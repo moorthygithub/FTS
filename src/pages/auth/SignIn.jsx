@@ -13,7 +13,7 @@ import { ContextPanel } from "../../utils/ContextPanel";
 import image1 from "../../assets/img1.jpg";
 import image2 from "../../assets/img2.jpg";
 import image3 from "../../assets/img3.jpg";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo.jpg";
 import { toast } from "react-toastify";
 
 const SignIn = () => {
@@ -171,14 +171,6 @@ const SignIn = () => {
                 {loading ? "Checking..." : "Sign In"}
               </Button>
               <div className="flex items-center justify-between gap-2 mt-6">
-                <Typography
-                  variant="small"
-                  className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500 "
-                >
-                  <Link to="/enquiry-now" className="text-gray-900 ml-1">
-                    Enquiry Now
-                  </Link>
-                </Typography>
                 <Typography
                   variant="small"
                   className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500"

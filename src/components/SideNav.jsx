@@ -6,18 +6,16 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useEffect, useRef } from "react";
-import image from "../assets/logo.png";
+import image from "../assets/logo.jpg";
 import { MdDashboard } from "react-icons/md";
 import { FaFlag } from "react-icons/fa";
 import { MdClass } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
-import { TbTruckDelivery } from "react-icons/tb";
 import { FaTruckMoving } from "react-icons/fa6";
 
 import { FaCodePullRequest } from "react-icons/fa6";
 import { GrTasks } from "react-icons/gr";
-import { MdNotificationsActive } from "react-icons/md";
 import { PiDownloadSimpleBold } from "react-icons/pi";
 
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
@@ -66,14 +64,6 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             <div className="bg-white p-2 rounded-md">
               <img src={image} alt="Logo" className="h-12 w-auto" />
             </div>{" "}
-            {/* <div className="ml-3 logo-text">
-              <div className="logo-title text-white text-lg font-bold">
-                <span className="font-black">AG</span> Solution
-              </div>
-              <div className="logo-sub-title text-gray-400 text-sm">
-                Single Click Solution
-              </div>
-            </div> */}
           </div>
         </Link>
         <IconButton

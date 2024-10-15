@@ -170,7 +170,7 @@ const SignIn = () => {
               >
                 {loading ? "Checking..." : "Sign In"}
               </Button>
-              <div className="flex items-center justify-between gap-2 mt-6">
+              <div className="flex items-center justify-end gap-2 mt-6">
                 <Typography
                   variant="small"
                   className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500"

@@ -108,16 +108,6 @@ const EditMaterial = () => {
 
   const handleBackButton = () => navigate("/recepit-material");
 
-  // const [occasion, setOccasion] = useState([]);
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   fetch(`${BaseUrl}/fetch-occasion`, {
-  //     method: "GET",
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => setOccasion(data.occasion));
-  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {

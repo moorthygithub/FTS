@@ -213,32 +213,6 @@ const EditDonorList = () => {
     setShowmodal(true);
   };
 
-  // const familyGroupStatus = (status) => {
-  //   var data = {};
-
-  //   if (status == "add_to_family_group") {
-  //     data = {
-  //       donor_related_id: family_related_id,
-  //     };
-  //   } else {
-  //     data = {
-  //       leave_family_group: true,
-  //     };
-  //   }
-
-  //   axios({
-  //     url: BaseUrl + "/update-donor-by-id/" + id,
-  //     method: "PUT",
-  //     data,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("login")}`,
-  //     },
-  //   }).then((res) => {
-  //     toast.success("Data Sucessfully Removed From the Group");
-
-  //     setShowmodal(false);
-  //   });
-  // };
   //GET DATA
   useEffect(() => {
     axios({
@@ -250,11 +224,11 @@ const EditDonorList = () => {
     })
       .then((res) => {
         setDonor(res.data.donor);
-        setLoader(false);
+        // setLoader(false);
       })
       .catch((error) => {
         console.error("Error fetching donor details:", error);
-        setLoader(false);
+        // setLoader(false);
       });
   }, [id]);
   return (

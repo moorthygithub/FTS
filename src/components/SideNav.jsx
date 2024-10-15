@@ -77,175 +77,181 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
           <XMarkIcon strokeWidth={2.5} className="h-5 w-5 text-white" />
         </IconButton>
       </div>
-      <div className="m-4">
-        <ul className="mb-4 flex flex-col gap-">
-          <li>
-            <NavLink to="/home">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <MdDashboard className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Dashboard
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
 
-          <li>
-            <NavLink to="/webdonation">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <FaFlag className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
+      {localStorage.getItem("user_type_id") == 2 ||
+      localStorage.getItem("user_type_id") == 3 ? (
+        <div className="m-4">
+          <ul className="mb-4 flex flex-col gap-">
+            <li>
+              <NavLink to="/home">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
                   >
-                    Website Donation
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/donor-list">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <MdClass className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Donor{" "}
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/master-list">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <FaUserGroup className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Master
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+                    <MdDashboard className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Dashboard
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/purchase">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <FaTruckMoving className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
+            <li>
+              <NavLink to="/webdonation">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
                   >
-                    Stock
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+                    <FaFlag className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Website Donation
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/donor-list">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <MdClass className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Donor{" "}
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/master-list">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <FaUserGroup className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Master
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
 
-          <li>
-            <NavLink to="/cashrecepit">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <FaCodePullRequest className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
+            <li>
+              <NavLink to="/purchase">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
                   >
-                    Receipts
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/stock-summary">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <GrTasks className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Reports
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/donor">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <PiDownloadSimpleBold className="w-5 h-5 text-inherit" />
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    download
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+                    <FaTruckMoving className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Stock
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
 
-          {/* Add more hardcoded routes here as needed */}
-        </ul>
-      </div>
+            <li>
+              <NavLink to="/cashrecepit">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <FaCodePullRequest className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Receipts
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/stock-summary">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <GrTasks className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Reports
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/donor">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <PiDownloadSimpleBold className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      download
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+
+            {/* Add more hardcoded routes here as needed */}
+          </ul>
+        </div>
+      ) : (
+        ""
+      )}
     </aside>
   );
 };

@@ -286,7 +286,6 @@ const CreateDonorRecepit = () => {
     }).then((res) => {
       setUserdata(res.data.donor);
       console.log("datatable", res.data.donor);
-      setLoader(false);
     });
   }, []);
   return (

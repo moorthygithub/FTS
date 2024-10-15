@@ -73,6 +73,10 @@ const Consumption = () => {
           return (
             <div className="flex items-center space-x-2">
               <MdEdit
+                style={{
+                  display:
+                    localStorage.getItem("user_type_id") == 1 ? "none" : "",
+                }}
                 onClick={() => navigate(`/edit-consumption/${id}`)}
                 title="edit country list"
                 className="h-5 w-5 cursor-pointer"
@@ -111,6 +115,12 @@ const Consumption = () => {
         <Link
           to="/add-consumption"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          style={{
+            display:
+              localStorage.getItem("user_type_id") == 2
+                ? "inline-block"
+                : "none",
+          }}
         >
           + Add Consumption
         </Link>

@@ -76,6 +76,10 @@ const PurchaseList = () => {
           return (
             <div className="flex items-center space-x-2">
               <MdEdit
+                style={{
+                  display:
+                    localStorage.getItem("user_type_id") == 1 ? "none" : "",
+                }}
                 onClick={() => navigate(`/edit-purchase/${id}`)}
                 title="edit purchase"
                 className="h-5 w-5 cursor-pointer"
@@ -104,6 +108,7 @@ const PurchaseList = () => {
       };
     },
   };
+  let usertype = localStorage.getItem("user_type_id");
 
   return (
     <Layout>
@@ -116,6 +121,7 @@ const PurchaseList = () => {
         <Link
           to="/add-purchase"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          style={{ display: usertype == 2 ? "inline-block" : "none" }}
         >
           + Add Purchase
         </Link>

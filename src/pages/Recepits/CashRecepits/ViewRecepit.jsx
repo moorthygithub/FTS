@@ -89,6 +89,9 @@ function ViewCashRecepit() {
             variant="text"
             className="flex items-center space-x-2"
             onClick={downloadReceipt}
+            style={{
+              display: localStorage.getItem("user_type_id") == 4 ? "none" : "",
+            }}
           >
             <LuDownload className="text-lg" />
             <span>Download</span>

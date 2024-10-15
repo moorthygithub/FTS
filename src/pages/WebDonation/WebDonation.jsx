@@ -62,14 +62,62 @@ const WebDonation = () => {
         filter: false,
         print: true,
         download: true,
+        sort: false,
       },
     },
-    "Name",
-    "Mobile",
-    "Date",
-    "Exemption Type",
-    "Donation Type",
-    "Amount",
+    {
+      name: "Name",
+      label: " Name",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Mobile",
+      label: " Mobile",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Date",
+      label: " Date",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Exemption Type",
+      label: " Exemption Type",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Donation Type",
+      label: " Donation Type",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Amount ",
+      label: " Amount ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    "",
+    "",
+    "",
+    "",
+    "",
   ];
 
   const options = {

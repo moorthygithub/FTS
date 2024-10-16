@@ -51,20 +51,22 @@ import EditConsumption from "./pages/Stock/Consumption/EditConsumption";
 import Stock from "./pages/Stock/StockList/StockList";
 import EditRecepit from "./pages/Recepits/CashRecepits/EditRecepits";
 import ViewCashRecepit from "./pages/Recepits/CashRecepits/ViewRecepit";
-import EditMaterial from "./pages/Recepits/MaterialRecepits/Editmaterial";
+import EditMaterial from "././pages/Recepits/MaterialRecepits/EditMaterial";
 import ViewMaterial from "./pages/Recepits/MaterialRecepits/ViewMaterial";
 import ViewStockSummary from "./pages/Reports/ViewStockSummary";
 import DowloadConsumption from "./pages/Dowloads/Consumption/DowloadConsumption";
 import DownloadWebDonation from "./pages/Dowloads/WebDonation/DownloadWebDonation";
-// import Consumption from "./pages/Dowloads/Consumption/Consumption";
-// import AddDonorList from "./pages/DonorList/AddDonorList";
 import AddDonorList from "./pages/DonorList/AddDonorList";
 import EditDonorList from "./pages/DonorList/EditDonorList";
 import CreateDonor from "./pages/DonorList/CreateDonor";
 import CreateDonorRecepit from "./pages/DonorList/CreateDonorRecepit";
 import ViewDonorDetails from "./pages/DonorList/ViewDonorDetails";
 import DonorReceiptsDetails from "./pages/DonorList/DonorReceiptsDetails";
-// import CashRecepitList from "./pages/DonorList/CashRecepitList";
+import FamilyList from "./pages/DonorList/FamilyMembers/FamilyList";
+import AddFamilyMembers from "./pages/DonorList/FamilyMembers/AddFamilyMembers";
+import DonationSummary from "./pages/Reports/DonationSummary/DonationSummary";
+import DonationSummaryView from "./pages/Reports/DonationSummary/DonationSummaryView";
+import DuplicateDonorList from "./pages/DonorList/Duplicate/DuplicateDonorList";
 const App = () => {
   return (
     <>
@@ -76,17 +78,15 @@ const App = () => {
         <Route path="/enquiry-now" element={<EnquiryNow />} />
         <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
         <Route path="/maintenance" element={<Maintenance />} />
-        {/* country  */}
-        {/* <Route path="/webdonation" element={<WebDonation />} /> */}
-        {/* <Route path="/add-country" element={<AddCountry />} /> */}
-        {/* <Route path="/edit-country/:id" element={<EditCountry />} /> */}
-        {/* DONOR */}
         <Route path="/donor-list" element={<DonorList />} />
         <Route path="/add-donor/:id?" element={<AddDonorList />} />
         <Route path="/edit-donor/:id" element={<EditDonorList />} />
         <Route path="/create-donor/:id" element={<CreateDonor />} />
+        <Route path="/create-family/:id" element={<FamilyList />} />
+        <Route path="/add-family" element={<AddFamilyMembers />} />
+        <Route path="/duplicate" element={<DuplicateDonorList />} />
         <Route
-          path="/createrecepit-donor/:id"
+          path="/createrecepit-donor/:id?"
           element={<CreateDonorRecepit />}
         />
         <Route path="/viewdonor-list/:id" element={<ViewDonorDetails />} />
@@ -149,8 +149,13 @@ const App = () => {
         <Route path="/add-request" element={<AddRequest />} />
         <Route path="recepit-material" element={<MaterialRecepits />} />
         <Route path="/request-completed" element={<CompletedListRequest />} />
-        {/* task Manager  */}
+        {/* Reports  */}
         <Route path="/stock-summary" element={<PendingListTask />} />
+        <Route path="/donation-summary" element={<DonationSummary />} />
+        <Route
+          path="/donation-summary-view"
+          element={<DonationSummaryView />}
+        />
         <Route path="/task-inspection" element={<InspectionListTask />} />
         <Route path="/task-completed" element={<CompletedListTask />} />
         <Route path="/view-stock" element={<ViewStockSummary />} />

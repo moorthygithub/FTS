@@ -127,6 +127,11 @@ const AppProvider = ({ children }) => {
           "/cashrecepit-list",
           "/viewdonor-list",
           "/recepitdonor-list",
+          "/create-family/",
+          "/add-family",
+          "/donation-summary",
+          "/donation-summary-view",
+          "/duplicate",
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)
@@ -146,7 +151,7 @@ const AppProvider = ({ children }) => {
         ) {
           navigate(currentPath);
         } else {
-          navigate("/"); // Redirect to login if no token
+          navigate("/");
         }
       }
     }

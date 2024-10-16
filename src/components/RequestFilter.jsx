@@ -9,20 +9,15 @@ const RequestFilter = () => {
   };
   const buttons = [
     {
-      label: "Cash Recepits",
+      label: "Donation Receipts",
       path: "/cashrecepit",
       color: "from-pink-500 to-orange-400",
     },
     {
-      label: "Material Recepits",
+      label: "Material Receipts",
       path: "/recepit-material",
       color: "from-blue-500 to-cyan-400",
     },
-    // {
-    //   label: "Completed List",
-    //   path: "/request-completed",
-    //   color: "from-green-500 to-teal-400",
-    // },
   ];
 
   return (

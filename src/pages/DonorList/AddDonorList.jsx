@@ -177,53 +177,49 @@ const AddDonorList = () => {
   };
 
   // /SUBMIT 1
-  // const onSubmitR = (e) => {
-  //   let data = {
-  //     donor_full_name: donor.donor_full_name,
-  //     donor_title: donor.donor_title,
-  //     donor_gender: donor.donor_gender,
-  //     donor_father_name: donor.donor_father_name,
-  //     donor_mother_name: donor.donor_mother_name,
-  //     donor_spouse_name: donor.donor_spouse_name,
-  //     donor_contact_name: donor.donor_contact_name,
-  //     donor_contact_designation: donor.donor_contact_designation,
-  //     donor_dob_annualday: donor.donor_dob_annualday,
-  //     donor_doa: donor.donor_doa,
-  //     donor_pan_no: donor.donor_pan_no,
-  //     donor_image_logo: donor.donor_image_logo,
-  //     donor_remarks: donor.donor_remarks,
-  //     donor_mobile: donor.donor_mobile,
-  //     donor_whatsapp: donor.donor_whatsapp,
-  //     donor_email: donor.donor_email,
-  //     donor_address: donor.donor_address,
-  //     donor_area: donor.donor_area,
-  //     donor_ladmark: donor.donor_ladmark,
-  //     donor_city: donor.donor_city,
-  //     donor_state: donor.donor_state,
-  //     donor_pin_code: donor.donor_pin_code,
-  //     donor_type: donor.donor_type,
-  //   };
+  const onSubmitR = async (e) => {
+    e.preventDefault();
 
-  //   var v = document.getElementById("addIndiv").checkValidity();
-  //   var v = document.getElementById("addIndiv").reportValidity();
+    let data = {
+      donor_full_name: donor.donor_full_name,
+      donor_title: donor.donor_title,
+      donor_gender: donor.donor_gender,
+      donor_father_name: donor.donor_father_name,
+      donor_mother_name: donor.donor_mother_name,
+      donor_spouse_name: donor.donor_spouse_name,
+      donor_contact_name: donor.donor_contact_name,
+      donor_contact_designation: donor.donor_contact_designation,
+      donor_dob_annualday: donor.donor_dob_annualday,
+      donor_doa: donor.donor_doa,
+      donor_pan_no: donor.donor_pan_no,
+      donor_image_logo: donor.donor_image_logo,
+      donor_remarks: donor.donor_remarks,
+      donor_mobile: donor.donor_mobile,
+      donor_whatsapp: donor.donor_whatsapp,
+      donor_email: donor.donor_email,
+      donor_address: donor.donor_address,
+      donor_area: donor.donor_area,
+      donor_ladmark: donor.donor_ladmark,
+      donor_city: donor.donor_city,
+      donor_state: donor.donor_state,
+      donor_pin_code: donor.donor_pin_code,
+      donor_type: donor.donor_type,
+    };
 
-  //   e.preventDefault();
-
-  //   if (v) {
-  //     setIsButtonDisabled(true);
-  //     axios({
-  //       url: BaseUrl + "/create-donor",
-  //       method: "POST",
-  //       data,
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("login")}`,
-  //       },
-  //     }).then((res) => {
-  //       toast.success("Donor Created Sucessfully");
-  //       // navigate(`/app/donor/receiptc?id=${res.data.latestid.id}`);
-  //     });
-  //   }
-  // };
+    setIsButtonDisabled(true);
+    axios({
+      url: BaseUrl + "/create-donor",
+      method: "POST",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      toast.success("Donor Created Sucessfully");
+      console.log(`/createrecepit-donor?id${res.data.latestid.id}`);
+      navigate(`/createrecepit-donor/${res.data.latestid.id}`);
+    });
+  };
   //FETCH STATE
   const [states, setStates] = useState([]);
   useEffect(() => {
@@ -263,19 +259,17 @@ const AddDonorList = () => {
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <h1 className="p-4 mb-2">Personal Details</h1>
-          <form onSubmit={onSubmit} autoComplete="off">
+          <form autoComplete="off">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div className="w-full">
-                <Dropdown
-                  label="Donor Type"
-                  className="required"
+              <div>
+                <Fields
+                  select
+                  title="Donor Type"
+                  type="whatsappDropdown"
                   name="donor_type"
                   value={donor.donor_type}
-                  options={company_type.map((item) => ({
-                    value: item.value,
-                    label: item.label,
-                  }))}
                   onChange={(e) => onInputChange(e)}
+                  options={company_type}
                 />
               </div>
               <div className="w-full">
@@ -284,14 +278,6 @@ const AddDonorList = () => {
                   required={true}
                   name="donor_title"
                   value={donor.donor_title}
-                  // options={
-                  //   donor.donor_type === "Individual"
-                  //     ? title1.map((option) => ({
-                  //         value: option.value,
-                  //         label: option.label,
-                  //       }))
-                  //     : []
-                  // }
                   options={title1}
                   type="whatsappDropdown"
                   onChange={(e) => onInputChange(e)}
@@ -308,17 +294,17 @@ const AddDonorList = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
-              <div className="w-full">
-                <Dropdown
-                  label="Gender"
-                  className="required"
+
+              <div className="mb-4">
+                <Fields
+                  select
+                  title="Gender"
+                  type="whatsappDropdown"
+                  required={true}
                   name="donor_gender"
                   value={donor.donor_gender}
-                  options={gender.map((option) => ({
-                    value: option.value,
-                    label: option.label,
-                  }))}
                   onChange={(e) => onInputChange(e)}
+                  options={gender}
                 />
               </div>
               {donor.donor_type == "Individual" ? (
@@ -326,9 +312,7 @@ const AddDonorList = () => {
               ) : (
                 <div>
                   <Input
-                    required
                     label="Contact Name"
-                    // type="number"
                     name="donor_contact_name"
                     value={donor.donor_contact_name}
                     onChange={(e) => onInputChange(e)}
@@ -341,7 +325,6 @@ const AddDonorList = () => {
               ) : (
                 <div>
                   <Input
-                    required
                     label="Contact Designation"
                     // type="number"
                     name="donor_contact_designation"
@@ -350,20 +333,7 @@ const AddDonorList = () => {
                   ></Input>
                 </div>
               )}
-              {/* {donor.donor_type == "Individual" ? (
-                ""
-              ) : (
-                <div className="w-full">
-                  <Input
-                    type="date"
-                    label="Date of Anniversary"
-                    name="receipt_from_date"
-                    className="required"
-                    value={course.courses_name}
-                    onChange={(e) => onInputChange(e)}
-                  />
-                </div>
-              )} */}
+
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <InputMask
                   mask="aaaaa 9999 a"
@@ -376,12 +346,10 @@ const AddDonorList = () => {
                 >
                   {(inputProps) => (
                     <Fields
-                      required={true}
                       title="PAN Number"
                       type="textField"
                       autoComplete="Name"
                       name="donor_pan_no"
-                      // Pass down other props but NOT onChange
                       {...inputProps}
                     />
                   )}
@@ -406,7 +374,6 @@ const AddDonorList = () => {
               {donor.donor_type == "Individual" ? (
                 <div>
                   <Fields
-                    required={true}
                     title="Mother Name"
                     type="textField"
                     autoComplete="Name"
@@ -421,7 +388,6 @@ const AddDonorList = () => {
               {donor.donor_type == "Individual" ? (
                 <div>
                   <Fields
-                    required={true}
                     title="Spouse Name"
                     type="textField"
                     autoComplete="Name"
@@ -460,7 +426,6 @@ const AddDonorList = () => {
 
               <div>
                 <Fields
-                  required={true}
                   title="Remarks"
                   type="textField"
                   autoComplete="Name"
@@ -490,7 +455,6 @@ const AddDonorList = () => {
               </div>
               <div>
                 <Fields
-                  required={true}
                   title="Whatsapp"
                   types="number"
                   type="textField"
@@ -503,7 +467,6 @@ const AddDonorList = () => {
               </div>
               <div>
                 <Fields
-                  required={true}
                   title="Email"
                   types="email"
                   type="textField"
@@ -520,7 +483,6 @@ const AddDonorList = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div>
                 <Fields
-                  required={true}
                   title="House&Street Number Address"
                   type="textField"
                   autoComplete="Name"
@@ -531,7 +493,6 @@ const AddDonorList = () => {
               </div>{" "}
               <div>
                 <Fields
-                  required={true}
                   title="City"
                   type="textField"
                   autoComplete="Name"
@@ -540,22 +501,19 @@ const AddDonorList = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>{" "}
-              <div className="w-full">
-                <Dropdown
-                  label="State"
-                  className="required"
+              <div className="mb-4">
+                <Fields
+                  select
+                  title="State"
+                  type="stateDropDown"
                   name="donor_state"
                   value={donor.donor_state}
-                  options={states.map((option) => ({
-                    value: option.state_name,
-                    label: option.state_name,
-                  }))}
                   onChange={(e) => onInputChange(e)}
+                  options={states}
                 />
-              </div>{" "}
+              </div>
               <div>
                 <Fields
-                  required={true}
                   title="Pincode"
                   type="textField"
                   autoComplete="Name"
@@ -570,8 +528,17 @@ const AddDonorList = () => {
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
                 disabled={isButtonDisabled}
+                onClick={onSubmit}
               >
                 Submit
+              </button>
+
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                onClick={onSubmitR}
+              >
+                Submit& Create Recepit
               </button>
               <Link to="/donor-list">
                 <button className="bg-green-500 text-white px-4 py-2 rounded-md">

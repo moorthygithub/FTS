@@ -70,7 +70,7 @@ const ViewDonorDetails = () => {
           </div>
         ) : (
           <Card className="p-6 mt-5 bg-white shadow-md rounded-lg">
-            <div className="flex justify-between">
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-center space-y-4 md:space-y-0 md:space-x-4">
               <div className="text-gray-700">
                 <strong>
                   {donor.donor_type == "Individual" ? "" : "M/S:"}

@@ -25,7 +25,7 @@ function DonorReceiptsDetails() {
     const fetchRecepitData = async () => {
       try {
         const res = await axios.get(
-          `${BaseUrl}/fetch-donor-receipt-by-id/${id}`,
+          `${BaseUrl}/fetch-donor-receipt-by-id-new/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,9 +33,9 @@ function DonorReceiptsDetails() {
           }
         );
 
-        setDonation(res.data.donor_receipts);
-        setFamgroup(res.data.related_group);
-        setMembership(res.data.membership_details);
+        setDonation(res.data.donor_receipts || []);
+        setFamgroup(res.data.related_group || []);
+        setMembership(res.data.membership_details || []);
 
         console.log(res.data);
       } catch (error) {
@@ -162,7 +162,7 @@ function DonorReceiptsDetails() {
         </Card>
       </div>
 
-      <div className="flex justify-center mt-4">
+      {/* <div className="flex justify-center mt-4">
         <Card className="p-4 w-full overflow-x-auto">
           {loader ? (
             <div className="flex justify-center items-center h-64">
@@ -252,7 +252,7 @@ function DonorReceiptsDetails() {
             </div>
           )}
         </Card>
-      </div>
+      </div> */}
     </Layout>
   );
 }

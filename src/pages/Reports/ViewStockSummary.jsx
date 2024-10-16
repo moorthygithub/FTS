@@ -6,9 +6,10 @@ import { IoIosPrint } from "react-icons/io";
 import { BaseUrl } from "../../base/BaseUrl";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import moment from "moment/moment";
+import html2pdf from "html2pdf.js"; 
 
 const TABLE_HEAD = [
   "Items Name",
@@ -25,19 +26,54 @@ function ViewStockSummary() {
   const [loader, setLoader] = useState(true);
   const [from_date, setFromDate] = useState("");
   const [to_date, setToDate] = useState("");
+  const componentRef = useRef(); 
 
-  const downloadReceipt = (e) => {
-    e.preventDefault();
-    window.location.href = `${BaseUrl}/download-receipts/${id}`;
-    toast.success("Receipt Downloaded Successfully");
+  const PrintRecepit = () => {
+    const printContent = componentRef.current; 
+    const printWindow = window.open("", "", "height=500,width=800");
+
+    printWindow.document.write("<html><head><title>Print Receipt</title>");
+
+    // Add CSS styles to the print window
+    const styles = Array.from(document.styleSheets)
+      .map((styleSheet) => {
+        try {
+          return Array.from(styleSheet.cssRules)
+            .map((rule) => rule.cssText)
+            .join("");
+        } catch (e) {
+          console.log(
+            "Accessing cross-origin styles is not allowed, skipping."
+          );
+          return "";
+        }
+      })
+      .join("");
+    printWindow.document.write(`<style>${styles}</style>`);
+    printWindow.document.write("</head><body>");
+    printWindow.document.write(printContent.innerHTML); 
+    printWindow.document.write("</body></html>");
+    printWindow.document.close();
+    printWindow.print();
   };
 
-  const printReceipt = (e) => {
-    e.preventDefault();
-    window.open(`${BaseUrl}/print-receipt/${id}`, "_blank");
+  const downloadPDF = () => {
+    const element = componentRef.current;
+    const opt = {
+      margin: 1,
+      filename: `Stock_Summary_${from_date}_to_${to_date}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // Use html2pdf to create and download the PDF
+    html2pdf().from(element).set(opt).save().catch((error) => {
+      console.error("PDF generation error:", error);
+      toast.error("Failed to download PDF.");
+    });
   };
 
-  // DATA FOR THE TABLE
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("user_type_id");
     if (!isLoggedIn) {
@@ -88,15 +124,15 @@ function ViewStockSummary() {
           <Button
             variant="text"
             className="flex items-center space-x-2"
-            onClick={downloadReceipt}
+            onClick={downloadPDF} 
           >
             <LuDownload className="text-lg" />
-            <span>Download</span>
+            <span>Download PDF</span>
           </Button>
           <Button
             variant="text"
             className="flex items-center space-x-2"
-            onClick={printReceipt}
+            onClick={PrintRecepit}
           >
             <IoIosPrint className="text-lg" />
             <span>Print Receipt</span>
@@ -104,7 +140,7 @@ function ViewStockSummary() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4" ref={componentRef}>
         <Card className="p-4 w-full overflow-x-auto">
           {loader ? (
             <div className="flex justify-center items-center h-64">
@@ -114,7 +150,7 @@ function ViewStockSummary() {
             <div className="overflow-x-auto">
               <div className="flex justify-center">
                 <div className="p-4 text-xl md:text-2xl flex justify-center font-bold">
-                  Stock Summary - From : {from_date}To :{to_date}
+                  Stock Summary - From: {from_date} To: {to_date}
                 </div>
               </div>
               <table className="min-w-full text-left">

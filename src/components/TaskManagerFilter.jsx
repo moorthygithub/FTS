@@ -9,9 +9,14 @@ const TaskManagerFilter = () => {
   };
   const buttons = [
     {
-      label: "Stock Summary ( In Kgs )",
+      label: "Stock Summary ",
       path: "/stock-summary",
       color: "from-pink-500 to-orange-400",
+    },
+    {
+      label: "Donation  Summary ",
+      path: "/donation-summary",
+      color: "from-teal-500 to-red-400",
     },
   ];
 

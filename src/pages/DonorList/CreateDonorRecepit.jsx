@@ -5,11 +5,16 @@ import axios from "axios";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
-import { Button, IconButton } from "@mui/material";
+// import { Button, IconButton } from "@mui/material";
 import { BaseUrl } from "../../base/BaseUrl";
 import moment from "moment/moment";
-import { Card, CardBody, Input } from "@material-tailwind/react";
+import { Button, Card, CardBody, Input } from "@material-tailwind/react";
 
+// Unit options for dropdown
+const unitOptions = [
+  { value: "Kg", label: "Kg" },
+  { value: "Ton", label: "Ton" },
+];
 const exemption = [
   {
     value: "80G",
@@ -60,6 +65,17 @@ const pay_mode_2 = [
   {
     value: "Others",
     label: "Others",
+  },
+];
+
+const family_check = [
+  {
+    value: "Yes",
+    label: "Yes",
+  },
+  {
+    value: "No",
+    label: "No",
   },
 ];
 
@@ -125,7 +141,7 @@ const donation_type_2 = [
   },
 ];
 
-const CreateDonorRecepit = () => {
+const DonorDonationReceipt = () => {
   const navigate = useNavigate();
   const [vendors, setVendors] = useState([]);
   const [items, setItems] = useState([]);
@@ -135,31 +151,90 @@ const CreateDonorRecepit = () => {
   console.log(id);
   // Get current date
 
-  const today = moment();
-  const todayback = today.format("YYYY-MM-DD");
+  // const today = moment();
+  // const todayBackFormatted = today.format("YYYY-MM-DD");
 
   // Financial year calculation
-  const currentYear = today.toDate().getFullYear();
-  const nextYear = (currentYear + 1).toString().substr(-2);
-  const financialYear = `${currentYear}-${nextYear}`;
+  // const currentYear = today.toDate().getFullYear();
+  // const nextYear = (currentYear + 1).toString().substr(-2);
+  // const financialYear = `${currentYear}-${nextYear}`;
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0");
+  var yyyy = today.getFullYear();
 
+  today = mm + "/" + dd + "/" + yyyy;
+  var todayback = yyyy + "-" + mm + "-" + dd;
+  var d = document.getElementById("datefield");
+  if (d) {
+    document.getElementById("datefield").setAttribute("max", todayback);
+  }
+
+  var todayyear = new Date().getFullYear();
+  var twoDigitYear = todayyear.toString().substr(-2);
+  var preyear = todayyear;
+  var finyear = +twoDigitYear + 1;
+  var finalyear = preyear + "-" + finyear;
+  const [dayClose, setDayClose] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [check, setCheck] = useState(false);
+
+  useEffect(() => {
+    var theLoginToken = localStorage.getItem("token");
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + theLoginToken,
+      },
+    };
+
+    fetch(BaseUrl + "/fetch-c-receipt-date", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setDayClose(data.latestdate.c_receipt_date));
+  }, []);
   const [donor, setDonor] = useState({
-    donor_fts_id: "",
-    receipt_financial_year: "",
-    receipt_date: todayback,
-    receipt_exemption_type: "",
-    receipt_total_amount: "",
-    receipt_donation_type: "",
-    receipt_tran_pay_mode: "",
-    receipt_tran_pay_details: "",
-    receipt_occasional: "",
-    receipt_email_count: "",
-    receipt_remarks: "",
-    receipt_reason: "",
+    indicomp_fts_id: "",
+    c_receipt_financial_year: "",
+    c_receipt_date: check ? dayClose : dayClose,
+    c_receipt_exemption_type: "",
+    c_receipt_total_amount: "0",
+    c_receipt_count: "",
+    c_receipt_tran_pay_mode: "",
+    c_receipt_tran_pay_details: "",
+    c_receipt_occasional: "",
+    c_receipt_email_count: "",
+    c_receipt_reason: "",
+    c_receipt_remarks: "",
+    c_manual_receipt_no: "",
+    c_receipt_sub_data: "",
+    family_full_check: "",
+    family_full_name: "",
   });
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const useTemplate = {
+    c_receipt_sub_donation_type: "",
+    c_receipt_sub_amount: "0",
+  };
 
+  const [users, setUsers] = useState([useTemplate]);
+  const [fabric_inward_count, setCount] = useState(1);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  //FETCH OCCASION
+  const [occasion, setOccasion] = useState([]);
+  useEffect(() => {
+    var theLoginToken = localStorage.getItem("token");
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + theLoginToken,
+      },
+    };
+
+    fetch(BaseUrl + "/fetch-occasion", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setOccasion(data.occasion));
+  }, []);
   // Fetch vendors and items on mount
   useEffect(() => {
     const fetchVendorData = async () => {
@@ -185,19 +260,24 @@ const CreateDonorRecepit = () => {
 
     const dateField = document.getElementById("datefield");
     if (dateField) {
-      dateField.setAttribute("max", todayback);
+      dateField.setAttribute("max", todayback); // Set max attribute for date input
     }
   }, [todayback]);
-  const validateOnlyDigits = (inputtxt) => {
-    var phoneno = /^\d+$/;
-    if (inputtxt.match(phoneno) || inputtxt.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
+
+  const addItem = () => {
+    setUsers([...users, useTemplate]);
+    setCount(fabric_inward_count + 1);
   };
+
+  const removeUser = (index) => {
+    const filteredUsers = [...users];
+    filteredUsers.splice(index, 1);
+    setUsers(filteredUsers);
+    setCount(fabric_inward_count - 1);
+  };
+
   const onInputChange = (e) => {
-    if (e.target.name == "receipt_total_amount") {
+    if (e.target.name == "c_receipt_total_amount") {
       if (validateOnlyDigits(e.target.value)) {
         setDonor({
           ...donor,
@@ -211,23 +291,71 @@ const CreateDonorRecepit = () => {
       });
     }
   };
+  const validateOnlyNumber = (inputtxt) => {
+    var phoneno = /^\d*\.?\d*$/;
+    if (inputtxt.match(phoneno) || inputtxt.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  //ONCHNAGE FOR USER
+  const onChange = (e, index) => {
+    if (e.target.name == "c_receipt_sub_amount") {
+      if (validateOnlyNumber(e.target.value)) {
+        const updatedUsers = users.map((user, i) =>
+          index == i
+            ? Object.assign(user, { [e.target.name]: e.target.value })
+            : user
+        );
+        setUsers(updatedUsers);
+      }
+    } else {
+      const updatedUsers = users.map((user, i) =>
+        index == i
+          ? Object.assign(user, { [e.target.name]: e.target.value })
+          : user
+      );
+      setUsers(updatedUsers);
+    }
+  };
 
+  const pan = userdata.donor_pan_no == "" ? "NA" : userdata.donor_pan_no;
+
+  const AmountCal = (selectedValue) => {
+    const tempUsers = [...users];
+    setUsers(tempUsers);
+    const result = [];
+    for (let i = 0; i < users.length; i++) {
+      result.push(users[i].c_receipt_sub_amount);
+    }
+    const valu = result.reduce((acc, curr) => acc + parseInt(curr), 0);
+    const total = +parseInt(valu || 0);
+    setDonor((donor) => ({
+      ...donor,
+      c_receipt_total_amount: total,
+    }));
+  };
   const onSubmit = (e) => {
     e.preventDefault();
 
     let data = {
       donor_fts_id: userdata.donor_fts_id,
-      receipt_financial_year: financialYear,
-      receipt_date: todayback,
-      receipt_exemption_type: donor.receipt_exemption_type,
-      receipt_total_amount: donor.receipt_total_amount,
-      receipt_donation_type: donor.receipt_donation_type,
-      receipt_tran_pay_mode: donor.receipt_tran_pay_mode,
-      receipt_tran_pay_details: donor.receipt_tran_pay_details,
-      receipt_occasional: donor.receipt_occasional,
-      receipt_remarks: donor.receipt_remarks,
-      receipt_reason: donor.receipt_reason,
-      receipt_email_count: donor.receipt_email_count,
+      c_receipt_financial_year: "2024-25",
+      c_receipt_date: check ? dayClose : dayClose,
+      c_receipt_exemption_type: donor.c_receipt_exemption_type,
+      c_receipt_total_amount: donor.c_receipt_total_amount,
+      c_receipt_count: fabric_inward_count,
+      c_receipt_tran_pay_mode: donor.c_receipt_tran_pay_mode,
+      c_receipt_tran_pay_details: donor.c_receipt_tran_pay_details,
+      c_receipt_occasional: donor.c_receipt_occasional,
+      c_receipt_remarks: donor.c_receipt_remarks,
+      c_receipt_reason: donor.c_receipt_reason,
+      c_receipt_email_count: donor.c_receipt_email_count,
+      c_manual_receipt_no: donor.c_manual_receipt_no,
+      c_receipt_sub_data: users,
+      family_full_check: donor.family_full_check,
+      family_full_name: donor.family_full_name,
     };
 
     const isValid = document.getElementById("addIndiv").checkValidity();
@@ -236,15 +364,15 @@ const CreateDonorRecepit = () => {
       setIsButtonDisabled(true);
 
       axios
-        .post(`${BaseUrl}/create-receipt`, data, {
+        .post(`${BaseUrl}/create-c-receipt`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
         .then((res) => {
-          if (res.status == 200 && res.data.code == "201") {
+          if (res.status == 200 && res.data.code == "200") {
             toast.success(res.data.msg || "Donor Created Successfully");
-            navigate("/cashrecepit");
+            navigate(`/recepit-view/${res.data.latestid.id}`);
           } else {
             toast.error(res.data.message || "Error occurred");
           }
@@ -285,9 +413,86 @@ const CreateDonorRecepit = () => {
       },
     }).then((res) => {
       setUserdata(res.data.donor);
+      // setUserfFamilydata(res.data.familyMember);
       console.log("datatable", res.data.donor);
     });
   }, []);
+  //DAY CLOSE
+
+  //DAY close
+  const onDayClose = (e) => {
+    e.preventDefault();
+    setCheck(true);
+
+    const receivedDate = new Date(dayClose);
+
+    if (isNaN(receivedDate)) {
+      console.error("Invalid dayClose date:", dayClose);
+      return;
+    }
+
+    receivedDate.setDate(receivedDate.getDate() + 1);
+
+    const year = receivedDate.getFullYear();
+    const month = String(receivedDate.getMonth() + 1).padStart(2, "0"); // Get month from 0-11, add 1 and pad with zero
+    const day = String(receivedDate.getDate()).padStart(2, "0"); // Get day and pad with zero
+
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate, "formattedDate");
+    let data = {
+      c_receipt_date: formattedDate,
+    };
+
+    // Making the API call
+    axios({
+      url: BaseUrl + "/update-c-receipt-date/1",
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data, "dayclose");
+        setDayClose(res.data.latestdate.c_receipt_date);
+      })
+      .catch((error) => {
+        console.error("Error updating receipt date:", error);
+      });
+  };
+  const isValidDate = (dateString) => {
+    const parsedDate = Date.parse(dateString);
+    return !isNaN(parsedDate);
+  };
+
+  const onDayOpen = (e) => {
+    e.preventDefault();
+    setCheck(true);
+    const receivedDate = new Date(dayClose);
+    receivedDate.setDate(receivedDate.getDate() - 1);
+
+    const year = receivedDate.getFullYear();
+    const month = String(receivedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(receivedDate.getDate()).padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+    let data = {
+      c_receipt_date: formattedDate,
+    };
+    axios({
+      url: BaseUrl + "/update-c-receipt-date-open/1",
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.data.code == 401) {
+        toast.error("In that Date there is already Receipt is Created");
+      } else {
+        setDayClose(res.data.latestdate.c_receipt_date);
+      }
+    });
+  };
   return (
     <Layout>
       <div>
@@ -297,8 +502,35 @@ const CreateDonorRecepit = () => {
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Material Receipt
+            Donation Receipt in receipt
           </h1>
+
+          <div>
+            {localStorage.getItem("user_type_id") == "2" ? (
+              <Button onClick={(e) => onDayOpen(e)}>+ Day Open</Button>
+            ) : (
+              ""
+            )}
+          </div>
+          <div>
+            {dayClose === todayback ? (
+              <Button
+                disabled
+                className="mr-10 mb-10 btn-get-started"
+                color="danger"
+              >
+                + Day Close
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => onDayClose(e)}
+                className="mr-10 mb-10 btn-get-started"
+                color="danger"
+              >
+                + Day Close
+              </Button>
+            )}
+          </div>
         </div>
         <Card className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <CardBody>
@@ -313,105 +545,203 @@ const CreateDonorRecepit = () => {
               </div>
               <div className="text-gray-700">
                 <strong>Pan No:</strong>
-                {userdata.donor_pan_no}
+                {pan}
               </div>
               <div className="text-gray-700">
                 <strong>Receipt Date:</strong>{" "}
-                {moment(userdata.donor_joining_date).format("DD-MM-YYYY")}
+                {moment(check ? dayClose : dayClose).format("DD-MM-YYYY")}{" "}
               </div>
               <div className="text-gray-700">
                 <strong>Year:</strong>
-                {financialYear}
+                {finalyear}
               </div>
             </div>
+            {donor.c_receipt_total_amount > 2000 &&
+            donor.c_receipt_exemption_type == "80G" &&
+            pan == "NA" ? (
+              <span className="amounterror">
+                Max amount allowedwithout Pan card is 2000
+              </span>
+            ) : (
+              ""
+            )}
           </CardBody>
         </Card>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form id="addIndiv" onSubmit={onSubmit}>
-            {/* Purchase Details */}
             <div className="mb-4">
               <Fields
                 required
                 select
                 title="Category"
                 type="whatsappDropdown"
-                name="receipt_exemption_type"
-                value={donor.receipt_exemption_type}
+                name="c_receipt_exemption_type"
+                value={donor.c_receipt_exemption_type}
                 onChange={(e) => onInputChange(e)}
                 options={exemption}
               />
             </div>
+
             <div className="mb-4">
-              <Fields
-                required
-                type="textField"
+              <label
+                className={`${
+                  donor?.c_receipt_total_amount
+                    ? "label-active"
+                    : "label-inactive"
+                } text-xs text-gray-500`}
+              >
+                Total Amount*
+              </label>
+              <Input
+                // required
+                type="text"
                 label="Total Amount"
-                name="receipt_total_amount"
-                value={donor.receipt_total_amount}
+                name="m_receipt_total_amount"
+                value={donor?.c_receipt_total_amount || ""}
                 onChange={(e) => onInputChange(e)}
+                disabled
+                className="disabled:opacity-50" // Optional: style for the input when disabled
               />
             </div>
-
             <div className="mb-4">
               <Fields
                 required
                 select
                 title="Transaction Type"
                 type="TransactionType"
-                name="receipt_tran_pay_mode"
-                value={donor.receipt_tran_pay_mode}
+                name="c_receipt_tran_pay_mode"
+                value={donor.c_receipt_tran_pay_mode}
                 onChange={(e) => onInputChange(e)}
                 donor={donor}
                 pay_mode={pay_mode}
                 pay_mode_2={pay_mode_2}
               />
             </div>
-            <div className="mb-4">
-              <Fields
-                required
-                select
-                title="Purpose"
-                type="TransactionType1"
-                name="receipt_donation_type"
-                value={donor.receipt_donation_type}
-                onChange={(e) => onInputChange(e)}
-                donor={donor}
-                donation_type={donation_type}
-                donation_type_2={donation_type_2}
-              ></Fields>
-            </div>
+
             <div className="mb-4">
               <Fields
                 required
                 type="textField"
                 label="Transaction Pay Details"
-                name="receipt_tran_pay_details"
-                value={donor.receipt_tran_pay_details}
+                name="c_receipt_tran_pay_details"
+                value={donor.c_receipt_tran_pay_details}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
             <div className="mb-4">
               <Fields
                 required
-                type="textField"
-                name="receipt_occasional"
-                value={donor.receipt_occasional}
+                select
+                title="On Occasion"
+                type="occasionDropdown"
+                name="c_receipt_occasional"
+                value={donor.c_receipt_occasional}
                 onChange={(e) => onInputChange(e)}
-                label="On Occasion"
+                options={occasion}
               />
             </div>
-
             <div className="mb-4">
               <Fields
                 required
                 type="textField"
-                name="receipt_remarks"
-                value={donor.receipt_remarks}
+                name="c_manual_receipt_no"
+                value={donor.c_manual_receipt_no}
                 onChange={(e) => onInputChange(e)}
+                label="Manual Receipt No"
+              />
+            </div>
+            <div className="mb-4">
+              <Fields
+                required
+                type="textField"
+                name="c_receipt_remarks"
+                value={donor.c_receipt_remarks}
+                onChange={onInputChange}
                 label="Remarks"
               />
             </div>
 
+            <div className="mb-4">
+              <Fields
+                required
+                select
+                title="Family Member"
+                type="whatsappDropdown"
+                name="family_full_check"
+                value={donor.family_full_check}
+                onChange={(e) => onInputChange(e)}
+                options={family_check}
+              />
+            </div>
+            {donor.family_full_check == "Yes" ? (
+              <div className="mb-4">
+                <Fields
+                  required
+                  select
+                  title="Family Member Name"
+                  type="familyDropdown"
+                  name="family_full_name"
+                  value={donor.family_full_name}
+                  onChange={(e) => onInputChange(e)}
+                  options={family_check}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+
+            {/* Line Items */}
+            {users.map((user, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
+              >
+                <Fields
+                  required
+                  select
+                  title="Purpose"
+                  type="TransactionType1"
+                  name="receipt_donation_type"
+                  value={donor.receipt_donation_type}
+                  onChange={(e) => onChange(e, index)}
+                  donor={donor}
+                  donation_type={donation_type}
+                  donation_type_2={donation_type_2}
+                ></Fields>
+
+                <Fields
+                  required
+                  label="Amount"
+                  type="textField"
+                  value={users.c_receipt_sub_amount}
+                  name="c_receipt_sub_amount"
+                  onChange={(e) => {
+                    onChange(e, index);
+                    AmountCal(index);
+                  }}
+                />
+                <button
+                  color="error"
+                  onClick={() => removeUser(index)}
+                  className="flex items-center justify-center p-2 hover:bg-gray-300 rounded-full transition duration-200 text-red-600"
+                  aria-label="Delete"
+                >
+                  {" "}
+                  <MdDelete />
+                </button>
+              </div>
+            ))}
+
+            <div className="display-flex justify-start">
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={addItem}
+                className="mt-4"
+              >
+                Add More
+              </Button>
+            </div>
             <div className="flex justify-center mt-4 space-x-4">
               <Button
                 type="submit"
@@ -438,4 +768,4 @@ const CreateDonorRecepit = () => {
   );
 };
 
-export default CreateDonorRecepit;
+export default DonorDonationReceipt;

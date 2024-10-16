@@ -42,6 +42,7 @@ const Fields = (props) => {
             placeholder={props.placeholder}
             {...props}
             maxLength={props.maxLenght}
+            // disabled={props.disabled}
           />
         </>
       )}
@@ -110,6 +111,65 @@ const Fields = (props) => {
               {props.options?.map((data, key) => (
                 <MenuItem key={key} value={data}>
                   {data}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </>
+      )}
+      {/* //occasion drop down  */}
+      {props.type === "occasionDropdown" && (
+        <>
+          <FormControl fullWidth>
+            <InputLabel id="service-select-label">
+              <span className="text-sm relative bottom-[6px]">
+                {props.title} <span className="text-red-700">*</span>
+              </span>
+            </InputLabel>
+            <Select
+              sx={{ height: "40px", borderRadius: "5px" }}
+              labelId="service-select-label"
+              id="service-select"
+              name={props.name}
+              value={props.value}
+              label={props.title}
+              onChange={props.onchange}
+              {...props}
+              required={props.required === true || props.required === "true"}
+            >
+              {props.options?.map((data, key) => (
+                <MenuItem key={key} value={data.occasion_name}>
+                  {data.occasion_name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </>
+      )}
+
+      {/* //Family DROP DOWN  */}
+      {props.type === "familyDropdown" && (
+        <>
+          <FormControl fullWidth>
+            <InputLabel id="service-select-label">
+              <span className="text-sm relative bottom-[6px]">
+                {props.title} <span className="text-red-700">*</span>
+              </span>
+            </InputLabel>
+            <Select
+              sx={{ height: "40px", borderRadius: "5px" }}
+              labelId="service-select-label"
+              id="service-select"
+              name={props.name}
+              value={props.value}
+              label={props.title}
+              onChange={props.onchange}
+              {...props}
+              required={props.required === true || props.required === "true"}
+            >
+              {props.options?.map((data, key) => (
+                <MenuItem key={key} value={data.family_full_name}>
+                  {data.family_full_name}
                 </MenuItem>
               ))}
             </Select>

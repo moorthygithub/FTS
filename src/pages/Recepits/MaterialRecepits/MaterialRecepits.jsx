@@ -61,7 +61,7 @@ const MaterialReceipts = () => {
       label: "Sl No",
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -69,7 +69,7 @@ const MaterialReceipts = () => {
       label: "Receipt No",
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -77,7 +77,7 @@ const MaterialReceipts = () => {
       label: "Date",
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -85,7 +85,7 @@ const MaterialReceipts = () => {
       label: "Name",
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -93,7 +93,7 @@ const MaterialReceipts = () => {
       label: "Approx Value",
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -101,7 +101,7 @@ const MaterialReceipts = () => {
       label: "No of Items",
       options: {
         filter: false,
-        sort: true,
+        sort: false,
       },
     },
     {

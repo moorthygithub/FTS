@@ -8,31 +8,43 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import {
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
 
 function ViewCashRecepit() {
-  const [receipts, setReceipts] = useState({});
+  const [receipts, setReceipts] = useState(null); // Set initial state to null
   const [company, setCompany] = useState({});
+  const [donor, setDonor] = useState(null);
+  const [recepitsub, setRecepitsub] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false); // Use state to control the Dialog visibility
+  const [email, setEmail] = useState(""); // For the input email
+
   useEffect(() => {
     axios({
-      url: `${BaseUrl}/fetch-receipt-by-id/${id}`,
+      // url: `${BaseUrl}/fetch-receipt-by-id/${id}`,
+      url: `${BaseUrl}/fetch-c-receipt-by-id/${id}`,
+
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => {
-        setReceipts(res.data.receipt);
-        setCompany(res.data.company);
+        setReceipts(res.data.receipts || {}); // Default to empty object
+        setCompany(res.data.company || {}); // Default to empty object
+        setDonor(res.data.donor);
+        setRecepitsub(res.data.receiptSub);
       })
       .catch((error) => {
         console.error("Error fetching receipt data:", error);
       });
   }, [id]);
-
-  console.log(receipts.donor, "receipts");
-  //DOWLOAD
   const downloadReceipt = (e) => {
     e.preventDefault();
     let check = (window.location.href = BaseUrl + "/download-receipts/" + id);
@@ -42,7 +54,7 @@ function ViewCashRecepit() {
       toast.error("Receipt Not Downloaded");
     }
   };
-  //EMAAIL
+
   const sendEmail = (e) => {
     e.preventDefault();
     axios({
@@ -51,12 +63,16 @@ function ViewCashRecepit() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    }).then((res) => {
-      toast.success("Email Sent Sucessfully");
-    });
+    })
+      .then((res) => {
+        toast.success("Email Sent Sucessfully");
+      })
+      .catch((error) => {
+        toast.error("Error sending email");
+        console.error("Email error:", error);
+      });
   };
 
-  //PRINT
   const printReceipt = (e) => {
     e.preventDefault();
     axios({
@@ -69,6 +85,18 @@ function ViewCashRecepit() {
       window.open(BaseUrl + "/print-receipt/" + id, "_blank");
     });
   };
+
+  const openModal = () => {
+    setShowModal(true);
+    localStorage.setItem("ftsid", receipts?.donor?.donor_fts_id + "");
+  };
+  const closeModal = () => setShowModal(false);
+
+  const handleAddEmail = () => {
+    toast.success("Email added successfully!");
+    closeModal();
+  };
+
   return (
     <Layout>
       <ToastContainer />
@@ -76,14 +104,13 @@ function ViewCashRecepit() {
         <div className="flex flex-row justify-start items-center p-2">
           <MdKeyboardBackspace
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
-            onClick={() => {
-              navigate("/cashrecepit");
-            }}
+            onClick={() => navigate("/cashrecepit")}
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
             Cash Receipt
           </h1>
         </div>
+
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4">
           <Button
             variant="text"
@@ -96,14 +123,51 @@ function ViewCashRecepit() {
             <LuDownload className="text-lg" />
             <span>Download</span>
           </Button>
-          <Button
-            variant="text"
-            className="flex items-center space-x-2"
-            onClick={sendEmail}
-          >
-            <MdEmail className="text-lg" />
-            <span>Email</span>
-          </Button>
+
+          {receipts?.donor?.donor_email ? (
+            <a onClick={sendEmail}>
+              <i className="mr-10 ti-email"></i> Email
+              <br />
+              {receipts?.receipt_email_count == null ? (
+                <small style={{ fontSize: "10px" }}>Email Sent 0 Times</small>
+              ) : (
+                <small style={{ fontSize: "10px" }}>
+                  Email Sent {receipts.receipt_email_count} Times
+                </small>
+              )}
+            </a>
+          ) : (
+            <>
+              <p style={{ color: "red" }}>
+                <i className="mr-10 ti-email"></i> Email not found
+              </p>
+              <Button onClick={openModal} className="mr-10 mb-10" color="green">
+                Add Email
+              </Button>
+            </>
+          )}
+
+          <Dialog open={showModal} handler={closeModal}>
+            <DialogHeader>Add Donor Email</DialogHeader>
+            <DialogBody>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter donor email"
+                className="w-full px-3 py-2 mt-1 border rounded"
+              />
+            </DialogBody>
+            <DialogFooter>
+              <Button color="blue" onClick={closeModal}>
+                Cancel
+              </Button>
+              <Button color="green" onClick={handleAddEmail}>
+                Add Email
+              </Button>
+            </DialogFooter>
+          </Dialog>
+
           <Button
             variant="text"
             className="flex items-center space-x-2"
@@ -115,52 +179,58 @@ function ViewCashRecepit() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-4">
-        <Card className="p-4 ">
-          <div className="border border-black">
-            <div className="grid grid-cols-1 md:grid-cols-2  ">
-              <div className="border-b border-r border-black px-4 py-2 ">
-                <strong>Receipt No:</strong> {receipts.receipt_no || "N/A"}
+      {receipts && (
+        <div className="flex justify-center mt-4">
+          <Card className="p-4 ">
+            <div className="border border-black">
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="border-b border-r border-black px-4 py-2">
+                  <strong>Receipt No:</strong> {receipts.c_receipt_no || "N/A"}
+                </div>
+                <div className="border-b border-black px-4 py-2">
+                  <strong>Date:</strong>{" "}
+                  {new Date(receipts.c_receipt_date).toLocaleDateString() ||
+                    "N/A"}
+                </div>
+              </div>
+
+              <div className="border-b border-black px-4 py-2">
+                <strong>Received with thanks from:</strong> {donor?.donor_title}
+                {donor?.donor_full_name}
+                {donor?.donor_city}-{donor?.donor_pin_code},{" "}
+                {donor?.donor_state}
+              </div>
+
+              <div className="border-b border-black px-4 py-2">
+                <strong>Occasion of:</strong>{" "}
+                {receipts.c_receipt_occasional || "N/A"}
               </div>
               <div className="border-b border-black px-4 py-2">
-                <strong>Date:</strong>{" "}
-                {new Date(receipts.receipt_date).toLocaleDateString() || "N/A"}
+                <strong>On Account of:</strong>{" "}
+                {/* {recepitsub.c_receipt_sub_donation_type || "N/A"} */}
+                {"name account not came "}
               </div>
-            </div>
 
-            <div className="border-b border-black px-4 py-2">
-              <strong>Received with thanks from:</strong>{" "}
-              {receipts.donor?.donor_title}{" "}
-              {receipts.donor?.donor_full_name || "N/A"}
-              {receipts.donor?.donor_city || "N/A"}-
-              {receipts.donor?.donor_pin_code || "N/A"},
-              {receipts.donor?.donor_state || "N/A"}
-            </div>
-            <div className="border-b border-black px-4 py-2">
-              <strong>Occasion of:</strong>{" "}
-              {receipts.receipt_occasional || "N/A"}
-            </div>
-            <div className="border-b border-black px-4 py-2 ">
-              <strong>On Account of:</strong> {receipts.receipt_reason || "N/A"}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2  ">
-              <div className="border-b border-r border-black px-4 py-2">
-                <strong>Pay Mode:</strong>{" "}
-                {receipts.receipt_tran_pay_mode || "N/A"}
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="border-b border-r border-black px-4 py-2">
+                  <strong>Pay Mode:</strong>{" "}
+                  {receipts.c_receipt_tran_pay_mode || "N/A"}
+                </div>
+                <div className="border-b border-black px-4 py-2">
+                  <strong>PAN:</strong> {company.company_pan_no || "N/A"}
+                </div>
               </div>
-              <div className="border-b border-black px-4 py-2  ">
-                <strong>PAN:</strong> {receipts.donor?.donor_pan_no || "N/A"}
+
+              <div className="border-b border-black px-4 py-2">
+                <strong>Reference:</strong> {receipts.c_receipt_ref_no || "N/A"}
+              </div>
+              <div className="px-4 py-2">
+                <strong>Amount:</strong> {receipts.c_receipt_total_amount}
               </div>
             </div>
-            <div className="border-b border-black px-4 py-2">
-              <strong>Reference:</strong> {receipts.receipt_ref_no || "N/A"}
-            </div>
-            <div className="px-4 py-2">
-              <strong>Amount:</strong> ${receipts.receipt_total_amount || "N/A"}
-            </div>
-          </div>{" "}
-        </Card>
-      </div>
+          </Card>
+        </div>
+      )}
     </Layout>
   );
 }

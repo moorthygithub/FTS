@@ -60,6 +60,7 @@ const DonorList = () => {
         filter: false,
         print: true,
         download: true,
+        sort: false,
       },
     },
     {
@@ -69,13 +70,50 @@ const DonorList = () => {
         print: true,
         download: true,
         display: "included",
+        sort: false,
       },
     },
-    "Name",
-    "Type",
-    "Spouse/Contact",
-    "Mobile",
-    "Email",
+
+    {
+      name: "Name ",
+      label: " Name ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Type ",
+      label: " Type ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Spouse/Contact ",
+      label: " Spouse/Contact ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Mobile ",
+      label: " Mobile ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Email ",
+      label: " Email ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
     {
       name: "id",
       label: "Action",

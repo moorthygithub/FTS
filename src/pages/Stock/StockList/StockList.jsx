@@ -93,6 +93,7 @@ const Stock = () => {
         filter: false,
         print: true,
         download: true,
+        sort: false,
       },
     },
     {
@@ -101,12 +102,41 @@ const Stock = () => {
         filter: false,
         print: true,
         download: true,
+        sort: false,
       },
     },
-    "Open Balance",
-    "Received",
-    "Consumption ",
-    "Close Balance",
+    {
+      name: "Open Balance ",
+      label: " Open Balance ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Received ",
+      label: " Received ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Consumption ",
+      label: " Consumption ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Close Balance ",
+      label: " Close Balance ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
   ];
   const options = {
     selectableRows: "none",

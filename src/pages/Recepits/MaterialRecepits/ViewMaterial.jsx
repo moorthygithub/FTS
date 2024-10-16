@@ -96,7 +96,7 @@ function ViewMaterial() {
             }}
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Material Receipt
+            Material Receipt View
           </h1>
         </div>
         <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4">

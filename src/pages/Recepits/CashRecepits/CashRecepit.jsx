@@ -33,7 +33,7 @@ const RecepitCashRecepit = () => {
         }
         setLoading(true);
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${BaseUrl}/fetch-receipt-list`, {
+        const response = await axios.get(`${BaseUrl}/fetch-c-receipt-list`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,12 +44,12 @@ const RecepitCashRecepit = () => {
         if (Array.isArray(res)) {
           const tempRows = res.map((item, index) => [
             index + 1,
-            item["receipt_no"],
-            item["donor"] ? item["donor"]["donor_full_name"] : "No Donor Info", // Check if donor exists
-            moment(item["receipt_date"]).format("DD-MM-YYYY"),
-            item["receipt_exemption_type"],
-            item["receipt_donation_type"],
-            item["receipt_total_amount"],
+            item["c_receipt_no"],
+            item["donor_full_name"],
+            moment(item["c_receipt_date"]).format("DD-MM-YYYY"),
+            item["c_receipt_exemption_type"],
+            item["c_receipt_total_amount"],
+            item["c_receipt_count"],
             item["id"],
           ]);
           setPendingRListData(tempRows);
@@ -64,17 +64,79 @@ const RecepitCashRecepit = () => {
   }, [isPanelUp, navigate]);
 
   const columns = [
-    { name: "SlNo", label: "SlNo" },
-    { name: "Receipt No", label: "Receipt No" },
-    { name: "Name", label: "Name" },
-    { name: "Date", label: "Date" },
-    { name: "Exemption Type", label: "Exemption Type" },
-    { name: "Donation Type", label: "Donation Type" },
-    { name: "Amount", label: "Amount" },
+    {
+      name: "SlNo",
+      label: "SlNo",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Receipt No",
+      label: "Receipt No",
+      options: {
+        filter: false,
+        print: true,
+        download: true,
+        sort: false,
+      },
+    },
+    {
+      name: "Name",
+      label: "Name",
+      options: {
+        filter: false,
+        print: true,
+        download: true,
+        sort: false,
+      },
+    },
+    {
+      name: "Date",
+      label: "Date",
+      options: {
+        filter: false,
+        print: true,
+        download: true,
+        sort: false,
+      },
+    },
+    {
+      name: "Exemption Type",
+      label: "Exemption Type",
+      options: {
+        filter: false,
+        print: true,
+        download: true,
+        sort: false,
+      },
+    },
+    {
+      name: "Donation Type",
+      label: "Donation Type",
+      options: {
+        filter: false,
+        print: true,
+        download: true,
+        sort: false,
+      },
+    },
+    {
+      name: "Amount",
+      label: "Amount",
+      options: {
+        filter: false,
+        print: true,
+        download: true,
+        sort: false,
+      },
+    },
     {
       name: "id",
       label: "Action",
       options: {
+        sort: false,
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
@@ -115,7 +177,7 @@ const RecepitCashRecepit = () => {
       <RequestFilter />
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Cash Receipts List
+          Cash Receipts List in recepit
         </h3>
       </div>
       <div className="mt-5">

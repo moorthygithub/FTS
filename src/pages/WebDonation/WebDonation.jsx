@@ -113,11 +113,6 @@ const WebDonation = () => {
         sort: false,
       },
     },
-    "",
-    "",
-    "",
-    "",
-    "",
   ];
 
   const options = {

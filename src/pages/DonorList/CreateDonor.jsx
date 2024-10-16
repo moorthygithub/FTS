@@ -5,18 +5,149 @@ import axios from "axios";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
-import { Button, IconButton } from "@mui/material";
+// import { Button, IconButton } from "@mui/material";
 import { BaseUrl } from "../../base/BaseUrl";
 import moment from "moment/moment";
-import { Card, CardBody } from "@material-tailwind/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  IconButton,
+  Input,
+} from "@material-tailwind/react";
 
 // Unit options for dropdown
 const unitOptions = [
   { value: "Kg", label: "Kg" },
   { value: "Ton", label: "Ton" },
 ];
+const exemption = [
+  {
+    value: "80G",
+    label: "80G",
+  },
+  {
+    value: "Non 80G",
+    label: "Non 80G",
+  },
+  {
+    value: "FCRA",
+    label: "FCRA",
+  },
+  {
+    value: "CSR",
+    label: "CSR",
+  },
+];
 
-const CreateDonor = () => {
+const pay_mode = [
+  {
+    value: "Cash",
+    label: "Cash",
+  },
+  {
+    value: "Cheque",
+    label: "Cheque",
+  },
+  {
+    value: "Transfer",
+    label: "Transfer",
+  },
+  {
+    value: "Others",
+    label: "Others",
+  },
+];
+
+const pay_mode_2 = [
+  {
+    value: "Cheque",
+    label: "Cheque",
+  },
+  {
+    value: "Transfer",
+    label: "Transfer",
+  },
+  {
+    value: "Others",
+    label: "Others",
+  },
+];
+
+const family_check = [
+  {
+    value: "Yes",
+    label: "Yes",
+  },
+  {
+    value: "No",
+    label: "No",
+  },
+];
+
+const donation_type = [
+  {
+    value: "Gopalak",
+    label: "Gopalak",
+  },
+  {
+    value: "Wet/Dry-Grass",
+    label: "Wet/Dry-Grass",
+  },
+  {
+    value: "FIne/Rough Bran",
+    label: "FIne/Rough Bran",
+  },
+  {
+    value: "Gou-Daan",
+    label: "Gou-Daan",
+  },
+  {
+    value: "Building Fund",
+    label: "Building Fund",
+  },
+  {
+    value: "Pigeon Feeds",
+    label: "Pigeon Feeds",
+  },
+  {
+    value: "General Fund/Others",
+    label: "General Fund/Others",
+  },
+];
+
+const donation_type_2 = [
+  {
+    value: "Gopalak",
+    label: "Gopalak",
+  },
+  {
+    value: "Wet/Dry-Grass",
+    label: "Wet/Dry-Grass",
+  },
+  {
+    value: "FIne/Rough Bran",
+    label: "FIne/Rough Bran",
+  },
+  {
+    value: "Gou-Daan",
+    label: "Gou-Daan",
+  },
+  {
+    value: "Building Fund",
+    label: "Building Fund",
+  },
+  {
+    value: "Pigeon Feeds",
+    label: "Pigeon Feeds",
+  },
+  {
+    value: "General Fund/Others",
+    label: "General Fund/Others",
+  },
+];
+
+const DonorDonationReceipt = () => {
   const navigate = useNavigate();
   const [vendors, setVendors] = useState([]);
   const [items, setItems] = useState([]);
@@ -24,20 +155,46 @@ const CreateDonor = () => {
   const [userdata, setUserdata] = useState("");
 
   console.log(id);
-  // Get current date
 
-  const today = moment();
-  const todayBackFormatted = today.format("YYYY-MM-DD");
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0");
+  var yyyy = today.getFullYear();
 
-  // Financial year calculation
-  const currentYear = today.toDate().getFullYear();
-  const nextYear = (currentYear + 1).toString().substr(-2);
-  const financialYear = `${currentYear}-${nextYear}`;
+  today = mm + "/" + dd + "/" + yyyy;
+  var todayback = yyyy + "-" + mm + "-" + dd;
+  var d = document.getElementById("datefield");
+  if (d) {
+    document.getElementById("datefield").setAttribute("max", todayback);
+  }
 
+  var todayyear = new Date().getFullYear();
+  var twoDigitYear = todayyear.toString().substr(-2);
+  var preyear = todayyear;
+  var finyear = +twoDigitYear + 1;
+  var finalyear = preyear + "-" + finyear;
+  const [dayClose, setDayClose] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [check, setCheck] = useState(false);
+
+  useEffect(() => {
+    var theLoginToken = localStorage.getItem("token");
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + theLoginToken,
+      },
+    };
+
+    fetch(BaseUrl + "/fetch-m-receipt-date", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setDayClose(data.latestdate.c_receipt_date));
+  }, []);
   const [donor, setDonor] = useState({
     indicomp_fts_id: "",
-    m_receipt_financial_year: financialYear,
-    m_receipt_date: todayBackFormatted,
+    m_receipt_financial_year: "",
+    m_receipt_date: check ? dayClose : dayClose,
     m_receipt_total_amount: "",
     m_receipt_tran_pay_mode: "",
     m_receipt_tran_pay_details: "",
@@ -61,7 +218,21 @@ const CreateDonor = () => {
   const [users, setUsers] = useState([useTemplate]);
   const [fabric_inward_count, setCount] = useState(1);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  //FETCH OCCASION
+  const [occasion, setOccasion] = useState([]);
+  useEffect(() => {
+    var theLoginToken = localStorage.getItem("token");
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + theLoginToken,
+      },
+    };
 
+    fetch(BaseUrl + "/fetch-occasion", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setOccasion(data.occasion));
+  }, []);
   // Fetch vendors and items on mount
   useEffect(() => {
     const fetchVendorData = async () => {
@@ -87,9 +258,9 @@ const CreateDonor = () => {
 
     const dateField = document.getElementById("datefield");
     if (dateField) {
-      dateField.setAttribute("max", todayBackFormatted); // Set max attribute for date input
+      dateField.setAttribute("max", todayback); // Set max attribute for date input
     }
-  }, [todayBackFormatted]);
+  }, [todayback]);
 
   const addItem = () => {
     setUsers([...users, useTemplate]);
@@ -102,27 +273,83 @@ const CreateDonor = () => {
     setUsers(filteredUsers);
     setCount(fabric_inward_count - 1);
   };
-
+  const validateOnlyDigits = (inputtxt) => {
+    var phoneno = /^\d+$/;
+    if (inputtxt.match(phoneno) || inputtxt.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const onInputChange = (e) => {
-    setDonor({
-      ...donor,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name == "m_receipt_total_amount") {
+      if (validateOnlyDigits(e.target.value)) {
+        setDonor({
+          ...donor,
+          [e.target.name]: e.target.value,
+        });
+      }
+    } else {
+      setDonor({
+        ...donor,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
-  const onItemChange = (e, index) => {
-    const updatedUsers = users.map((user, i) =>
-      index === i ? { ...user, [e.target.name]: e.target.value } : user
-    );
-    setUsers(updatedUsers);
+  const validateOnlyNumber = (inputtxt) => {
+    var phoneno = /^\d*\.?\d*$/;
+    if (inputtxt.match(phoneno) || inputtxt.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
   };
+
+  //ONCHNAGE FOR USER
+  const onChange = (e, index) => {
+    if (e.target.name == "m_receipt_sub_quantity") {
+      if (validateOnlyNumber(e.target.value)) {
+        const updatedUsers = users.map((user, i) =>
+          index == i
+            ? Object.assign(user, { [e.target.name]: e.target.value })
+            : user
+        );
+        setUsers(updatedUsers);
+      }
+    } else {
+      const updatedUsers = users.map((user, i) =>
+        index == i
+          ? Object.assign(user, { [e.target.name]: e.target.value })
+          : user
+      );
+      setUsers(updatedUsers);
+    }
+  };
+
+  const pan = userdata.donor_pan_no == "" ? "NA" : userdata.donor_pan_no;
+
+  // const AmountCal = (selectedValue) => {
+  //   const tempUsers = [...users];
+  //   setUsers(tempUsers);
+  //   const result = [];
+  //   for (let i = 0; i < users.length; i++) {
+  //     result.push(users[i].c_receipt_sub_amount);
+  //   }
+  //   const valu = result.reduce((acc, curr) => acc + parseInt(curr), 0);
+  //   const total = +parseInt(valu || 0);
+  //   setDonor((donor) => ({
+  //     ...donor,
+  //     c_receipt_total_amount: total,
+  //   }));
+  // };
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const data = {
-      indicomp_fts_id: donor.indicomp_fts_id,
-      m_receipt_financial_year: financialYear,
-      m_receipt_date: donor.m_receipt_date,
+    let data = {
+      indicomp_fts_id: userdata.donor_fts_id,
+      m_receipt_financial_year: "2024-25",
+      m_receipt_date: check ? dayClose : dayClose,
       m_receipt_total_amount: donor.m_receipt_total_amount,
       m_receipt_tran_pay_mode: donor.m_receipt_tran_pay_mode,
       m_receipt_tran_pay_details: donor.m_receipt_tran_pay_details,
@@ -137,7 +364,21 @@ const CreateDonor = () => {
     };
 
     const isValid = document.getElementById("addIndiv").checkValidity();
+    //FETCH OCCASION
+    const [occasion, setOccasion] = useState([]);
+    useEffect(() => {
+      var theLoginToken = localStorage.getItem("token");
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + theLoginToken,
+        },
+      };
 
+      fetch(BaseUrl + "/fetch-occasion", requestOptions)
+        .then((response) => response.json())
+        .then((data) => setOccasion(data.occasion));
+    }, []);
     if (isValid) {
       setIsButtonDisabled(true);
 
@@ -150,13 +391,14 @@ const CreateDonor = () => {
         .then((res) => {
           if (res.status == 200 && res.data.code == "200") {
             toast.success(res.data.msg || "Donor Created Successfully");
-            navigate("/donor-list");
+            const id = res.data.latestid.id;
+            console.log(id);
+            navigate(`/material-view/${id}`);
           } else {
             toast.error(res.data.message || "Error occurred");
           }
         })
         .catch((err) => {
-          // Improved error logging
           if (err.response) {
             toast.error(
               `Error: ${
@@ -191,9 +433,89 @@ const CreateDonor = () => {
       },
     }).then((res) => {
       setUserdata(res.data.donor);
+      // setUserfFamilydata(res.data.familyMember);
       console.log("datatable", res.data.donor);
     });
   }, []);
+  //DAY CLOSE
+
+  //DAY close
+  const onDayClose = (e) => {
+    e.preventDefault();
+    setCheck(true);
+
+    const receivedDate = new Date(dayClose);
+
+    if (isNaN(receivedDate)) {
+      console.error("Invalid dayClose date:", dayClose);
+      return;
+    }
+
+    receivedDate.setDate(receivedDate.getDate() + 1);
+
+    const year = receivedDate.getFullYear();
+    const month = String(receivedDate.getMonth() + 1).padStart(2, "0"); // Get month from 0-11, add 1 and pad with zero
+    const day = String(receivedDate.getDate()).padStart(2, "0"); // Get day and pad with zero
+
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate, "formattedDate");
+    let data = {
+      c_receipt_date: formattedDate,
+    };
+
+    // Making the API call
+    axios({
+      url: BaseUrl + "/update-m-receipt-date/2",
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        console.log(res.data, "dayclose"); // Log the response data for debugging
+        // Set the new dayClose value
+        setDayClose(res.data.latestdate.c_receipt_date);
+      })
+      .catch((error) => {
+        console.error("Error updating receipt date:", error);
+      });
+  };
+  const isValidDate = (dateString) => {
+    const parsedDate = Date.parse(dateString);
+    return !isNaN(parsedDate);
+  };
+
+  const onDayOpen = (e) => {
+    e.preventDefault();
+    setCheck(true);
+    const receivedDate = new Date(dayClose);
+    receivedDate.setDate(receivedDate.getDate() - 1);
+
+    const year = receivedDate.getFullYear();
+    const month = String(receivedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(receivedDate.getDate()).padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+    let data = {
+      c_receipt_date: formattedDate,
+    };
+    axios({
+      url: BaseUrl + "/update-m-receipt-date-open/2",
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.data.code == 401) {
+        NotificationManager.error(
+          "In that Date there is already Receipt is Created"
+        );
+      } else {
+        setDayClose(res.data.latestdate.c_receipt_date);
+      }
+    });
+  };
   return (
     <Layout>
       <div>
@@ -203,8 +525,35 @@ const CreateDonor = () => {
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Material Receipt
+            Donation Receipt in material
           </h1>
+
+          <div>
+            {localStorage.getItem("user_type_id") == "2" ? (
+              <Button onClick={(e) => onDayOpen(e)}>+ Day Open</Button>
+            ) : (
+              ""
+            )}
+          </div>
+          <div>
+            {dayClose === todayback ? (
+              <Button
+                disabled
+                className="mr-10 mb-10 btn-get-started"
+                color="danger"
+              >
+                + Day Close
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => onDayClose(e)}
+                className="mr-10 mb-10 btn-get-started"
+                color="danger"
+              >
+                + Day Close
+              </Button>
+            )}
+          </div>
         </div>
         <Card className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <CardBody>
@@ -219,17 +568,26 @@ const CreateDonor = () => {
               </div>
               <div className="text-gray-700">
                 <strong>Pan No:</strong>
-                {userdata.donor_pan_no}
+                {pan}
               </div>
               <div className="text-gray-700">
                 <strong>Receipt Date:</strong>{" "}
-                {moment(userdata.donor_joining_date).format("DD-MM-YYYY")}
+                {moment(check ? dayClose : dayClose).format("DD-MM-YYYY")}{" "}
               </div>
               <div className="text-gray-700">
                 <strong>Year:</strong>
-                {financialYear}
+                {finalyear}
               </div>
             </div>
+            {donor.c_receipt_total_amount > 2000 &&
+            donor.c_receipt_exemption_type == "80G" &&
+            pan == "NA" ? (
+              <span className="amounterror">
+                Max amount allowedwithout Pan card is 2000
+              </span>
+            ) : (
+              ""
+            )}
           </CardBody>
         </Card>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
@@ -259,11 +617,13 @@ const CreateDonor = () => {
             <div className="mb-4">
               <Fields
                 required
-                type="textField"
-                label="On Occasion of"
+                select
+                title="On Occasion"
+                type="occasionDropdown"
                 name="m_receipt_occasional"
                 value={donor.m_receipt_occasional}
                 onChange={onInputChange}
+                options={occasion}
               />
             </div>
 
@@ -275,6 +635,17 @@ const CreateDonor = () => {
                 value={donor.m_receipt_remarks}
                 onChange={onInputChange}
                 label="Remarks"
+              />
+            </div>
+
+            <div className="mb-4">
+              <Fields
+                required
+                type="textField"
+                name="m_manual_receipt_no"
+                value={donor.m_manual_receipt_no}
+                onChange={onInputChange}
+                label="Manual Receipt No"
               />
             </div>
 
@@ -291,7 +662,7 @@ const CreateDonor = () => {
                   type="itemdropdown"
                   value={user.purchase_sub_item}
                   name="purchase_sub_item"
-                  onChange={(e) => onItemChange(e, index)}
+                  onChange={(e) => onChange(e, index)}
                   options={items}
                 />
                 <Fields
@@ -300,7 +671,7 @@ const CreateDonor = () => {
                   type="textField"
                   value={user.m_receipt_sub_quantity}
                   name="m_receipt_sub_quantity"
-                  onChange={(e) => onItemChange(e, index)}
+                  onChange={(e) => onChange(e, index)}
                 />
                 <Fields
                   required
@@ -309,7 +680,7 @@ const CreateDonor = () => {
                   type="whatsappDropdown"
                   name="m_receipt_sub_unit"
                   value={user.m_receipt_sub_unit}
-                  onChange={(e) => onItemChange(e, index)}
+                  onChange={(e) => onChange(e, index)}
                   options={unitOptions}
                 />
                 <IconButton color="error" onClick={() => removeUser(index)}>
@@ -354,4 +725,4 @@ const CreateDonor = () => {
   );
 };
 
-export default CreateDonor;
+export default DonorDonationReceipt;

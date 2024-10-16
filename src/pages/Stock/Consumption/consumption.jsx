@@ -58,10 +58,25 @@ const Consumption = () => {
         filter: false,
         print: true,
         download: true,
+        sort: false,
       },
     },
-    "Date",
-    "No of Item",
+    {
+      name: "Date",
+      label: "Date",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },    {
+      name: "No of Item ",
+      label: " No of Item ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+
 
     {
       name: "id",

@@ -61,11 +61,47 @@ const PurchaseList = () => {
         download: true,
       },
     },
-    "Date",
-    "Vendor",
-    "Bill No",
-    "Total Amount",
-    "No of Item",
+    {
+      name: "Date ",
+      label: " Date ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Vendor ",
+      label: " Vendor ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Bill No ",
+      label: " Bill No ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "Total Amount ",
+      label: " Total Amount ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "No of Item ",
+      label: " No of Item ",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+
     {
       name: "id",
       label: "Action",

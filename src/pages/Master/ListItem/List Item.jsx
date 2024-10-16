@@ -62,16 +62,16 @@ const OpenListEnquiry = () => {
       name: "Name",
       label: "Name",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
       name: "Status",
       label: "Status",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {

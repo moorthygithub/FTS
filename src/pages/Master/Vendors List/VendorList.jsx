@@ -66,40 +66,40 @@ const VendorList = () => {
       name: "Name",
       label: "Vendor Name",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
       name: "GST",
       label: "GST Number",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
       name: "Mobile",
       label: "Mobile Number",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
       name: "Email",
       label: "Email Address",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
       name: "Status",
       label: "Status",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {

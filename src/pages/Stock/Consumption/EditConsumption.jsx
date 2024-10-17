@@ -132,8 +132,8 @@ const EditConsumption = () => {
               users.map((user, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
-                >
+                  className="flex flex-wrap lg:flex-nowrap gap-3 mb-4 mt-4"
+                  >
                   <Fields
                     required
                     select

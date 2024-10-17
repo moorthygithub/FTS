@@ -151,56 +151,58 @@ const EditPurchase = () => {
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form id="addIndiv" onSubmit={onSubmit}>
             {/* Purchase Details */}
-            <div className="mb-4">
-              <Input
-                type="date"
-                id="purchase_date"
-                name="purchase_date"
-                label="Date"
-                value={purchase.purchase_date}
-                onChange={onInputChange}
-                disabled
-                className="border rounded p-2 w-full border-gray-400"
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 mb-4 mt-4">
+              <div className="mb-4">
+                <Input
+                  type="date"
+                  id="purchase_date"
+                  name="purchase_date"
+                  label="Date"
+                  value={purchase.purchase_date}
+                  onChange={onInputChange}
+                  disabled
+                  className="border rounded p-2 w-full border-gray-400"
+                />
+              </div>
+              <div className="mb-4">
+                <Fields
+                  required
+                  title="Vendor"
+                  type="venderDropdown"
+                  select
+                  value={purchase.purchase_vendor}
+                  options={vendors}
+                  onChange={onInputChange}
+                  name="purchase_vendor"
+                />
+              </div>
+              <div className="mb-4">
+                <Fields
+                  required
+                  label="Bill No"
+                  type="textField"
+                  value={purchase.purchase_bill_no}
+                  onChange={onInputChange}
+                  name="purchase_bill_no"
+                />
+              </div>
+              <div className="mb-4">
+                <Fields
+                  required
+                  label="Total Bill"
+                  type="textField"
+                  value={purchase.purchase_total_bill}
+                  onChange={onInputChange}
+                  name="purchase_total_bill"
+                />
+              </div>
             </div>
-            <div className="mb-4">
-              <Fields
-                required
-                title="Vendor"
-                type="venderDropdown"
-                select
-                value={purchase.purchase_vendor}
-                options={vendors}
-                onChange={onInputChange}
-                name="purchase_vendor"
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                required
-                label="Bill No"
-                type="textField"
-                value={purchase.purchase_bill_no}
-                onChange={onInputChange}
-                name="purchase_bill_no"
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                required
-                label="Total Bill"
-                type="textField"
-                value={purchase.purchase_total_bill}
-                onChange={onInputChange}
-                name="purchase_total_bill"
-              />
-            </div>
-
+<hr></hr>
             {/* Line Items */}
             {users.map((user, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
+                className="grid grid-cols-1 lg:grid-cols-4 gap-3 mb-4 mt-4"
               >
                 <Fields
                   required

@@ -86,7 +86,7 @@ const OpenListEnquiry = () => {
               <MdEdit
                 onClick={() => navigate(`/edit-enquiry/${id}`)}
                 title="edit item"
-                className="h-5 w-5 cursor-pointer"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
             </div>
           );

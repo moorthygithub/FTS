@@ -68,6 +68,38 @@ function Cash() {
       label: "CSR",
     },
   ];
+  const manual = [
+    {
+      value: "All",
+      label: "All",
+    },
+    {
+      value: "1",
+      label: "Manual",
+    },
+  ];
+  const pay_mode = [
+    {
+      value: "Cash",
+      label: "Cash",
+    },
+    {
+      value: "Cheque",
+      label: "Cheque",
+    },
+    {
+      value: "Credit Card",
+      label: "Credit Card",
+    },
+    {
+      value: "Online",
+      label: "Online",
+    },
+    {
+      value: "Others",
+      label: "Others",
+    },
+  ];
 
   //FROM AND TO DATE
   var today = new Date();
@@ -85,6 +117,8 @@ function Cash() {
     receipt_to_date: todayback,
     receipt_donation_type: "",
     receipt_exemption_type: "",
+    c_manual_receipt_no: "",
+    receipt_tran_pay_mode: "",
   });
 
   const onInputChange = (e) => {
@@ -102,6 +136,8 @@ function Cash() {
       receipt_to_date: receiptsdwn.receipt_to_date,
       receipt_donation_type: receiptsdwn.receipt_donation_type,
       receipt_exemption_type: receiptsdwn.receipt_exemption_type,
+      c_manual_receipt_no: receiptsdwn.c_manual_receipt_no,
+      receipt_tran_pay_mode: receiptsdwn.receipt_tran_pay_mode,
     };
     var v = document.getElementById("dowRecp").checkValidity();
     var v = document.getElementById("dowRecp").reportValidity();
@@ -139,7 +175,7 @@ function Cash() {
       <ToastContainer />
       <div className="mt-4 mb-6">
         <PageTitle
-          title={"Download Cash Receipts"}
+          title={"Download Donation Receipts"}
           // icon={FaArrowCircleLeft}
           backLink="-1"
         />
@@ -153,6 +189,7 @@ function Cash() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             <div className="w-full">
               <Input
+                required
                 type="date"
                 label="From Date"
                 className="required"
@@ -163,6 +200,7 @@ function Cash() {
             </div>
             <div className="w-full">
               <Input
+                required
                 type="date"
                 label="To Date"
                 className="required"
@@ -204,6 +242,41 @@ function Cash() {
                   }));
                 }}
                 name="receipt_exemption_type"
+              />
+            </div>
+
+            <div className="w-full">
+              <Dropdown
+                label="Transaction Type"
+                className="required"
+                options={pay_mode.map((option, index) => ({
+                  value: option.value,
+                  label: option.label,
+                }))}
+                onChange={(value) => {
+                  setReceiptDownload((prev) => ({
+                    ...prev,
+                    receipt_tran_pay_mode: value,
+                  }));
+                }}
+                name="receipt_tran_pay_mode"
+              />
+            </div>
+            <div className="w-full">
+              <Dropdown
+                label="Manual Receipt"
+                className="required"
+                options={manual.map((option, index) => ({
+                  value: option.value,
+                  label: option.label,
+                }))}
+                onChange={(value) => {
+                  setReceiptDownload((prev) => ({
+                    ...prev,
+                    c_manual_receipt_no: value,
+                  }));
+                }}
+                name="c_manual_receipt_no"
               />
             </div>
 

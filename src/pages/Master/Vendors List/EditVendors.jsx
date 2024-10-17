@@ -224,7 +224,7 @@ const EditVendors = () => {
             <button
               onClick={handleBackButton}
               type="button" // Changed type to button to avoid form submission
-              className="bg-green-500 text-white px-4 py-2 rounded-md"
+              className="bg-red-500 text-white px-4 py-2 rounded-md"
             >
               Back
             </button>

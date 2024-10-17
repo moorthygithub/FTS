@@ -110,6 +110,7 @@ function DowloadConsumption() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div className="w-full">
               <Input
+                required
                 type="date"
                 label="From Date"
                 name="receipt_from_date"
@@ -120,6 +121,7 @@ function DowloadConsumption() {
             </div>
             <div className="w-full">
               <Input
+                required
                 type="date"
                 label="To Date"
                 className="required"

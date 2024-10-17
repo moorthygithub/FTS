@@ -20,7 +20,7 @@ const AddPurchase = () => {
   const [vendors, setVendors] = useState([]);
   const [items, setItems] = useState([]);
   const [purchase, setPurchase] = useState({
-    purchase_date: "",
+    purchase_date: new Date().toISOString().split("T")[0],
     purchase_vendor: "",
     purchase_bill_no: "",
     purchase_total_bill: "",
@@ -145,107 +145,124 @@ const AddPurchase = () => {
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form id="addIndiv" onSubmit={onSubmit}>
             {/* Purchase Details */}
-            <div className="mb-4">
-              <Input
-                type="date"
-                id="purchase_date"
-                name="purchase_date"
-                label="date"
-                value={purchase.purchase_date}
-                onChange={onInputChange}
-                required
-                className="border rounded p-2 w-full border-gray-400 "
-                placeholder="Date"
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                required
-                title="Vendor"
-                type="venderDropdown"
-                select
-                value={purchase.purchase_vendor}
-                options={vendors}
-                onChange={onInputChange}
-                name="purchase_vendor"
-              ></Fields>
-            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 mb-4 mt-4">
+              <div className="mb-4">
+                <Input
+                  type="date"
+                  id="purchase_date"
+                  name="purchase_date"
+                  label="date"
+                  value={purchase.purchase_date}
+                  onChange={onInputChange}
+                  required
+                  className="border rounded p-2 w-full border-gray-400 "
+                  placeholder="Date"
+                />
+              </div>
+              <div className="mb-4">
+                <Fields
+                  required
+                  title="Vendor"
+                  type="venderDropdown"
+                  select
+                  value={purchase.purchase_vendor}
+                  options={vendors}
+                  onChange={onInputChange}
+                  name="purchase_vendor"
+                ></Fields>
+              </div>
 
-            <div className="mb-4">
-              <Fields
-                required
-                type="textField"
-                label="Bill No"
-                value={purchase.purchase_bill_no}
-                onChange={onInputChange}
-                name="purchase_bill_no"
-              />
-            </div>
+              <div className="mb-4">
+                <Fields
+                  required
+                  type="textField"
+                  label="Bill No"
+                  value={purchase.purchase_bill_no}
+                  onChange={onInputChange}
+                  name="purchase_bill_no"
+                />
+              </div>
 
-            <div className="mb-4">
-              <Fields
-                required
-                label="Total Bill"
-                type="textField"
-                value={purchase.purchase_total_bill}
-                onChange={onInputChange}
-                name="purchase_total_bill"
-              />
+              <div className="mb-4">
+                <Fields
+                  required
+                  label="Total Bill"
+                  type="textField"
+                  value={purchase.purchase_total_bill}
+                  onChange={onInputChange}
+                  name="purchase_total_bill"
+                />
+              </div>
             </div>
+            <hr></hr>
 
             {/* Line Items */}
             {users.map((user, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
+                className="flex flex-wrap lg:flex-nowrap gap-3 mb-4 mt-4"
               >
-                <Fields
-                  required
-                  select
-                  title="Item"
-                  type="itemdropdown"
-                  value={user.purchase_sub_item}
-                  name="purchase_sub_item"
-                  onChange={(e) => onItemChange(e, index)}
-                  options={items}
-                ></Fields>
-                <Fields
-                  required
-                  label="Quantity"
-                  type="textField"
-                  value={user.purchase_sub_qnty}
-                  name="purchase_sub_qnty"
-                  onChange={(e) => onItemChange(e, index)}
-                />
-                <Fields
-                  required
-                  select
-                  title="Unit"
-                  type="whatsappDropdown"
-                  value={user.purchase_sub_unit}
-                  name="purchase_sub_unit"
-                  onChange={(e) => onItemChange(e, index)}
-                  options={unitOptions}
-                ></Fields>
-                <Fields
-                  required
-                  label="Amount"
-                  type="textField"
-                  value={user.purchase_sub_amount}
-                  name="purchase_sub_amount"
-                  onChange={(e) => onItemChange(e, index)}
-                />
-                <IconButton color="error" onClick={() => removeUser(index)}>
-                  <MdDelete />
-                </IconButton>
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    select
+                    title="Item"
+                    type="itemdropdown"
+                    value={user.purchase_sub_item}
+                    name="purchase_sub_item"
+                    onChange={(e) => onItemChange(e, index)}
+                    options={items}
+                  />
+                </div>
+
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    label="Quantity"
+                    type="textField"
+                    value={user.purchase_sub_qnty}
+                    name="purchase_sub_qnty"
+                    onChange={(e) => onItemChange(e, index)}
+                  />
+                </div>
+
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    select
+                    title="Unit"
+                    type="whatsappDropdown"
+                    value={user.purchase_sub_unit}
+                    name="purchase_sub_unit"
+                    onChange={(e) => onItemChange(e, index)}
+                    options={unitOptions}
+                  />
+                </div>
+
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    label="Amount"
+                    type="textField"
+                    value={user.purchase_sub_amount}
+                    name="purchase_sub_amount"
+                    onChange={(e) => onItemChange(e, index)}
+                  />
+                </div>
+                <div className=" md:w-full lg:w-20 flex justify-center mb-4">
+                  <IconButton color="error" onClick={() => removeUser(index)}>
+                    <MdDelete />
+                  </IconButton>
+                </div>
               </div>
             ))}
+
             <div className="display-flex justify-start">
               <Button
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 onClick={addItem}
-                className="mt-4"
+                className="mt-4 bg-blue-400"
               >
                 Add More
               </Button>

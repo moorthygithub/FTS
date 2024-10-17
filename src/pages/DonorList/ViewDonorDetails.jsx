@@ -33,7 +33,7 @@ const ViewDonorDetails = () => {
         });
 
         setDonor(res.data.donor);
-        setDonorFam(res.data.family_details);
+        setDonorFam(res.data.family_details || []);
         setCompany(res.data.company_details);
         setFamGroup(res.data.related_group);
 
@@ -55,15 +55,25 @@ const ViewDonorDetails = () => {
   return (
     <Layout>
       <div>
-        <div className="flex mb-4 mt-6">
-          <MdKeyboardBackspace
-            onClick={handleBackButton}
-            className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
-          />
-          <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Donor Details
-          </h1>
+        <div className="flex justify-between mb-4 mt-6 items-center">
+          <div className="flex items-center">
+            <MdKeyboardBackspace
+              onClick={handleBackButton}
+              className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+            />
+            <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
+              Donor Details
+            </h1>
+          </div>
+
+          <div className="text-right text-gray-700">
+            <strong>Family Group of: </strong>
+            {famgroup.length > 0 && famgroup[0].donor_full_name
+              ? famgroup[0].donor_full_name
+              : ""}
+          </div>
         </div>
+
         {loader ? (
           <div className="flex justify-center items-center h-64">
             <Spinner className="h-12 w-12" />
@@ -88,7 +98,10 @@ const ViewDonorDetails = () => {
                 <strong>Pds Id :</strong>
                 {donor.donor_fts_id}
               </div>{" "}
-              <Button onClick={() => navigate(`/recepitdonor-list/${id}`)}>
+              <Button
+                onClick={() => navigate(`/recepitdonor-list/${id}`)}
+                className="bg-red-400"
+              >
                 Receipts Details
               </Button>
             </div>
@@ -140,11 +153,23 @@ const ViewDonorDetails = () => {
                           <strong>Gender:</strong>
                           {donor.donor_gender || ""}{" "}
                         </div>
-                        <div className="text-gray-700">
+                        {/* <div className="text-gray-700">
                           <strong>Annual Day:</strong>
                           {moment(donor.donor_dob_annualday).format(
                             "DD-MM-YYYY"
                           ) || ""}
+                        </div> */}
+                        <div className="form-group">
+                          <strong>Annual Day:</strong>
+                          {donor.donor_dob_annualday ? (
+                            <>
+                              {moment(donor.donor_dob_annualday).format(
+                                "DD-MM-YYYY"
+                              )}
+                            </>
+                          ) : (
+                            <>{donor.donor_dob_annualday} </>
+                          )}
                         </div>
                       </>
                     )}
@@ -216,7 +241,7 @@ const ViewDonorDetails = () => {
                   Family Details
                 </div>
                 <button
-                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                  class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                   onClick={() => {
                     navigate(`/add-donor/${id}`);
                   }}
@@ -305,7 +330,7 @@ const ViewDonorDetails = () => {
         </Card>
       </div>
 
-      {/* //FAMILY  */}
+      {/* //COMPANY  */}
 
       <div className="flex justify-center mt-4">
         <Card className="p-4 w-full overflow-x-auto">
@@ -320,7 +345,7 @@ const ViewDonorDetails = () => {
                   Company Details
                 </div>
                 <button
-                  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                  class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded inline-flex items-center"
                   onClick={() => {
                     navigate(`/add-donor/${id}`);
                   }}

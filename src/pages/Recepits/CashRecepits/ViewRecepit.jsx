@@ -14,6 +14,7 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { FaWhatsapp } from "react-icons/fa";
 
 function ViewCashRecepit() {
   const [receipts, setReceipts] = useState(null);
@@ -141,7 +142,7 @@ function ViewCashRecepit() {
             onClick={() => navigate("/cashrecepit")}
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Donation Receipt in Recepit
+            Cash Receipt
           </h1>
         </div>
         <div
@@ -158,7 +159,8 @@ function ViewCashRecepit() {
 
       {receipts && (
         <div>
-          <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4">
+          <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4 p-6">
+            {/* Buttons for Download and WhatsApp */}
             <Button
               variant="text"
               className="flex items-center space-x-2"
@@ -181,31 +183,35 @@ function ViewCashRecepit() {
                   localStorage.getItem("user_type_id") == 4 ? "none" : "",
               }}
             >
-              <LuDownload className="text-lg" />
-              <span>Whatsapp</span>
+              <FaWhatsapp className="text-lg text-green-400" />
+              <span className="text-green-400">Whatsapp</span>
             </Button>
 
+            {/* Email Handling Section */}
             {receipts?.donor?.donor_email ? (
-              <a onClick={sendEmail}>
-                <i className="mr-10 ti-email"></i> Email
-                <br />
-                {receipts?.receipt_email_count == null ? (
-                  <small style={{ fontSize: "10px" }}>Email Sent 0 Times</small>
-                ) : (
-                  <small style={{ fontSize: "10px" }}>
-                    Email Sent {receipts.receipt_email_count} Times
-                  </small>
-                )}
-              </a>
-            ) : (
               <>
-                <p style={{ color: "red" }}>
-                  <i className="mr-10 ti-email"></i> Email not found
+                <div className="flex flex-col items-start">
+                  <a onClick={sendEmail} className="flex items-center">
+                    <i className="mr-2 ti-email"></i>
+                    <span>Email</span>
+                  </a>
+                  <small style={{ fontSize: "10px" }}>
+                    {receipts?.receipt_email_count == null
+                      ? "Email Sent 0 Times"
+                      : `Email Sent ${receipts.receipt_email_count} Times`}
+                  </small>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-start text-red-500">
+                <p className="flex items-center">
+                  <i className="mr-2 ti-email"></i>
+                  <span>Email not found</span>
                 </p>
-                <Button onClick={openModal} className="mr-10 mb-10 ">
+                <Button onClick={openModal} className="mt-2 bg-green-500">
                   Add Email
                 </Button>
-              </>
+              </div>
             )}
 
             <Dialog open={showModal} handler={closeModal}>
@@ -238,22 +244,23 @@ function ViewCashRecepit() {
               <span>Print Receipt</span>
             </Button>
           </div>
-          <div className="flex justify-center">
+
+          <div className="flex justify-center ">
             <Card className="p-4  w-[90%] ">
               <div className="border border-black">
-                <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b border-r border-black px-4 py-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 h-20">
+                  <div className="border-b border-r border-black px-4 py-2 flex items-center">
                     <strong>Receipt No:</strong>{" "}
                     {receipts.c_receipt_no || "N/A"}
                   </div>
-                  <div className="border-b border-black px-4 py-2">
+                  <div className="border-b border-black px-4 py-2  flex items-center">
                     <strong>Date:</strong>{" "}
                     {new Date(receipts.c_receipt_date).toLocaleDateString() ||
                       "N/A"}
                   </div>
                 </div>
 
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>Received with thanks from:</strong>{" "}
                   {donor?.donor_title}
                   {donor?.donor_full_name}
@@ -261,38 +268,38 @@ function ViewCashRecepit() {
                   {donor?.donor_state}
                 </div>
 
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>Occasion of:</strong> {receipts.c_receipt_occasional}
                 </div>
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>On Account of:</strong>{" "}
                   {recepitsub[0].c_receipt_sub_donation_type}
                   {recepitsub[0].c_receipt_sub_amount}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b border-r border-black px-4 py-2">
+                  <div className="border-b border-r border-black px-4 py-2 h-20 flex items-center">
                     <strong>Pay Mode:</strong>{" "}
                     {receipts.c_receipt_tran_pay_mode || "N/A"}
                   </div>
-                  <div className="border-b border-black px-4 py-2">
+                  <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                     <strong>PAN:</strong> {company.company_pan_no || "N/A"}
                   </div>
                 </div>
 
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>Reference:</strong>{" "}
                   {receipts.c_receipt_ref_no || "N/A"}
                 </div>
-                <div className="px-4 py-2 border-b  border-black">
+                <div className="px-4 py-2 border-b  border-black h-20 flex items-center">
                   <strong>Amount:</strong> {receipts.c_receipt_total_amount}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b  border-black px-4 py-2">
+                  <div className="border-b  border-black px-4 py-2 h-20 flex items-center">
                     <strong>Donor Sign:</strong> ({donor?.donor_title}{" "}
                     {donor?.donor_full_name})
                   </div>
-                  <div className="border-b border-black px-4 py-2">
+                  <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                     <strong>Receiver Sign:</strong> ({company.company_authsign})
                   </div>
                 </div>

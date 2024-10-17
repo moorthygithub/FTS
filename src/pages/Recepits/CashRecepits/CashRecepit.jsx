@@ -141,18 +141,21 @@ const RecepitCashRecepit = () => {
           return (
             <div className="flex items-center space-x-2">
               <Link
-                to={`/recepit-add/${id}`}
-                style={{ display: userType === "2" ? "" : "none" }}
-              >
-                <MdEdit title="Edit" className="h-5 w-5 cursor-pointer" />
-              </Link>
-              <Link
                 to={`/recepit-view/${id}`}
                 style={{ display: userType === "4" ? "none" : "" }}
               >
                 <MdOutlineRemoveRedEye
                   title="View"
-                  className="h-5 w-5 cursor-pointer"
+                  className="h-5 w-5 cursor-pointer text-blue-500"
+                />
+              </Link>
+              <Link
+                to={`/recepit-add/${id}`}
+                style={{ display: userType === "2" ? "" : "none" }}
+              >
+                <MdEdit
+                  title="Edit"
+                  className="h-5 w-5 cursor-pointer text-blue-500"
                 />
               </Link>
             </div>

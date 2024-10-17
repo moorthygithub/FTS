@@ -132,6 +132,9 @@ const AppProvider = ({ children }) => {
           "/donation-summary",
           "/donation-summary-view",
           "/duplicate",
+          "/occasion",
+          "/add-occasion",
+          "/edit-occasion",
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)

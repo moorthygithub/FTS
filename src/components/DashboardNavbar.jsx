@@ -113,11 +113,11 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
                   Profile
                 </Link>
               </MenuItem>
-              <MenuItem>
+              {/* <MenuItem>
                 <Link to="/change-password" className="text-black">
                   Change Password
                 </Link>
-              </MenuItem>
+              </MenuItem> */}
             </MenuList>
           </Menu>
           {/* Settings icon */}

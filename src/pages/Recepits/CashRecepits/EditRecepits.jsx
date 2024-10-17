@@ -369,76 +369,7 @@ const EditRecepit = () => {
   }, [id]);
   //DAY CLOSE
   console.log(users, "sers");
-  //DAY close
-  // const onDayClose = (e) => {
-  //   e.preventDefault();
-  //   setCheck(true);
 
-  //   const receivedDate = new Date(dayClose);
-
-  //   if (isNaN(receivedDate)) {
-  //     console.error("Invalid dayClose date:", dayClose);
-  //     return;
-  //   }
-
-  //   receivedDate.setDate(receivedDate.getDate() + 1);
-
-  //   const year = receivedDate.getFullYear();
-  //   const month = String(receivedDate.getMonth() + 1).padStart(2, "0"); // Get month from 0-11, add 1 and pad with zero
-  //   const day = String(receivedDate.getDate()).padStart(2, "0"); // Get day and pad with zero
-
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   console.log(formattedDate, "formattedDate");
-  //   let data = {
-  //     c_receipt_date: formattedDate,
-  //   };
-
-  //   // Making the API call
-  //   axios({
-  //     url: BaseUrl + "/update-c-receipt-date/1",
-  //     method: "PUT",
-  //     data,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       console.log(res.data, "dayclose");
-  //       setDayClose(res.data.latestdate.c_receipt_date);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error updating receipt date:", error);
-  //     });
-  // };
-
-  // const onDayOpen = (e) => {
-  //   e.preventDefault();
-  //   setCheck(true);
-  //   const receivedDate = new Date(dayClose);
-  //   receivedDate.setDate(receivedDate.getDate() - 1);
-
-  //   const year = receivedDate.getFullYear();
-  //   const month = String(receivedDate.getMonth() + 1).padStart(2, "0");
-  //   const day = String(receivedDate.getDate()).padStart(2, "0");
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   let data = {
-  //     c_receipt_date: formattedDate,
-  //   };
-  //   axios({
-  //     url: BaseUrl + "/update-c-receipt-date-open/1",
-  //     method: "PUT",
-  //     data,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   }).then((res) => {
-  //     if (res.data.code == 401) {
-  //       toast.error("In that Date there is already Receipt is Created");
-  //     } else {
-  //       setDayClose(res.data.latestdate.c_receipt_date);
-  //     }
-  //   });
-  // };
   return (
     <Layout>
       <div>
@@ -448,10 +379,10 @@ const EditRecepit = () => {
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Donation Receipt in receipt
+            Cash Receipt
           </h1>
         </div>
-        <Card className="p-6 mt-5 bg-white shadow-md rounded-lg">
+        <Card className=" mt-5 bg-white shadow-md rounded-lg">
           <CardBody>
             <div className="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-4 mb-4">
               <div className="text-gray-700">
@@ -632,14 +563,14 @@ const EditRecepit = () => {
                 variant="contained"
                 color="primary"
                 disabled={isButtonDisabled}
-                className="mt-4"
+                className="mt-4 bg-blue-400"
               >
                 Update
               </Button>
               <Button
                 variant="contained"
                 color="secondary"
-                className="mt-4"
+                className="mt-4 bg-red-400"
                 onClick={handleBackButton}
               >
                 Back

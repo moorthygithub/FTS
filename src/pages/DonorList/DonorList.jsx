@@ -127,30 +127,30 @@ const DonorList = () => {
             <div className="flex items-center space-x-2">
               <IoEye
                 onClick={() => navigate(`/viewdonor-list/${id}`)}
-                title="edit courses list"
-                className="h-5 w-5 cursor-pointer"
+                title="View "
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
 
               <MdEdit
                 onClick={() => navigate(`/edit-donor/${id}`)}
-                title="edit courses list"
-                className="h-5 w-5 cursor-pointer"
+                title="Edit"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
 
               <BiAbacus
                 onClick={() => navigate(`/createrecepit-donor/${id}`)}
-                title="edit courses list"
-                className="h-5 w-5 cursor-pointer"
+                title="Cash Recepit"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
               <MdShoppingBasket
                 onClick={() => navigate(`/create-donor/${id}`)}
-                title="edit courses list"
-                className="h-5 w-5 cursor-pointer"
+                title="Material Recepit"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
               <FaUsers
                 onClick={() => navigate(`/create-family/${id}`)}
-                title="edit courses list"
-                className="h-5 w-5 cursor-pointer"
+                title="Family Members"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
             </div>
           );
@@ -177,7 +177,7 @@ const DonorList = () => {
   };
   return (
     <Layout>
-      <CommonListing/>
+      <CommonListing />
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Donor List

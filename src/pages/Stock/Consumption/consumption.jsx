@@ -68,7 +68,8 @@ const Consumption = () => {
         filter: false,
         sort: false,
       },
-    },    {
+    },
+    {
       name: "No of Item ",
       label: " No of Item ",
       options: {
@@ -76,7 +77,6 @@ const Consumption = () => {
         sort: false,
       },
     },
-
 
     {
       name: "id",
@@ -94,7 +94,7 @@ const Consumption = () => {
                 }}
                 onClick={() => navigate(`/edit-consumption/${id}`)}
                 title="edit country list"
-                className="h-5 w-5 cursor-pointer"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
             </div>
           );

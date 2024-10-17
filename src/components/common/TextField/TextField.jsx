@@ -25,6 +25,7 @@ const Fields = (props) => {
       ? donation_type_2
       : donation_type;
   };
+
   return (
     <>
       {props.type === "textField" && (
@@ -32,7 +33,8 @@ const Fields = (props) => {
           <Input
             label={props.title}
             required={props.required === true || props.required === "true"}
-            multiline={props.multiline === true || props.multiline === "true"}
+            // multiline={props.multiline === true || props.multiline === "true"}
+            multiline={props.multiline ? true : undefined}
             name={props.name}
             type={props.types}
             autoComplete={props.autoComplete}
@@ -291,6 +293,34 @@ const Fields = (props) => {
           </FormControl>
         </>
       )}
+      {props.type === "TitleDropDown" && (
+        <>
+          <FormControl fullWidth>
+            <InputLabel id={`${props.name}-select-label`}>
+              <span className="text-sm relative bottom-[6px]">
+                {props.title} <span className="text-red-700">*</span>
+              </span>
+            </InputLabel>
+            <Select
+              sx={{ height: "40px", borderRadius: "5px" }}
+              labelId={`${props.name}-select-label`}
+              id={`${props.name}-select`}
+              name={props.name}
+              value={props.value}
+              label={props.title}
+              onChange={props.onChange}
+              {...props}
+              required={props.required === true || props.required === "true"}
+            >
+              {props.options.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </>
+      )}
 
       {props.type === "TransactionType" && (
         <>
@@ -361,7 +391,7 @@ const Fields = (props) => {
               labelId="service-select-label"
               id="service-select"
               name={props.name}
-              value={props.value}
+              value={props.value || ""}
               label={props.title}
               onChange={props.onchange}
               {...props}

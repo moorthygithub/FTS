@@ -23,9 +23,9 @@ const MaterialReceipts = () => {
         navigate("/maintenance");
         return;
       }
-      
+
       setLoading(true);
-      
+
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(`${BaseUrl}/fetch-m-receipt-list`, {
@@ -48,7 +48,7 @@ const MaterialReceipts = () => {
       } catch (error) {
         console.error("Error fetching approved list request data", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -114,15 +114,6 @@ const MaterialReceipts = () => {
           return (
             <div className="flex items-center space-x-2">
               <Link
-                to={`/material-add/${id}`}
-                style={{
-                  display:
-                    localStorage.getItem("user_type_id") == 4 ? "none" : "",
-                }}
-              >
-                <MdEdit title="Edit" className="h-5 w-5 cursor-pointer" />
-              </Link>
-              <Link
                 to={`/material-view/${id}`}
                 style={{
                   display:
@@ -131,7 +122,19 @@ const MaterialReceipts = () => {
               >
                 <MdOutlineRemoveRedEye
                   title="View"
-                  className="h-5 w-5 cursor-pointer"
+                  className="h-5 w-5 cursor-pointer text-blue-500"
+                />
+              </Link>
+              <Link
+                to={`/material-add/${id}`}
+                style={{
+                  display:
+                    localStorage.getItem("user_type_id") == 4 ? "none" : "",
+                }}
+              >
+                <MdEdit
+                  title="Edit"
+                  className="h-5 w-5 cursor-pointer text-blue-500"
                 />
               </Link>
             </div>

@@ -14,6 +14,7 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { FaWhatsapp } from "react-icons/fa";
 
 function ViewMaterialRecepit() {
   const [receipts, setReceipts] = useState(null);
@@ -139,43 +140,44 @@ function ViewMaterialRecepit() {
                   localStorage.getItem("user_type_id") == 4 ? "none" : "",
               }}
             >
-              <LuDownload className="text-lg" />
-              <span>Whatsapp</span>
+              <FaWhatsapp className="text-lg text-green-400" />
+              <span className="text-green-400">Whatsapp</span>
             </Button>
 
             {/* Email Section */}
-            {donor !== null &&
-              typeof donor !== "undefined" &&
-              donor.donor_email !== null && (
-                <a>
-                  <Button
-                    variant="text"
-                    className="flex items-center p-0 m-0"
-                    onClick={sendEmail}
-                  >
-                    <MdEmail className="text-lg" />
-                    <span>Email</span>
-                  </Button>
-                  <br />
-                  {receipts?.receipt_email_count == null ? (
-                    <small style={{ fontSize: "10px" }}>
-                      Email Sent 0 Times
-                    </small>
-                  ) : (
-                    <small style={{ fontSize: "10px" }}>
-                      Email Sent {receipts.receipt_email_count} Times
-                    </small>
-                  )}
-                </a>
-              )}
+            <div className=" p-4">
+              {donor !== null &&
+                typeof donor !== "undefined" &&
+                donor.donor_email !== null && (
+                  <a>
+                    <Button
+                      variant="text"
+                      className="flex items-center bg-green-400"
+                      onClick={sendEmail}
+                    >
+                      <MdEmail className="text-lg" />
+                      <span>Email</span>
+                    </Button>
+                    {receipts?.receipt_email_count == null ? (
+                      <small style={{ fontSize: "10px" }}>
+                        Email Sent 0 Times
+                      </small>
+                    ) : (
+                      <small style={{ fontSize: "10px" }}>
+                        Email Sent {receipts.receipt_email_count} Times
+                      </small>
+                    )}
+                  </a>
+                )}
 
-            {receipts !== null &&
-              typeof donor !== "undefined" &&
-              donor.donor_email == null && (
-                <p style={{ color: "red" }}>
-                  <i className="mr-10 ti-email"></i> Email not found
-                </p>
-              )}
+              {receipts !== null &&
+                typeof donor !== "undefined" &&
+                donor.donor_email == null && (
+                  <p style={{ color: "red" }}>
+                    <i className="mr-10 ti-email"></i> Email not found
+                  </p>
+                )}
+            </div>
 
             <Button
               variant="text"
@@ -190,32 +192,32 @@ function ViewMaterialRecepit() {
             <Card className="p-4  w-[90%] ">
               <div className="border border-black">
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b border-r border-black px-4 py-2">
+                  <div className="border-b border-r border-black px-4 py-2 h-20 flex items-center">
                     <strong>Receipt No:</strong>{" "}
                     {receipts.m_receipt_no || "N/A"}
                   </div>
-                  <div className="border-b border-black px-4 py-2">
+                  <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                     <strong>Date:</strong>{" "}
                     {new Date(receipts.m_receipt_date).toLocaleDateString() ||
                       "N/A"}
                   </div>
                 </div>
 
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>Received with thanks from:</strong>{" "}
                   {donor?.donor_title} {donor?.donor_full_name}
                   {donor?.donor_city}-{donor?.donor_pin_code},{" "}
                   {donor?.donor_state}
                 </div>
 
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>Occasion of:</strong> {receipts.m_receipt_occasional}
                 </div>
 
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>Vehicle :</strong> {receipts.m_receipt_vehicle_no}
                 </div>
-                <div className="border-b border-black px-4 py-2">
+                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                   <strong>In Account of:</strong>{" "}
                   {recepitsub[0].purchase_sub_item}-
                   {recepitsub[0].purchase_sub_qnty}{" "}
@@ -223,11 +225,11 @@ function ViewMaterialRecepit() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b  border-black px-4 py-2">
+                  <div className="border-b  border-black px-4 py-2 h-20 flex items-center">
                     <strong>Donor Sign:</strong> ({donor?.donor_title}{" "}
                     {donor?.donor_full_name})
                   </div>
-                  <div className="border-b border-black px-4 py-2">
+                  <div className="border-b border-black px-4 py-2 h-20 flex items-center">
                     <strong>Receiver Sign:</strong> ({company.company_authsign})
                   </div>
                 </div>

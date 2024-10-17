@@ -58,8 +58,8 @@ import DowloadConsumption from "./pages/Dowloads/Consumption/DowloadConsumption"
 import DownloadWebDonation from "./pages/Dowloads/WebDonation/DownloadWebDonation";
 import AddDonorList from "./pages/DonorList/AddDonorList";
 import EditDonorList from "./pages/DonorList/EditDonorList";
-import CreateDonor from "./pages/DonorList/CreateDonor";
-import CreateDonorRecepit from "./pages/DonorList/CreateDonorRecepit";
+import CreateDonor from "./pages/DonorList/CreateDonorMaterialRecepit";
+import CreateDonorRecepit from "./pages/DonorList/CreateDonorCashRecepit";
 import ViewDonorDetails from "./pages/DonorList/ViewDonorDetails";
 import DonorReceiptsDetails from "./pages/DonorList/DonorReceiptsDetails";
 import FamilyList from "./pages/DonorList/FamilyMembers/FamilyList";
@@ -67,6 +67,9 @@ import AddFamilyMembers from "./pages/DonorList/FamilyMembers/AddFamilyMembers";
 import DonationSummary from "./pages/Reports/DonationSummary/DonationSummary";
 import DonationSummaryView from "./pages/Reports/DonationSummary/DonationSummaryView";
 import DuplicateDonorList from "./pages/DonorList/Duplicate/DuplicateDonorList";
+import ListOccasion from "./pages/Master/Occasion/Listoccasion";
+import AddOccasion from "./pages/Master/Occasion/Addoccasion";
+import EditOccasion from "./pages/Master/Occasion/Editoccasion";
 const App = () => {
   return (
     <>
@@ -94,50 +97,18 @@ const App = () => {
           path="/recepitdonor-list/:id"
           element={<DonorReceiptsDetails />}
         />
-        {/* enquiry  */}
+        {/* MASTER  */}
         <Route path="/master-list" element={<OpenListEnquiry />} />
         <Route path="/add-enquiry" element={<AddEnquiry />} />
         <Route path="/edit-enquiry/:id" element={<EditList />} />
         <Route path="/edit-personal/:id" element={<EditPersonalDetails />} />
         <Route path="/view-enquiry/:id" element={<ViewEnquiry />} />
+        <Route path="/occasion" element={<ListOccasion />} />
+        <Route path="/add-occasion" element={<AddOccasion />} />
+        <Route path="/edit-occasion/:id" element={<EditOccasion />} />
         {/* //chnage */}
         <Route path="/closeList-enquiry" element={<CloseListEnquiry />} />
         <Route path="/addVendor" element={<AddVendors />} />
-        {/* student  */}
-        {/* <Route path="/student" element={<StudentList />} /> */}
-        {/* <Route path="/view-student/:id" element={<ViewStudent />} /> */}
-        {/* <Route path="/add-student-course/:id" element={<StudentAddCourse />} /> */}
-        {/* <Route
-          path="/add-student-delivery/:id"
-          element={<StudentAddDelivery />}
-        />
-        <Route path="/add-exam/:id" element={<AddExam />} />
-        <Route path="/edit-exam/:id" element={<EditExam />} />
-        <Route path="/view-exam/:id" element={<ViewExam />} />
-        <Route path="/exam-pending-list" element={<ExamPendingList />} />
-        <Route path="/edit-result/:id" element={<EditResult />} />
-        <Route path="/view-result/:id" element={<ViewResult />} />
-        <Route path="/edit-student/:id" element={<EditStudent />} /> */}
-        {/* <Route
-          path="/view-student-enquiry/:id"
-          element={<ViewStudentEquiry />}
-        />
-        <Route
-          path="/edit-student-course/:id"
-          element={<EditStudentCourse />}
-        />
-        <Route path="/view-course/:id" element={<ViewCourse />} />
-        <Route */}
-        {/* //   path="/edit-student-delivery/:id"
-        //   element={<EditStudentDelivery />}
-        // /> */}
-        {/* // <Route path="/view-delivery/:id" element={<ViewDelivery />} /> */}
-        {/* // <Route path="/pending-onboard" element={<PendingOnboarding />} />
-        // <Route path="/pending-offboard" element={<PendingOffboarding />} />
-        // <Route path="/pending-interview" element={<PendingInterview />} />
-        // <Route path="/course-due" element={<StudentCourseDue />} />
-        // <Route path="/over-due-task-list" element={<OverDueTaskList />} /> */}
-        {/* delivery  */}
         <Route path="/purchase" element={<PurchaseList />} />
         <Route path="/add-delivery" element={<AddDelivery />} />
         <Route path="/edit-delivery/:id" element={<EditDelivery />} />

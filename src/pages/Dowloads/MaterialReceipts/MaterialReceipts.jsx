@@ -21,6 +21,16 @@ function MaterialReceipts() {
     { value: "Ton", label: "Ton" },
   ];
 
+  const manual = [
+    {
+      value: "All",
+      label: "All",
+    },
+    {
+      value: "1",
+      label: "Manual",
+    },
+  ];
   // Get the first and last date
   const todayback = Moment().format("YYYY-MM-DD");
   const firstdate = Moment().startOf("month").format("YYYY-MM-DD");
@@ -30,6 +40,7 @@ function MaterialReceipts() {
     receipt_to_date: todayback,
     purchase_sub_item: "",
     purchase_sub_unit: "",
+    m_manual_receipt_no: "",
   });
 
   // Input change handler for native inputs
@@ -48,6 +59,7 @@ function MaterialReceipts() {
       receipt_to_date: receiptsdwn.receipt_to_date,
       purchase_sub_item: receiptsdwn.purchase_sub_item,
       purchase_sub_unit: receiptsdwn.purchase_sub_unit,
+      m_manual_receipt_no: receiptsdwn.m_manual_receipt_no,
     };
 
     if (document.getElementById("dowRecp").reportValidity()) {
@@ -137,9 +149,7 @@ function MaterialReceipts() {
   return (
     <Layout>
       <DownloadCommon />
-      <ToastContainer
-
-      />
+      <ToastContainer />
       <div className="mt-4 mb-6">
         <PageTitle title={"Download Material Receipts"} backLink="-1" />
       </div>
@@ -152,6 +162,7 @@ function MaterialReceipts() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div className="w-full">
               <Input
+                required
                 type="date"
                 label="From Date"
                 name="receipt_from_date"
@@ -162,6 +173,7 @@ function MaterialReceipts() {
             </div>
             <div className="w-full">
               <Input
+                required
                 type="date"
                 label="To Date"
                 className="required"
@@ -191,6 +203,20 @@ function MaterialReceipts() {
                 name="purchase_sub_unit"
                 value={receiptsdwn.purchase_sub_unit}
                 options={unit.map((option) => ({
+                  value: option.value,
+                  label: option.label,
+                }))}
+                onChange={(value) => onInputChange("purchase_sub_unit", value)}
+              />
+            </div>
+
+            <div className="w-full">
+              <Dropdown
+                label="Manual Receip"
+                className="required"
+                name="m_manual_receipt_no"
+                value={receiptsdwn.m_manual_receipt_no}
+                options={manual.map((option) => ({
                   value: option.value,
                   label: option.label,
                 }))}

@@ -260,7 +260,7 @@ const AddDonorList = () => {
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <h1 className="p-4 mb-2">Personal Details</h1>
           <form autoComplete="off">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
               <div>
                 <Fields
                   select
@@ -423,17 +423,17 @@ const AddDonorList = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
+            </div>
 
-              <div>
-                <Fields
-                  title="Remarks"
-                  type="textField"
-                  autoComplete="Name"
-                  name="donor_remarks"
-                  value={donor.donor_remarks}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
+            <div>
+              <Fields
+                title="Remarks"
+                type="textField"
+                autoComplete="Name"
+                name="donor_remarks"
+                value={donor.donor_remarks}
+                onChange={(e) => onInputChange(e)}
+              />
             </div>
 
             {/* //COMMIMCATION */}
@@ -479,18 +479,18 @@ const AddDonorList = () => {
             </div>
             {/* ADDRESS */}
             <h1 className="p-2 ">Address</h1>
-
+            <div className="mb-4">
+              <Fields
+                title="House&Street Number Address"
+                type="textField"
+                autoComplete="Name"
+                name="donor_address"
+                value={donor.donor_address}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div>
-                <Fields
-                  title="House&Street Number Address"
-                  type="textField"
-                  autoComplete="Name"
-                  name="donor_address"
-                  value={donor.donor_address}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>{" "}
+              {" "}
               <div>
                 <Fields
                   title="City"
@@ -501,7 +501,7 @@ const AddDonorList = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>{" "}
-              <div className="mb-4">
+              <div>
                 <Fields
                   select
                   title="State"

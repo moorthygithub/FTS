@@ -18,11 +18,11 @@ const EnquiryFilter = () => {
       path: "/VendorList",
       color: "from-blue-500 to-cyan-400",
     },
-    // {
-    //   label: "Close List",
-    //   path: "/closeList-enquiry",
-    //   color: "from-green-500 to-teal-400",
-    // },
+    {
+      label: "Occasion List",
+      path: "/occasion",
+      color: "from-green-500 to-teal-400",
+    },
   ];
   return (
     <div className="flex flex-wrap justify-between mt-6 gap-4">

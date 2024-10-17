@@ -118,7 +118,7 @@ const PurchaseList = () => {
                 }}
                 onClick={() => navigate(`/edit-purchase/${id}`)}
                 title="edit purchase"
-                className="h-5 w-5 cursor-pointer"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
             </div>
           );

@@ -118,7 +118,7 @@ const VendorList = () => {
                 }}
                 onClick={() => navigate(`/EditVendors/${id}`)}
                 title="Edit Vendor"
-                className="h-5 w-5 cursor-pointer"
+                className="h-5 w-5 cursor-pointer text-blue-500"
               />
             </div>
           );

@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Input } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import BASE_URL, { BaseUrl } from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
 import Dropdown from "../../components/common/DropDown";
 import InputMask from "react-input-mask";
+import FamilyGroupModal from "./FamilyGroupModa";
 
 const gender = [
   {
@@ -92,7 +93,7 @@ const EditDonorList = () => {
       if (validateOnlyDigits(e.target.value)) {
         setDonor({
           ...donor,
-          [e.target.name]: e.target.value,
+          [e.target.name]: e.target.value || "",
         });
       }
     } else if (e.target.name == "donor_whatsapp") {
@@ -205,14 +206,10 @@ const EditDonorList = () => {
   ];
 
   //FAMILY PATCH
-  const [showmodal, setShowmodal] = useState(false);
-  const closegroupModal = () => {
-    setShowmodal(false);
-  };
-  const openmodal = () => {
-    setShowmodal(true);
-  };
+  const [showModal, setShowModal] = useState(false);
 
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
   //GET DATA
   useEffect(() => {
     axios({
@@ -231,6 +228,39 @@ const EditDonorList = () => {
         // setLoader(false);
       });
   }, [id]);
+
+  //FamilyGroupstatus
+  const handleFamilyGroupStatus = (status) => {
+    let data = {};
+
+    if (status === "add_to_family_group") {
+      data = {
+        donor_related_id: family_related_id,
+      };
+    } else if (status === "leave_family_group") {
+      data = {
+        leave_family_group: true,
+      };
+    }
+
+    axios({
+      url: `${BaseUrl}/update-donor-by-id/${id}`,
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        toast.success("Data Successfully Updated");
+
+        setShowModal(false);
+      })
+      .catch((err) => {
+        toast.error("Error updating data, please try again.");
+      });
+  };
+
   return (
     <Layout>
       <div>
@@ -244,9 +274,9 @@ const EditDonorList = () => {
           </h1>
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
-          <h1 className="p-4 mb-2">Personal Details</h1>
+          <h1 className="p-4 mb-2">Personal Details </h1>
           <form onSubmit={onSubmit} autoComplete="off">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
               <div className="w-full">
                 <Fields
                   title="Donor Type"
@@ -258,15 +288,16 @@ const EditDonorList = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
-              <div className="w-full">
+              <div className="mb-4">
                 <Fields
+                  required
+                  select
                   title="Title"
-                  required={true}
+                  type="TitleDropDown"
                   name="donor_title"
                   value={donor.donor_title}
-                  options={title1}
-                  type="whatsappDropdown"
                   onChange={(e) => onInputChange(e)}
+                  options={donor.donor_type == "Individual" ? title : title1}
                 />
               </div>
               <div>
@@ -321,20 +352,7 @@ const EditDonorList = () => {
                   ></Input>
                 </div>
               )}
-              {/* {donor.donor_type == "Individual" ? (
-                ""
-              ) : (
-                <div className="w-full">
-                  <Input
-                    type="date"
-                    label="Date of Anniversary"
-                    name="receipt_from_date"
-                    className="required"
-                    value={course.courses_name}
-                    onChange={(e) => onInputChange(e)}
-                  />
-                </div>
-              )} */}
+
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <InputMask
                   mask="aaaaa 9999 a"
@@ -352,7 +370,6 @@ const EditDonorList = () => {
                       type="textField"
                       autoComplete="Name"
                       name="donor_pan_no"
-                      // Pass down other props but NOT onChange
                       {...inputProps}
                     />
                   )}
@@ -428,23 +445,20 @@ const EditDonorList = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
-
-              <div>
-                <Fields
-                  required={true}
-                  title="Remarks"
-                  type="textField"
-                  autoComplete="Name"
-                  name="donor_remarks"
-                  value={donor.donor_remarks}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
             </div>
-
+            <div>
+              <Fields
+                required={true}
+                title="Remarks"
+                type="textField"
+                autoComplete="Name"
+                name="donor_remarks"
+                value={donor.donor_remarks}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
             {/* //COMMIMCATION */}
             <h1 className="p-2 ">Communication Details</h1>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div>
                 <Fields
@@ -487,19 +501,18 @@ const EditDonorList = () => {
             </div>
             {/* ADDRESS */}
             <h1 className="p-2 ">Address</h1>
-
+            <div className="mb-6">
+              <Fields
+                required={true}
+                title="House&Street Number Address"
+                type="textField"
+                autoComplete="Name"
+                name="donor_address"
+                value={donor.donor_address}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>{" "}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div>
-                <Fields
-                  required={true}
-                  title="House&Street Number Address"
-                  type="textField"
-                  autoComplete="Name"
-                  name="donor_address"
-                  value={donor.donor_address}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>{" "}
               <div>
                 <Fields
                   required={true}
@@ -516,7 +529,7 @@ const EditDonorList = () => {
                   title="State"
                   required={true}
                   name="donor_state"
-                  value={donor.donor_state}
+                  value={donor.donor_state || ""}
                   options={states}
                   type="stateDropDown"
                   onChange={(e) => onInputChange(e)}
@@ -534,14 +547,49 @@ const EditDonorList = () => {
                 />
               </div>
             </div>
-            <div className="mt-4 text-center">
+            <div className="mt-4 text-center flex flex-col sm:flex-row sm:justify-center sm:gap-2">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
                 disabled={isButtonDisabled}
               >
                 Submit
               </button>
+              {donor.donor_related_id == donor.donor_fts_id ? (
+                <Button color="blue" onClick={openModal}>
+                  Attach to Group
+                </Button>
+              ) : (
+                <Button color="blue" onClick={openModal} disabled>
+                  Attach to Group
+                </Button>
+              )}
+
+              <div>
+                <FamilyGroupModal
+                  showModal={showModal}
+                  closeModal={closeModal}
+                  handleFamilyGroupStatus={handleFamilyGroupStatus}
+                  id={donor.donor_fts_id}
+                />
+              </div>
+              {donor.donor_related_id == donor.donor_fts_id ? (
+                <Button
+                  color="red"
+                  disabled
+                  onClick={() => handleFamilyGroupStatus("leave_family_group")}
+                >
+                  Leave Group
+                </Button>
+              ) : (
+                <Button
+                  color="red"
+                  onClick={() => handleFamilyGroupStatus("leave_family_group")}
+                >
+                  Leave Group
+                </Button>
+              )}
+
               <Link to="/donor-list">
                 <button className="bg-green-500 text-white px-4 py-2 rounded-md">
                   Back

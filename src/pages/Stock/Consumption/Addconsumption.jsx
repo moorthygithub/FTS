@@ -19,7 +19,7 @@ const AddConsumption = () => {
   const [items, setItems] = useState([]);
 
   const [cons, setCons] = useState({
-    cons_date: new Date().toISOString().split("T")[0], // default to today
+    cons_date: new Date().toISOString().split("T")[0],
     cons_year: "2023-24",
     cons_count: "",
     cons_sub_data: [],
@@ -135,44 +135,56 @@ const AddConsumption = () => {
             {users.map((user, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
+                className="flex flex-wrap lg:flex-nowrap gap-3 mb-4 mt-4"
               >
-                <Fields
-                  required
-                  select
-                  title="Item"
-                  type="itemdropdown"
-                  value={user.cons_sub_item}
-                  name="cons_sub_item"
-                  onChange={(e) => onChange(e, index)}
-                  options={items}
-                />
-                <Fields
-                  required
-                  label="Quantity"
-                  type="textField"
-                  value={user.cons_sub_qnty}
-                  name="cons_sub_qnty"
-                  onChange={(e) => onChange(e, index)}
-                />
-                <Fields
-                  required
-                  select
-                  title="Unit"
-                  type="whatsappDropdown"
-                  value={user.cons_sub_unit}
-                  name="cons_sub_unit"
-                  onChange={(e) => onChange(e, index)}
-                  options={unitOptions}
-                />
-                <IconButton color="error" onClick={() => removeUser(index)}>
-                  <MdDelete />
-                </IconButton>
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    select
+                    title="Item"
+                    type="itemdropdown"
+                    value={user.cons_sub_item}
+                    name="cons_sub_item"
+                    onChange={(e) => onChange(e, index)}
+                    options={items}
+                  />
+                </div>
+
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    label="Quantity"
+                    type="textField"
+                    value={user.cons_sub_qnty}
+                    name="cons_sub_qnty"
+                    onChange={(e) => onChange(e, index)}
+                  />
+                </div>
+
+                <div className="w-full lg:w-1/4">
+                  <Fields
+                    required
+                    select
+                    title="Unit"
+                    type="whatsappDropdown"
+                    value={user.cons_sub_unit}
+                    name="cons_sub_unit"
+                    onChange={(e) => onChange(e, index)}
+                    options={unitOptions}
+                  />
+                </div>
+
+                <div className="w-full lg:w-20 flex justify-center items-center">
+                  <IconButton color="error" onClick={() => removeUser(index)}>
+                    <MdDelete />
+                  </IconButton>
+                </div>
               </div>
             ))}
+
             <div className="display-flex justify-start">
               <Button
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 onClick={addItem}
                 className="mt-4"

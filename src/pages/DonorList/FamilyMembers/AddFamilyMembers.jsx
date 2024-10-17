@@ -70,7 +70,7 @@ function AddFamilyMembers() {
 
             <div className="w-77">
               <Button
-                color="blue"
+                className="bg-blue-400"
                 fullWidth
                 type="submit"
                 name="donor_gender"
@@ -81,7 +81,7 @@ function AddFamilyMembers() {
             </div>
             <div className="w-77">
               <Button
-                color="blue"
+                color="red"
                 fullWidth
                 name="donor_gender"
                 onClick={() => {

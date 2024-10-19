@@ -88,7 +88,7 @@ const AddVendors = () => {
         },
       })
         .then((res) => {
-          if (res.data.code === "200") {
+          if (res.data.code == "200") {
             toast.success("Item is Created Successfully");
             navigate("/VendorList");
           } else {
@@ -135,7 +135,6 @@ const AddVendors = () => {
                 </div>
                 <div>
                   <Input
-                    required
                     label="Mobile"
                     type="tel"
                     maxLength={10}
@@ -146,18 +145,7 @@ const AddVendors = () => {
                 </div>
 
                 <div>
-                  {/* <Fields
-                    required={true}
-                    label="Email"
-                    type="textField"
-                    types="email"
-                    autoComplete="Name"
-                    name="vendor_email"
-                    value={vendor.vendor_email}
-                    onChange={onInputChange}
-                  /> */}
                   <Input
-                    required
                     label="Email"
                     type="email"
                     name="vendor_email"
@@ -167,7 +155,7 @@ const AddVendors = () => {
                 </div>
                 <div>
                   <Fields
-                    required={true}
+                    // required={true}
                     label="GST No"
                     type="textField"
                     autoComplete="Name"
@@ -178,7 +166,7 @@ const AddVendors = () => {
                 </div>
                 <div>
                   <Fields
-                    required={true}
+                    // required={true}
                     label="Address"
                     type="textField"
                     autoComplete="Name"

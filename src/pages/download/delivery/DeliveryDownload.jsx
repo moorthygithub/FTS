@@ -25,12 +25,12 @@ const DownloadCommon = () => {
     },
     {
       label: "Material Recepit",
-      path: "/exam",
+      path: "/M-recepit",
       color: "from-cyan-500 to-pink-400",
     },
     {
       label: "Consumption",
-      path: "/attendance",
+      path: "/D-consumption",
       color: "from-orange-500 to-cyan-400",
     },
     {

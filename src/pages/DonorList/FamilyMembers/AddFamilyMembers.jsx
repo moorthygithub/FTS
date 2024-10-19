@@ -43,13 +43,18 @@ function AddFamilyMembers() {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }).then((res) => {
-      toast.success("Family Member Created Sucessfully");
-      navigate("/donor-list");
+      if (res.data.code == "200") {
+        toast.success("Family Member Created Sucessfully");
+        navigate("/donor-list");
+      }
+      else{
+        toast.error("Duplicate Entry")
+      }
     });
   };
   return (
     <Layout>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="mt-4 mb-6">
         <PageTitle title={"Personal Details"} backLink="-1" />
       </div>

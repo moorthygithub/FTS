@@ -419,95 +419,99 @@ const EditRecepit = () => {
         </Card>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form id="addIndiv" onSubmit={onSubmit}>
-            <div className="mb-4">
-              <label
-                className={`${
-                  donor?.c_receipt_total_amount
-                    ? "label-active"
-                    : "label-inactive"
-                } text-xs text-gray-500`}
-              >
-                Total Amount*
-              </label>
-              <Input
-                type="text"
-                label="Total Amount"
-                name="c_receipt_total_amount"
-                value={donor?.c_receipt_total_amount || ""}
-                onChange={(e) => onInputChange(e)}
-                disabled
-                className="disabled:opacity-50"
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                required
-                select
-                title="Transaction Type"
-                type="TransactionType"
-                name="c_receipt_tran_pay_mode"
-                value={donor.c_receipt_tran_pay_mode}
-                onChange={(e) => onInputChange(e)}
-                donor={donor}
-                pay_mode={pay_mode}
-                pay_mode_2={pay_mode_2}
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                type="textField"
-                label="Transaction Pay Details"
-                name="c_receipt_tran_pay_details"
-                value={donor.c_receipt_tran_pay_details}
-                onChange={(e) => onInputChange(e)}
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                select
-                title="On Occasion"
-                type="occasionDropdown"
-                name="c_receipt_occasional"
-                value={donor.c_receipt_occasional}
-                onChange={(e) => onInputChange(e)}
-                options={occasion}
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                type="textField"
-                name="c_manual_receipt_no"
-                value={donor.c_manual_receipt_no}
-                onChange={(e) => onInputChange(e)}
-                label="Manual Receipt No"
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                select
-                title="Family Member"
-                type="whatsappDropdown"
-                name="family_full_check"
-                value={donor.family_full_check}
-                onChange={(e) => onInputChange(e)}
-                options={family_check}
-              />
-            </div>
-            {donor.family_full_check == "Yes" ? (
-              <div className="mb-4">
-                <Fields
-                  select
-                  title="Family Member Name"
-                  type="familyDropdown"
-                  name="family_full_name"
-                  value={donor.family_full_name}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <div className="md:col-span-1">
+                {/* <label
+                  className={`${
+                    donor?.c_receipt_total_amount
+                      ? "label-active"
+                      : "label-inactive"
+                  } text-xs text-gray-500`}
+                >
+                  Total Amount*
+                </label> */}
+                <Input
+                  type="text"
+                  label="Total Amount"
+                  name="c_receipt_total_amount"
+                  value={donor?.c_receipt_total_amount || ""}
                   onChange={(e) => onInputChange(e)}
-                  options={userfamilydata}
+                  disabled
+                  className="disabled:opacity-50"
                 />
               </div>
-            ) : (
-              ""
-            )}
+              <div className="md:col-span-1">
+                <Fields
+                  required
+                  select
+                  title="Transaction Type"
+                  type="TransactionType"
+                  name="c_receipt_tran_pay_mode"
+                  value={donor.c_receipt_tran_pay_mode}
+                  onChange={(e) => onInputChange(e)}
+                  donor={donor}
+                  pay_mode={pay_mode}
+                  pay_mode_2={pay_mode_2}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <Fields
+                  type="textField"
+                  label="Transaction Pay Details"
+                  name="c_receipt_tran_pay_details"
+                  value={donor.c_receipt_tran_pay_details}
+                  onChange={(e) => onInputChange(e)}
+                />
+              </div>{" "}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <div>
+                <Fields
+                  select
+                  title="On Occasion"
+                  type="occasionDropdown"
+                  name="c_receipt_occasional"
+                  value={donor.c_receipt_occasional}
+                  onChange={(e) => onInputChange(e)}
+                  options={occasion}
+                />
+              </div>
+              <div>
+                <Fields
+                  type="textField"
+                  name="c_manual_receipt_no"
+                  value={donor.c_manual_receipt_no}
+                  onChange={(e) => onInputChange(e)}
+                  label="Manual Receipt No"
+                />
+              </div>
+              <div>
+                <Fields
+                  select
+                  title="Family Member"
+                  type="whatsappDropdown"
+                  name="family_full_check"
+                  value={donor.family_full_check}
+                  onChange={(e) => onInputChange(e)}
+                  options={family_check}
+                />
+              </div>
+              {donor.family_full_check == "Yes" ? (
+                <div>
+                  <Fields
+                    select
+                    title="Family Member Name"
+                    type="familyDropdown"
+                    name="family_full_name"
+                    value={donor.family_full_name}
+                    onChange={(e) => onInputChange(e)}
+                    options={userfamilydata}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
             <div className="mb-4">
               <Fields
                 type="textField"
@@ -530,31 +534,34 @@ const EditRecepit = () => {
             {users.map((user, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
+                className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4"
               >
-                <Fields
-                  select
-                  required
-                  title="Purpose"
-                  type="TransactionType1"
-                  name="c_receipt_sub_donation_type"
-                  value={user.c_receipt_sub_donation_type}
-                  onChange={(e) => onChange(e, index)}
-                  donor={donor}
-                  donation_type={donation_type}
-                  donation_type_2={donation_type_2}
-                ></Fields>
-
-                <Fields
-                  label="Amount"
-                  type="textField"
-                  value={user.c_receipt_sub_amount}
-                  name="c_receipt_sub_amount"
-                  onChange={(e) => {
-                    onChange(e, index);
-                    AmountCal(index);
-                  }}
-                />
+                <div className="md:col-span-3">
+                  <Fields
+                    select
+                    required
+                    title="Purpose"
+                    type="TransactionType1"
+                    name="c_receipt_sub_donation_type"
+                    value={user.c_receipt_sub_donation_type}
+                    onChange={(e) => onChange(e, index)}
+                    donor={donor}
+                    donation_type={donation_type}
+                    donation_type_2={donation_type_2}
+                  ></Fields>
+                </div>
+                <div className="md:col-span-1">
+                  <Fields
+                    label="Amount"
+                    type="textField"
+                    value={user.c_receipt_sub_amount}
+                    name="c_receipt_sub_amount"
+                    onChange={(e) => {
+                      onChange(e, index);
+                      AmountCal(index);
+                    }}
+                  />
+                </div>
               </div>
             ))}
             <div className="flex justify-center mt-4 space-x-4">

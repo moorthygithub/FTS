@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 
 const SignIn = () => {
   const [email, setEmail] = useState("testadmin");
-  const [password, setPassword] = useState("123456");
+  const [password, setPassword] = useState("6570");
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
@@ -32,23 +32,17 @@ const SignIn = () => {
 
     setLoading(true);
 
-    //create a formData object and append state values
     const formData = new FormData();
     formData.append("username", email);
     formData.append("password", password);
     console.log(formData, "dormdata");
     try {
-      // Send POST request to login API with form data
       const res = await axios.post(`${BaseUrl}/login`, formData);
       console.log(res, "res");
 
       if (res.status === 200) {
         const token = res.data.UserInfo?.token;
         console.log(token, "Token");
-        // const user_type = res.data.UserInfo?.user.user_type;
-        // const id = res.data.UserInfo?.user.user_type;
-        // const username = res.data.UserInfo?.user.name;
-        // console.log(username, "username");
         localStorage.setItem("full_name", res.data.UserInfo.user.full_name);
         localStorage.setItem("username", res.data.UserInfo.user.name);
         localStorage.setItem(
@@ -100,6 +94,10 @@ const SignIn = () => {
         {/* Right Section for Login Form  h-full add*/}
         <div className="flex-1 flex items-center bg-blue-50 justify-center px-4 lg:px-8 py-12 h-full lg:w-1/2">
           <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg  shadow-blue-500 ">
+            <h2 className="flex justify-center font-extrabold text-5xl bg-gradient-to-b from-[#32e432] via-[#1f1f75] to-[#FF8C00] bg-clip-text text-transparent">
+              PRANI DAYA
+            </h2>
+
             <div className="flex justify-between mb-4">
               <div>
                 <h2 className="font-bold text-2xl text-[#002D74]">Login</h2>

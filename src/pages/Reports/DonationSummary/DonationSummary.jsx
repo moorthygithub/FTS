@@ -28,7 +28,7 @@ const DonationSummary = () => {
         downloadDonation.receipt_from_date
       );
       localStorage.setItem("receipt_to_date", downloadDonation.receipt_to_date);
-      navigate("/donation-summary-view");
+      navigate("/d-summary-view");
     }
   };
 

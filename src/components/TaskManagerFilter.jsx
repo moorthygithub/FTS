@@ -15,7 +15,7 @@ const TaskManagerFilter = () => {
     },
     {
       label: "Donation  Summary ",
-      path: "/donation-summary",
+      path: "/d-summary",
       color: "from-teal-500 to-red-400",
     },
   ];

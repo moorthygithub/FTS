@@ -187,17 +187,17 @@ const EditPurchase = () => {
                 />
               </div>
               <div className="mb-4">
-                <Fields
+                <Input
                   required
-                  label="Total Bill"
-                  type="textField"
+                  label="Bill Amount"
+                  type="number"
                   value={purchase.purchase_total_bill}
                   onChange={onInputChange}
                   name="purchase_total_bill"
                 />
               </div>
             </div>
-<hr></hr>
+            <hr></hr>
             {/* Line Items */}
             {users.map((user, index) => (
               <div
@@ -214,10 +214,10 @@ const EditPurchase = () => {
                   onChange={(e) => onItemChange(e, index)}
                   options={items}
                 />
-                <Fields
+                <Input
                   required
                   label="Quantity"
-                  type="textField"
+                  type="number"
                   value={user.purchase_sub_qnty}
                   name="purchase_sub_qnty"
                   onChange={(e) => onItemChange(e, index)}
@@ -232,10 +232,10 @@ const EditPurchase = () => {
                   onChange={(e) => onItemChange(e, index)}
                   options={unitOptions}
                 />
-                <Fields
+                <Input
                   required
                   label="Amount"
-                  type="textField"
+                  type="number"
                   value={user.purchase_sub_amount}
                   name="purchase_sub_amount"
                   onChange={(e) => onItemChange(e, index)}
@@ -251,7 +251,7 @@ const EditPurchase = () => {
                 disabled={isButtonDisabled}
                 className="mt-4"
               >
-                Submit
+                Update
               </Button>
               <Button
                 variant="contained"

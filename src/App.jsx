@@ -70,6 +70,7 @@ import DuplicateDonorList from "./pages/DonorList/Duplicate/DuplicateDonorList";
 import ListOccasion from "./pages/Master/Occasion/Listoccasion";
 import AddOccasion from "./pages/Master/Occasion/Addoccasion";
 import EditOccasion from "./pages/Master/Occasion/Editoccasion";
+import EditDuplicate from "./pages/DonorList/Duplicate/EditDuplicate";
 const App = () => {
   return (
     <>
@@ -88,6 +89,7 @@ const App = () => {
         <Route path="/create-family/:id" element={<FamilyList />} />
         <Route path="/add-family" element={<AddFamilyMembers />} />
         <Route path="/duplicate" element={<DuplicateDonorList />} />
+        <Route path="/edit-duplicate/:id" element={<EditDuplicate />} />
         <Route
           path="/createrecepit-donor/:id?"
           element={<CreateDonorRecepit />}
@@ -122,11 +124,8 @@ const App = () => {
         <Route path="/request-completed" element={<CompletedListRequest />} />
         {/* Reports  */}
         <Route path="/stock-summary" element={<PendingListTask />} />
-        <Route path="/donation-summary" element={<DonationSummary />} />
-        <Route
-          path="/donation-summary-view"
-          element={<DonationSummaryView />}
-        />
+        <Route path="/d-summary" element={<DonationSummary />} />
+        <Route path="/d-summary-view" element={<DonationSummaryView />} />
         <Route path="/task-inspection" element={<InspectionListTask />} />
         <Route path="/task-completed" element={<CompletedListTask />} />
         <Route path="/view-stock" element={<ViewStockSummary />} />
@@ -146,9 +145,12 @@ const App = () => {
           element={<ProtectedRoute element={<Students />} />}
         />
         <Route path="/cash" element={<ProtectedRoute element={<Cash />} />} />
-        <Route path="/exam" element={<ProtectedRoute element={<Exam />} />} />
         <Route
-          path="/attendance"
+          path="/M-recepit"
+          element={<ProtectedRoute element={<Exam />} />}
+        />
+        <Route
+          path="/D-consumption"
           element={<ProtectedRoute element={<DowloadConsumption />} />}
         />
         <Route
@@ -164,7 +166,7 @@ const App = () => {
           element={<ProtectedRoute element={<DeliveryReport />} />}
         />
         <Route
-          path="/examreport"
+          path="/material-recepitreport"
           element={<ProtectedRoute element={<ExamReport />} />}
         />
         {/* ///NEW  */}

@@ -221,11 +221,9 @@ const EditDonorList = () => {
     })
       .then((res) => {
         setDonor(res.data.donor);
-        // setLoader(false);
       })
       .catch((error) => {
         console.error("Error fetching donor details:", error);
-        // setLoader(false);
       });
   }, [id]);
 
@@ -328,7 +326,6 @@ const EditDonorList = () => {
               ) : (
                 <div>
                   <Input
-                    required
                     label="Contact Name"
                     // type="number"
                     name="donor_contact_name"
@@ -343,7 +340,6 @@ const EditDonorList = () => {
               ) : (
                 <div>
                   <Input
-                    required
                     label="Contact Designation"
                     // type="number"
                     name="donor_contact_designation"
@@ -365,7 +361,6 @@ const EditDonorList = () => {
                 >
                   {(inputProps) => (
                     <Fields
-                      required={true}
                       title="PAN Number"
                       type="textField"
                       autoComplete="Name"
@@ -379,7 +374,6 @@ const EditDonorList = () => {
               {donor.donor_type == "Individual" ? (
                 <div>
                   <Fields
-                    required={true}
                     title="Father Name"
                     type="textField"
                     autoComplete="Name"
@@ -394,7 +388,6 @@ const EditDonorList = () => {
               {donor.donor_type == "Individual" ? (
                 <div>
                   <Fields
-                    required={true}
                     title="Mother Name"
                     type="textField"
                     autoComplete="Name"
@@ -409,7 +402,6 @@ const EditDonorList = () => {
               {donor.donor_type == "Individual" ? (
                 <div>
                   <Fields
-                    required={true}
                     title="Spouse Name"
                     type="textField"
                     autoComplete="Name"
@@ -448,7 +440,6 @@ const EditDonorList = () => {
             </div>
             <div>
               <Fields
-                required={true}
                 title="Remarks"
                 type="textField"
                 autoComplete="Name"
@@ -475,7 +466,6 @@ const EditDonorList = () => {
               </div>
               <div>
                 <Fields
-                  required={true}
                   title="Whatsapp"
                   types="number"
                   type="textField"
@@ -488,7 +478,6 @@ const EditDonorList = () => {
               </div>
               <div>
                 <Fields
-                  required={true}
                   title="Email"
                   types="email"
                   type="textField"
@@ -503,7 +492,6 @@ const EditDonorList = () => {
             <h1 className="p-2 ">Address</h1>
             <div className="mb-6">
               <Fields
-                required={true}
                 title="House&Street Number Address"
                 type="textField"
                 autoComplete="Name"
@@ -515,7 +503,6 @@ const EditDonorList = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div>
                 <Fields
-                  required={true}
                   title="City"
                   type="textField"
                   autoComplete="Name"
@@ -527,7 +514,6 @@ const EditDonorList = () => {
               <div className="w-full">
                 <Fields
                   title="State"
-                  required={true}
                   name="donor_state"
                   value={donor.donor_state || ""}
                   options={states}
@@ -537,7 +523,6 @@ const EditDonorList = () => {
               </div>{" "}
               <div>
                 <Fields
-                  required={true}
                   title="Pincode"
                   type="textField"
                   autoComplete="Name"
@@ -553,7 +538,7 @@ const EditDonorList = () => {
                 className="bg-blue-500 text-white px-4 py-2 rounded-md"
                 disabled={isButtonDisabled}
               >
-                Submit
+                Update
               </button>
               {donor.donor_related_id == donor.donor_fts_id ? (
                 <Button color="blue" onClick={openModal}>

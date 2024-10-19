@@ -157,7 +157,6 @@ const EditVendors = () => {
               </div>
               <div>
                 <Input
-                  required
                   label="Mobile"
                   type="tel"
                   maxLength={10}
@@ -168,7 +167,6 @@ const EditVendors = () => {
               </div>
               <div>
                 <Input
-                  required
                   label="Email"
                   type="email"
                   name="vendor_email"
@@ -178,7 +176,6 @@ const EditVendors = () => {
               </div>
               <div>
                 <Fields
-                  required
                   label="GST No"
                   type="textField"
                   autoComplete="off"
@@ -189,7 +186,6 @@ const EditVendors = () => {
               </div>
               <div>
                 <Fields
-                  required
                   label="Address"
                   type="textField"
                   autoComplete="off"
@@ -200,7 +196,7 @@ const EditVendors = () => {
               </div>
               <div>
                 <Fields
-                  required={true}
+                  required
                   title=" Status"
                   type="whatsappDropdown"
                   autoComplete="Name"

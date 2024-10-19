@@ -119,7 +119,7 @@ function DonationSummaryView() {
         <div className="flex flex-row justify-start p-2">
           <MdKeyboardBackspace
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
-            onClick={() => navigate("/donation-summary")}
+            onClick={() => navigate("/d-summary")}
           />
           <h1 className="text-xl md:text-2xl text-[#464D69] font-semibold ml-2">
             Donation Summary

@@ -85,18 +85,21 @@ const ViewDonorDetails = () => {
                 <strong>
                   {donor.donor_type == "Individual" ? "" : "M/S:"}
                 </strong>
-                {donor.donor_type == "Individual" && (
-                  <>
-                    {donor.donor_title} {donor.donor_full_name}
-                  </>
-                )}
-                {donor.donor_type != "Individual" && (
-                  <>{donor.donor_full_name}</>
-                )}{" "}
-              </div>{" "}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {donor.donor_type === "Individual" ? (
+                    <>
+                      {donor.donor_title} {donor.donor_full_name}
+                    </>
+                  ) : (
+                    <>{donor.donor_full_name}</>
+                  )}
+                </div>{" "}
+              </div>
               <div className="text-gray-700">
                 <strong>Pds Id :</strong>
-                {donor.donor_fts_id}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {donor.donor_fts_id}
+                </div>{" "}
               </div>{" "}
               <Button
                 onClick={() => navigate(`/recepitdonor-list/${id}`)}
@@ -111,11 +114,16 @@ const ViewDonorDetails = () => {
                   <>
                     <div className="text-gray-700">
                       <strong>Father Name:</strong>
-                      {donor.donor_father_name || ""}
+                      <div className="text-blue-400 inline-flex ml-1">
+                        {donor.donor_father_name || ""}
+                      </div>
                     </div>
+
                     <div className="text-gray-700">
                       <strong>Mother Name:</strong>
-                      {donor.donor_mother_name || ""}
+                      <div className="text-blue-400 inline-flex ml-1">
+                        {donor.donor_mother_name || ""}
+                      </div>
                     </div>
 
                     {/* Individual specific details */}
@@ -123,21 +131,29 @@ const ViewDonorDetails = () => {
                       <>
                         <div className="text-gray-700">
                           <strong>DOA:</strong>
-                          {donor.donor_doa
-                            ? moment(donor.donor_doa).format("DD-MM-YYYY")
-                            : ""}
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_doa
+                              ? moment(donor.donor_doa).format("DD-MM-YYYY")
+                              : ""}
+                          </div>
                         </div>
+
                         <div className="text-gray-700">
                           <strong>DOB:</strong>
-                          {donor.donor_dob_annualday
-                            ? moment(donor.donor_dob_annualday).format(
-                                "DD-MM-YYYY"
-                              )
-                            : ""}{" "}
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_dob_annualday
+                              ? moment(donor.donor_dob_annualday).format(
+                                  "DD-MM-YYYY"
+                                )
+                              : ""}
+                          </div>
                         </div>
+
                         <div className="text-gray-700">
                           <strong>Gender:</strong>
-                          {donor.donor_gender || ""}
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_gender || ""}
+                          </div>
                         </div>
                       </>
                     )}
@@ -147,49 +163,56 @@ const ViewDonorDetails = () => {
                       <>
                         <div className="text-gray-700">
                           <strong>Contact Name:</strong>
-                          {donor.donor_contact_name || ""}
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_contact_name || ""}
+                          </div>
                         </div>
+
                         <div className="text-gray-700">
                           <strong>Gender:</strong>
-                          {donor.donor_gender || ""}{" "}
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_gender || ""}
+                          </div>
                         </div>
-                        {/* <div className="text-gray-700">
-                          <strong>Annual Day:</strong>
-                          {moment(donor.donor_dob_annualday).format(
-                            "DD-MM-YYYY"
-                          ) || ""}
-                        </div> */}
+
                         <div className="form-group">
                           <strong>Annual Day:</strong>
-                          {donor.donor_dob_annualday ? (
-                            <>
-                              {moment(donor.donor_dob_annualday).format(
-                                "DD-MM-YYYY"
-                              )}
-                            </>
-                          ) : (
-                            <>{donor.donor_dob_annualday} </>
-                          )}
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_dob_annualday
+                              ? moment(donor.donor_dob_annualday).format(
+                                  "DD-MM-YYYY"
+                                )
+                              : donor.donor_dob_annualday || ""}
+                          </div>
+                        </div>
+
+                        <div className="text-gray-700">
+                          <strong>PAN Number:</strong>
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_pan_no || ""}
+                          </div>
+                        </div>
+
+                        <div className="text-gray-700">
+                          <strong>Donor Type:</strong>
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_type || ""}
+                          </div>
+                        </div>
+
+                        <div className="text-gray-700">
+                          <strong>Remarks:</strong>
+                          <div className="text-blue-400 inline-flex ml-1">
+                            {donor.donor_remarks || ""}
+                          </div>
                         </div>
                       </>
                     )}
-
-                    <div className="text-gray-700">
-                      <strong>PAN Number:</strong>
-                      {donor.donor_pan_no || ""}
-                    </div>
-                    <div className="text-gray-700">
-                      <strong>Donor Type :</strong>
-                      {donor.donor_type || ""}
-                    </div>
-                    <div className="text-gray-700">
-                      <strong>Remarks:</strong>
-                      {donor.donor_remarks || ""}
-                    </div>
                   </>
                 )}
               </div>
             </CardBody>
+
             <h1>Communication Details</h1>
             <CardBody>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -197,14 +220,23 @@ const ViewDonorDetails = () => {
                   <>
                     <div className="text-gray-700">
                       <strong>Mobile :</strong>
-                      {donor.donor_mobile || ""}
+                      <div className="text-blue-400 inline-flex ml-1">
+                        {donor.donor_mobile || ""}
+                      </div>{" "}
                     </div>
+
                     <div className="text-gray-700">
-                      <strong>Whats App :</strong>
-                      {donor.donor_whatsapp || ""}
+                      <strong>WhatsApp :</strong>
+                      <div className="text-blue-400 inline-flex ml-1">
+                        {donor.donor_whatsapp || ""}
+                      </div>{" "}
                     </div>
+
                     <div className="text-gray-700">
-                      <strong>Email:</strong> {donor.donor_email || ""}
+                      <strong>Email:</strong>{" "}
+                      <div className="text-blue-400 inline-flex ml-1">
+                        {donor.donor_email || ""}
+                      </div>{" "}
                     </div>
                   </>
                 )}
@@ -216,9 +248,11 @@ const ViewDonorDetails = () => {
                 {donor && (
                   <div className="text-gray-700">
                     <strong>Address :</strong>
-                    {donor.donor_address}, {donor.donor_area},{" "}
-                    {donor.donor_ladmark},{donor.donor_city},{" "}
-                    {donor.donor_state} - {donor.donor_pin_code}
+                    <div className="text-blue-400 inline-flex ml-1">
+                      {donor.donor_address}, {donor.donor_area},{" "}
+                      {donor.donor_ladmark},{donor.donor_city},{" "}
+                      {donor.donor_state} - {donor.donor_pin_code}
+                    </div>{" "}
                   </div>
                 )}
               </div>
@@ -271,8 +305,8 @@ const ViewDonorDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {famgroup.length > 0 ? (
-                    famgroup.map((stockItem, index) => {
+                  {donorfam.length > 0 ? (
+                    donorfam.map((stockItem, index) => {
                       return (
                         <tr key={index}>
                           <td>

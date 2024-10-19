@@ -362,23 +362,9 @@ const DonorDonationReceipt = () => {
       m_receipt_vehicle_no: donor.m_receipt_vehicle_no,
       m_receipt_occasional: donor.m_receipt_occasional,
     };
-
+    console.log(data, "MATERIAL DATA");
     const isValid = document.getElementById("addIndiv").checkValidity();
-    //FETCH OCCASION
-    const [occasion, setOccasion] = useState([]);
-    useEffect(() => {
-      var theLoginToken = localStorage.getItem("token");
-      const requestOptions = {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + theLoginToken,
-        },
-      };
 
-      fetch(BaseUrl + "/fetch-occasion", requestOptions)
-        .then((response) => response.json())
-        .then((data) => setOccasion(data.occasion));
-    }, []);
     if (isValid) {
       setIsButtonDisabled(true);
 
@@ -391,9 +377,9 @@ const DonorDonationReceipt = () => {
         .then((res) => {
           if (res.status == 200 && res.data.code == "200") {
             toast.success(res.data.msg || "Donor Created Successfully");
-            const id = res.data.latestid.id;
-            console.log(id);
-            navigate(`/material-view/${id}`);
+            // const ids = res.data.latestid.id;
+            // console.log(id);
+            navigate(`/material-view/${res.data.latestid.id}`);
           } else {
             toast.error(res.data.message || "Error occurred");
           }
@@ -424,6 +410,23 @@ const DonorDonationReceipt = () => {
     navigate("/donor-list");
   };
 
+
+
+      //FETCH OCCASION
+      // const [occasion, setOccasion] = useState([]);
+      // useEffect(() => {
+      //   var theLoginToken = localStorage.getItem("token");
+      //   const requestOptions = {
+      //     method: "GET",
+      //     headers: {
+      //       Authorization: "Bearer " + theLoginToken,
+      //     },
+      //   };
+  
+      //   fetch(BaseUrl + "/fetch-occasion", requestOptions)
+      //     .then((response) => response.json())
+      //     .then((data) => setOccasion(data.occasion));
+      // }, []);
   useEffect(() => {
     axios({
       url: BaseUrl + "/fetch-donor-by-id/" + id,
@@ -588,79 +591,80 @@ const DonorDonationReceipt = () => {
         </Card>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form id="addIndiv" onSubmit={onSubmit}>
-            {/* Purchase Details */}
-            <div className="mb-4">
-              <Fields
-                required
-                type="textField"
-                label="Approx Value"
-                name="m_receipt_total_amount"
-                value={donor.m_receipt_total_amount}
-                onChange={onInputChange}
-              />
-            </div>
-            <div className="mb-4">
-              <Fields
-                required
-                type="textField"
-                label="Vehicle No"
-                name="m_receipt_vehicle_no"
-                value={donor.m_receipt_vehicle_no}
-                onChange={onInputChange}
-              />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+              {/* Purchase Details */}
+              <div>
+                <Fields
+                  type="textField"
+                  label="Approx Value"
+                  name="m_receipt_total_amount"
+                  value={donor.m_receipt_total_amount}
+                  onChange={onInputChange}
+                />
+              </div>
+              <div>
+                <Fields
+                  type="textField"
+                  label="Vehicle No"
+                  name="m_receipt_vehicle_no"
+                  value={donor.m_receipt_vehicle_no}
+                  onChange={onInputChange}
+                />
+              </div>
 
-            <div className="mb-4">
-              <Fields
-                required
-                select
-                title="On Occasion"
-                type="occasionDropdown"
-                name="m_receipt_occasional"
-                value={donor.m_receipt_occasional}
-                onChange={onInputChange}
-                options={occasion}
-              />
+              <div>
+                <Fields
+                  select
+                  title="On Occasion"
+                  type="occasionDropdown"
+                  name="m_receipt_occasional"
+                  value={donor.m_receipt_occasional}
+                  onChange={onInputChange}
+                  options={occasion}
+                />
+              </div>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <div className="md:col-span-2">
+                <Fields
+                  type="textField"
+                  name="m_receipt_remarks"
+                  value={donor.m_receipt_remarks}
+                  onChange={onInputChange}
+                  label="Remarks"
+                />
+              </div>
 
-            <div className="mb-4">
-              <Fields
-                required
-                type="textField"
-                name="m_receipt_remarks"
-                value={donor.m_receipt_remarks}
-                onChange={onInputChange}
-                label="Remarks"
-              />
-            </div>
-
-            <div className="mb-4">
-              <Fields
-                required
-                type="textField"
-                name="m_manual_receipt_no"
-                value={donor.m_manual_receipt_no}
-                onChange={onInputChange}
-                label="Manual Receipt No"
-              />
+              <div className="mb-4">
+                <Fields
+                  type="textField"
+                  name="m_manual_receipt_no"
+                  value={donor.m_manual_receipt_no}
+                  onChange={onInputChange}
+                  label="Manual Receipt No"
+                />
+              </div>
             </div>
 
             {/* Line Items */}
             {users.map((user, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 md:grid-cols-1 gap-3 mb-4 mt-4"
+                className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4"
               >
-                <Fields
-                  required
-                  select
-                  title="Item"
-                  type="itemdropdown"
-                  value={user.purchase_sub_item}
-                  name="purchase_sub_item"
-                  onChange={(e) => onChange(e, index)}
-                  options={items}
-                />
+                <div className="md:col-span-2">
+                  <Fields
+                    required
+                    select
+                    title="Item"
+                    type="itemdropdown"
+                    value={user.purchase_sub_item}
+                    name="purchase_sub_item"
+                    onChange={(e) => onChange(e, index)}
+                    options={items}
+                  />
+                </div>
+
                 <Fields
                   required
                   label="Quantity"

@@ -85,11 +85,11 @@ const AddConsumption = () => {
     setIsButtonDisabled(true);
     try {
       const response = await axios.post(`${BaseUrl}/create-cons`, data, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("login")}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      if (response.data.code === "200") {
+      if (response.data.code == "200") {
         toast.success("Consumption is Created Successfully");
-        navigate("/listing");
+        navigate("/consumption");
       } else {
         toast.error("Duplicate Entry");
       }
@@ -151,10 +151,10 @@ const AddConsumption = () => {
                 </div>
 
                 <div className="w-full lg:w-1/4">
-                  <Fields
+                  <Input
                     required
                     label="Quantity"
-                    type="textField"
+                    type="number"
                     value={user.cons_sub_qnty}
                     name="cons_sub_qnty"
                     onChange={(e) => onChange(e, index)}

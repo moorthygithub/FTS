@@ -9,16 +9,8 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Avatar,
 } from "@material-tailwind/react";
-import {
-  UserCircleIcon,
-  Cog6ToothIcon,
-  BellIcon,
-  ClockIcon,
-  CreditCardIcon,
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
+import { UserCircleIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import Logout from "./Logout";
 import { useState } from "react";
 import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
@@ -33,11 +25,19 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
 
   const pathSegments = pathname.split("/").filter((el) => el !== "");
 
+  // const breadcrumbs = [
+  //   { name: "Home", link: "/home" },
+  //   ...pathSegments.map((segment, index) => ({
+  //     name: segment.charAt(0).toUpperCase() + segment.slice(1),
+  //     link: `/${pathSegments.slice(0, index + 1).join("/")}`,
+  //   })),
+  // ];
+
   const breadcrumbs = [
     { name: "Home", link: "/home" },
-    ...pathSegments.map((segment, index) => ({
+    ...pathSegments.slice(0, 1).map((segment, index) => ({
       name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      link: `/${pathSegments.slice(0, index + 1).join("/")}`,
+      link: `/home/${segment}`,  
     })),
   ];
 
@@ -47,7 +47,6 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
       : pathSegments[pathSegments.length - 1]?.charAt(0).toUpperCase() +
         pathSegments[pathSegments.length - 1]?.slice(1);
 
-  // Hardcode fixedNavbar to true
   const fixedNavbar = true;
 
   return (
@@ -61,7 +60,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
       fullWidth
       blurred={fixedNavbar}
     >
-      <div className="flex  justify-between gap-6 flex-row md:items-center">
+      <div className="flex  justify-between  flex-row md:items-center">
         <div className="capitalize">
           <Breadcrumbs
             className={`bg-transparent p-0 transition-all ${
@@ -73,7 +72,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
                 <Typography
                   variant="small"
                   color="white"
-                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
+                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100 "
                 >
                   {breadcrumb.name}
                 </Typography>

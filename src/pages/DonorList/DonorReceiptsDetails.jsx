@@ -113,7 +113,7 @@ function DonorReceiptsDetails() {
                               color="blue-gray"
                               className="font-normal "
                             >
-                              {stockItem.receipt_no}{" "}
+                              {stockItem.c_receipt_no}{" "}
                             </Typography>
                           </td>
                           <td className="bg-blue-gray-50/50">
@@ -131,7 +131,7 @@ function DonorReceiptsDetails() {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {moment(stockItem.receipt_date).format(
+                              {moment(stockItem.c_receipt_date).format(
                                 "DD-MM-YYYY"
                               )}
                             </Typography>
@@ -142,7 +142,7 @@ function DonorReceiptsDetails() {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {stockItem.receipt_total_amount}{" "}
+                              {stockItem.c_receipt_total_amount}{" "}
                             </Typography>
                           </td>
                         </tr>

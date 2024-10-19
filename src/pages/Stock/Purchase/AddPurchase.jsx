@@ -109,7 +109,7 @@ const AddPurchase = () => {
           },
         })
         .then((res) => {
-          if (res.data.code === "200") {
+          if (res.data.code == "200") {
             toast.success("Purchase Created Successfully");
             navigate("/purchase");
           } else {
@@ -151,7 +151,7 @@ const AddPurchase = () => {
                   type="date"
                   id="purchase_date"
                   name="purchase_date"
-                  label="date"
+                  label="Date"
                   value={purchase.purchase_date}
                   onChange={onInputChange}
                   required
@@ -184,10 +184,11 @@ const AddPurchase = () => {
               </div>
 
               <div className="mb-4">
-                <Fields
+                <Input
                   required
-                  label="Total Bill"
-                  type="textField"
+                  label="Bill Amount"
+                  // type="textField"
+                  type="number"
                   value={purchase.purchase_total_bill}
                   onChange={onInputChange}
                   name="purchase_total_bill"
@@ -216,10 +217,11 @@ const AddPurchase = () => {
                 </div>
 
                 <div className="w-full lg:w-1/4">
-                  <Fields
+                  <Input
                     required
                     label="Quantity"
-                    type="textField"
+                    // type="textField"
+                    type="number"
                     value={user.purchase_sub_qnty}
                     name="purchase_sub_qnty"
                     onChange={(e) => onItemChange(e, index)}
@@ -240,10 +242,10 @@ const AddPurchase = () => {
                 </div>
 
                 <div className="w-full lg:w-1/4">
-                  <Fields
+                  <Input
                     required
                     label="Amount"
-                    type="textField"
+                    type="number"
                     value={user.purchase_sub_amount}
                     name="purchase_sub_amount"
                     onChange={(e) => onItemChange(e, index)}

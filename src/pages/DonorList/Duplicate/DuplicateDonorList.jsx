@@ -7,12 +7,15 @@ import axios from "axios";
 import { BaseUrl } from "../../../base/BaseUrl";
 import { Spinner, Button } from "@material-tailwind/react";
 import CommonListing from "../CommonListing";
+import { MdDelete, MdEdit } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const DuplicateDonorList = () => {
-  const [webdonation, setWebDonation] = useState([]);
+  const [duplicate, setDuplicate] = useState([]);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
+  const [data, setData] = useState("");
 
   useEffect(() => {
     const fetchPendingRData = async () => {
@@ -59,7 +62,7 @@ const DuplicateDonorList = () => {
           }
         });
 
-        setWebDonation(tempRows);
+        setDuplicate(tempRows);
       } catch (error) {
         console.error("Error fetching pending list request data", error);
       } finally {
@@ -79,8 +82,8 @@ const DuplicateDonorList = () => {
       },
     }).then((res) => {
       console.log("receipt", res.data);
+      setData(res.data.c_receipt_count);
       toast.success("Data Updated Successfully");
-      // window.location.href = "listing";
     });
   };
 
@@ -117,16 +120,37 @@ const DuplicateDonorList = () => {
       name: "Actions",
       options: {
         filter: true,
-        customBodyRender: (value) => (
-          <div style={{ minWidth: "150px" }}>
-            <Button
-              className="text-white py-1 px-2 bg-gradient-to-b from-[#7c8492] to-[#677080] border-[#677080] shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_1px_rgba(0,0,0,0.075)]"
-              onClick={() => updateData(value.substr(value.indexOf("#") + 1))}
-            >
-              <MdDelete />
-            </Button>
-          </div>
-        ),
+        customBodyRender: (value) => {
+          return (
+            <div style={{ minWidth: "150px" }}>
+              {!value.startsWith(0) ? (
+                <Button
+                  className="bg-white text-red-600"
+                  onClick={() => {
+                    navigate(
+                      `/edit-duplicate/${value.substr(
+                        value.indexOf("#") + 1,
+                        value.length - 1
+                      )}`
+                    )
+                  }}
+                
+                >
+                  <MdEdit />
+                </Button>
+              ) : (
+                <Button
+                  className="bg-white text-red-600"
+                  onClick={() =>
+                    updateData(value.substr(value.indexOf("#") + 1))
+                  }
+                >
+                  <MdDelete />
+                </Button>
+              )}
+            </div>
+          );
+        },
       },
     },
   ];
@@ -134,8 +158,8 @@ const DuplicateDonorList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
     responsive: "standard",
     viewColumns: true,
     download: false,
@@ -152,7 +176,7 @@ const DuplicateDonorList = () => {
       <CommonListing />
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Duplicate List
+          Duplicate List 
         </h3>
       </div>
       <div
@@ -173,11 +197,7 @@ const DuplicateDonorList = () => {
         </div>
       ) : (
         <div className="mt-5">
-          <MUIDataTable
-            data={webdonation}
-            columns={columns}
-            options={options}
-          />
+          <MUIDataTable data={duplicate} columns={columns} options={options} />
         </div>
       )}
     </Layout>

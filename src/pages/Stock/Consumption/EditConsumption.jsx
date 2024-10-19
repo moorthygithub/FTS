@@ -4,12 +4,11 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import axios from "axios";
 import Layout from "../../../layout/Layout";
 import Fields from "../../../components/common/TextField/TextField";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { BaseUrl } from "../../../base/BaseUrl";
 
-
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import { Input } from "@material-tailwind/react";
 
 const unitOptions = [
@@ -79,10 +78,8 @@ const EditConsumption = () => {
       const response = await axios.put(`${BaseUrl}/update-cons/${id}`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      if (response.data.code == "200") {
-        toast.success(
-          response.data.msg | "Consumption is Updated Successfully"
-        );
+      if (response.data.code == 200) {
+        toast.success("Consumption is Updated Successfully");
         navigate("/consumption");
       } else {
         toast.error("Duplicate Entry");
@@ -97,7 +94,7 @@ const EditConsumption = () => {
 
   return (
     <Layout>
-      <ToastContainer /> 
+      {/* <ToastContainer /> */}
       <div>
         <div className="flex mb-4 mt-6">
           <MdKeyboardBackspace
@@ -118,6 +115,7 @@ const EditConsumption = () => {
                 id="cons_date"
                 name="cons_date"
                 label="Date"
+                disabled
                 value={cons.cons_date}
                 onChange={onInputChange}
                 required
@@ -133,7 +131,7 @@ const EditConsumption = () => {
                 <div
                   key={index}
                   className="flex flex-wrap lg:flex-nowrap gap-3 mb-4 mt-4"
-                  >
+                >
                   <Fields
                     required
                     select
@@ -144,10 +142,10 @@ const EditConsumption = () => {
                     onChange={(e) => onChange(e, index)}
                     options={items}
                   />
-                  <Fields
+                  <Input
                     required
                     label="Quantity"
-                    type="textField"
+                    type="number"
                     value={user.cons_sub_qnty}
                     name="cons_sub_qnty"
                     onChange={(e) => onChange(e, index)}
@@ -174,7 +172,7 @@ const EditConsumption = () => {
                 disabled={isButtonDisabled}
                 className="mt-4"
               >
-                Submit
+                Update
               </Button>
               <Button
                 variant="contained"

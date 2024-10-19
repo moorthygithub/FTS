@@ -5,7 +5,7 @@ import { ContextPanel } from "../../../utils/ContextPanel";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BaseUrl } from "../../../base/BaseUrl";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdKeyboardBackspace } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
 
@@ -103,9 +103,22 @@ const FamilyList = () => {
   return (
     <Layout>
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
+        {/* <MdKeyboardBackspace
+              // onClick={handleBackButton}
+              className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+            />
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Family Member List{" "}
-        </h3>
+        </h3> */}
+        <div className="flex items-center">
+          <MdKeyboardBackspace
+            onClick={()=>{navigate("/donor-list")}}
+            className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+          <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
+          Family Member List
+          </h1>
+        </div>
 
         <Link
           to="/add-family"

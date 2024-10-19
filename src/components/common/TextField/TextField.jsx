@@ -125,7 +125,7 @@ const Fields = (props) => {
           <FormControl fullWidth>
             <InputLabel id="service-select-label">
               <span className="text-sm relative bottom-[6px]">
-                {props.title} <span className="text-red-700">*</span>
+                {props.title} 
               </span>
             </InputLabel>
             <Select

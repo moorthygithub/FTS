@@ -14,9 +14,9 @@ const Layout = ({ children }) => {
           setOpenSideNav={setOpenSideNav}
         />
         {children}
-        {/* <div className="text-blue-gray-600">
+        <div className="mt-4 bg-blue-gray-50 shadow-lg">
           <Footer />
-        </div> */}
+        </div>
       </div>
     </div>
   );

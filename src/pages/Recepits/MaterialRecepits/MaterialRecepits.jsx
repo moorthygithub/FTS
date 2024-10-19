@@ -147,8 +147,8 @@ const MaterialReceipts = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    rowsPerPage: 10,
+    rowsPerPageOptions: [10, 25, 50],
     responsive: "standard",
     viewColumns: true,
     download: false,

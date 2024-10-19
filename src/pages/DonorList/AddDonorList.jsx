@@ -156,7 +156,6 @@ const AddDonorList = () => {
       const response = await axios.post(`${BaseUrl}/create-donor`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -207,19 +206,43 @@ const AddDonorList = () => {
     };
 
     setIsButtonDisabled(true);
-    axios({
-      url: BaseUrl + "/create-donor",
-      method: "POST",
-      data,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    }).then((res) => {
-      toast.success("Donor Created Sucessfully");
-      console.log(`/createrecepit-donor?id${res.data.latestid.id}`);
-      navigate(`/createrecepit-donor/${res.data.latestid.id}`);
-    });
+    // axios({
+    //   url: BaseUrl + "/create-donor",
+    //   method: "POST",
+    //   data,
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //   },
+    // });
+    try {
+      const response = await axios.post(`${BaseUrl}/create-donor`, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.data.code == 201) {
+        toast.success("Data Updated Successfully");
+        navigate(`/createrecepit-donor/${res.data.latestid.id}`);
+      } else {
+        if (response.data.code == 404) {
+          toast.error(" Duplicate Entry");
+        }
+      }
+    } catch (error) {
+      console.error("Error updating Course:", error);
+      toast.error("Error updating Course");
+    } finally {
+      setIsButtonDisabled(false);
+    }
   };
+
+  //   .then((res) => {
+  //     toast.success("Donor Created Sucessfully");
+  //     console.log(`/createrecepit-donor?id${res.data.latestid.id}`);
+  //     navigate(`/createrecepit-donor/${res.data.latestid.id}`);
+  //   });
+  // };
   //FETCH STATE
   const [states, setStates] = useState([]);
   useEffect(() => {
@@ -278,8 +301,8 @@ const AddDonorList = () => {
                   required={true}
                   name="donor_title"
                   value={donor.donor_title}
-                  options={title1}
-                  type="whatsappDropdown"
+                  type="TitleDropDown"
+                  options={donor.donor_type == "Individual" ? title : title1}
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
@@ -359,7 +382,7 @@ const AddDonorList = () => {
               {donor.donor_type == "Individual" ? (
                 <div>
                   <Fields
-                    required={true}
+                    // required={true}
                     title="Father Name"
                     type="textField"
                     autoComplete="Name"
@@ -518,6 +541,7 @@ const AddDonorList = () => {
                   type="textField"
                   autoComplete="Name"
                   name="donor_pin_code"
+                  maxLenght={6}
                   value={donor.donor_pin_code}
                   onChange={(e) => onInputChange(e)}
                 />

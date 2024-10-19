@@ -69,7 +69,7 @@ const AddEnquiry = () => {
         },
       })
         .then((res) => {
-          if (res.data.code === "200") {
+          if (res.data.code == "200") {
             toast.success("Item is Created Successfully");
             navigate("/master-list");
           } else {

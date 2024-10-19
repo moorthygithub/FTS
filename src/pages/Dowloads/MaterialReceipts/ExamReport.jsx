@@ -14,7 +14,7 @@ import DownloadCommon from "../../download/delivery/DeliveryDownload";
 function ExamEnquiryReport() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/exam");
+    navigate("/material-recepit");
   };
 
   const TABLE_HEAD = [
@@ -98,7 +98,7 @@ function ExamEnquiryReport() {
         <PageTitle
           title={"Exam List"}
           icon={FaArrowCircleLeft}
-          backLink="/exam"
+          backLink="/material-recepit"
         />
       </div>
       {loader ? (

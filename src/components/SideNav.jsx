@@ -1,19 +1,15 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {
-  HomeIcon,
-  TableCellsIcon,
+
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useEffect, useRef } from "react";
 import image from "../assets/logo.jpg";
-import { MdDashboard } from "react-icons/md";
-import { FaFlag } from "react-icons/fa";
+import { MdDashboard, MdOutlineWebhook } from "react-icons/md";
 import { MdClass } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
-import { IoMdPersonAdd } from "react-icons/io";
-import { FaTruckMoving } from "react-icons/fa6";
-
+import { FaRegUserCircle } from "react-icons/fa";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { GrTasks } from "react-icons/gr";
 import { PiDownloadSimpleBold } from "react-icons/pi";
@@ -104,46 +100,6 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </li>
 
             <li>
-              <NavLink to="/webdonation">
-                {({ isActive }) => (
-                  <Button
-                    variant={isActive ? "gradient" : "text"}
-                    color="white"
-                    className="flex items-center gap-4 px-4 capitalize"
-                    fullWidth
-                  >
-                    <FaFlag className="w-5 h-5 text-inherit" />
-                    <Typography
-                      color="inherit"
-                      className="font-medium capitalize"
-                    >
-                      Website Donation
-                    </Typography>
-                  </Button>
-                )}
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/donor-list">
-                {({ isActive }) => (
-                  <Button
-                    variant={isActive ? "gradient" : "text"}
-                    color="white"
-                    className="flex items-center gap-4 px-4 capitalize"
-                    fullWidth
-                  >
-                    <MdClass className="w-5 h-5 text-inherit" />
-                    <Typography
-                      color="inherit"
-                      className="font-medium capitalize"
-                    >
-                      Donor{" "}
-                    </Typography>
-                  </Button>
-                )}
-              </NavLink>
-            </li>
-            <li>
               <NavLink to="/master-list">
                 {({ isActive }) => (
                   <Button
@@ -173,12 +129,32 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                     className="flex items-center gap-4 px-4 capitalize"
                     fullWidth
                   >
-                    <FaTruckMoving className="w-5 h-5 text-inherit" />
+                    <FaRegUserCircle className="w-5 h-5 text-inherit" />
                     <Typography
                       color="inherit"
                       className="font-medium capitalize"
                     >
                       Stock
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/donor-list">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <MdClass className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Donor{" "}
                     </Typography>
                   </Button>
                 )}
@@ -200,6 +176,27 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                       className="font-medium capitalize"
                     >
                       Receipts
+                    </Typography>
+                  </Button>
+                )}
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/webdonation">
+                {({ isActive }) => (
+                  <Button
+                    variant={isActive ? "gradient" : "text"}
+                    color="white"
+                    className="flex items-center gap-4 px-4 capitalize"
+                    fullWidth
+                  >
+                    <MdOutlineWebhook className="w-5 h-5 text-inherit" />
+                    <Typography
+                      color="inherit"
+                      className="font-medium capitalize"
+                    >
+                      Website Donation
                     </Typography>
                   </Button>
                 )}

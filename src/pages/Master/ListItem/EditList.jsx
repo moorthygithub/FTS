@@ -103,10 +103,10 @@ const EditList = () => {
       })
         .then((res) => {
           if (res.data.code == "200") {
-            toast.success(res.data.msg || "Item is updated successfully");
+            toast.success("Item is updated successfully");
             navigate("/master-list");
           } else {
-            toast.error(res.data.msg || "Duplicate Entry");
+            toast.error("Duplicate Entry");
           }
         })
         .catch((error) => {

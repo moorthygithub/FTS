@@ -206,7 +206,7 @@ function ViewStockSummary() {
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal"
+                              className="font-normal flex justify-end"
                             >
                               {numberFormatter.format(openpurch)}
                             </Typography>
@@ -215,7 +215,7 @@ function ViewStockSummary() {
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal"
+                              className="font-normal flex justify-end"
                             >
                               {numberFormatter.format(purch)}
                             </Typography>
@@ -224,7 +224,7 @@ function ViewStockSummary() {
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal"
+                              className="font-normal flex justify-end"
                             >
                               {numberFormatter.format(sale)}
                             </Typography>
@@ -233,7 +233,7 @@ function ViewStockSummary() {
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal"
+                              className="font-normal flex justify-end"
                             >
                               {numberFormatter.format(closesale)}
                             </Typography>

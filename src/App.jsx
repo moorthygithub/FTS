@@ -13,35 +13,35 @@ import OpenListEnquiry from "./pages/Master/ListItem/List Item";
 import PurchaseList from "./pages/Stock/Purchase/PurchaseList";
 import RecepitCashRecepit from "./pages/Recepits/CashRecepits/CashRecepit";
 import PendingListTask from "./pages/Reports/StockReport";
-import EnquiryDownload from "./pages/download/enquiry/EnquiryDownload";
+import EnquiryDownload from "./pages/download/EnquiryDownload";
 import VendorList from "./pages/Master/Vendors List/VendorList";
-import CloseListEnquiry from "./pages/enquiry/closeList/CloseListEnquiry";
+// import CloseListEnquiry from "./pages/enquiry/closeList/CloseListEnquiry";
 import Consumption from "./pages/Stock/Consumption/consumption";
 import MaterialRecepits from "./pages/Recepits/MaterialRecepits/MaterialRecepits";
-import CompletedListRequest from "./pages/request/completedList/CompletedListRequest";
-import InspectionListTask from "./pages/taskManager/inspectionList/InspectionListTask";
-import CompletedListTask from "./pages/taskManager/completedList/CompletedListTask";
+// import CompletedListRequest from "./pages/request/completedList/CompletedListRequest";
+// import InspectionListTask from "./pages/taskManager/inspectionList/InspectionListTask";
+// import CompletedListTask from "./pages/taskManager/completedList/CompletedListTask";
 import Donor from "./pages/Dowloads/Donor/Donor";
 import Students from "./pages/Dowloads/Purchase/CashPurchase";
 import Cash from "./pages/Dowloads/Delivery/Cash";
 import Exam from "./pages/Dowloads/MaterialReceipts/MaterialReceipts";
-import EnquiryReport from "./pages/Dowloads/Donor/EnquiryReport";
-import StudentReport from "./pages/Dowloads/Purchase/StudentsReport";
-import DeliveryReport from "./pages/Dowloads/Delivery/DeliveryReport";
-import ExamReport from "./pages/Dowloads/MaterialReceipts/ExamReport";
+// import EnquiryReport from "./pages/Dowloads/Donor/EnquiryReport";
+// import StudentReport from "./pages/Dowloads/Purchase/StudentsReport";
+// import DeliveryReport from "./pages/Dowloads/Delivery/DeliveryReport";
+// import ExamReport from "./pages/Dowloads/MaterialReceipts/ExamReport";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddEnquiry from "./pages/Master/ListItem/AddItem";
-import AddDelivery from "./pages/delivery/AddDelivery";
-import EditDelivery from "./pages/delivery/EditDelivery";
+// import AddDelivery from "./pages/delivery/AddDelivery";
+// import EditDelivery from "./pages/delivery/EditDelivery";
 import EditList from "./pages/Master/ListItem/EditList";
-import AddRequest from "./pages/request/AddRequest";
-import EditPersonalDetails from "./pages/enquiry/EditPersonalDetails";
-import ViewEnquiry from "./pages/enquiry/ViewEnquiry";
+// import AddRequest from "./pages/request/AddRequest";
+// import EditPersonalDetails from "./pages/enquiry/EditPersonalDetails";
+// import ViewEnquiry from "./pages/enquiry/ViewEnquiry";
 
-import View from "./pages/delivery/View";
+// import View from "./pages/delivery/View";
 
-import EnquiryNow from "./pages/enquiryNow/EnquiryNow";
+// import EnquiryNow from "./pages/enquiryNow/EnquiryNow";
 import AddVendors from "./pages/Master/Vendors List/AddVendors";
 import EditVendors from "./pages/Master/Vendors List/EditVendors";
 import AddPurchase from "./pages/Stock/Purchase/AddPurchase";
@@ -79,7 +79,7 @@ const App = () => {
         <Route path="/" element={<SignIn />} />
         <Route path="/register" element={<SIgnUp />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/enquiry-now" element={<EnquiryNow />} />
+        {/* <Route path="/enquiry-now" element={<EnquiryNow />} /> */}
         <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
         <Route path="/maintenance" element={<Maintenance />} />
         <Route path="/donor-list" element={<DonorList />} />
@@ -103,31 +103,31 @@ const App = () => {
         <Route path="/master-list" element={<OpenListEnquiry />} />
         <Route path="/add-enquiry" element={<AddEnquiry />} />
         <Route path="/edit-enquiry/:id" element={<EditList />} />
-        <Route path="/edit-personal/:id" element={<EditPersonalDetails />} />
-        <Route path="/view-enquiry/:id" element={<ViewEnquiry />} />
+        {/* <Route path="/edit-personal/:id" element={<EditPersonalDetails />} /> */}
+        {/* <Route path="/view-enquiry/:id" element={<ViewEnquiry />} /> */}
         <Route path="/occasion" element={<ListOccasion />} />
         <Route path="/add-occasion" element={<AddOccasion />} />
         <Route path="/edit-occasion/:id" element={<EditOccasion />} />
         {/* //chnage */}
-        <Route path="/closeList-enquiry" element={<CloseListEnquiry />} />
+        {/* <Route path="/closeList-enquiry" element={<CloseListEnquiry />} /> */}
         <Route path="/addVendor" element={<AddVendors />} />
         <Route path="/purchase" element={<PurchaseList />} />
-        <Route path="/add-delivery" element={<AddDelivery />} />
-        <Route path="/edit-delivery/:id" element={<EditDelivery />} />
+        {/* <Route path="/add-delivery" element={<AddDelivery />} /> */}
+        {/* <Route path="/edit-delivery/:id" element={<EditDelivery />} /> */}
         <Route path="/consumption" element={<Consumption />} />
-        <Route path="/view-student-delivery/:id" element={<View />} />
+        {/* <Route path="/view-student-delivery/:id" element={<View />} /> */}
         {/* class  */}
         {/* request  */}
         <Route path="/cashrecepit" element={<RecepitCashRecepit />} />
-        <Route path="/add-request" element={<AddRequest />} />
+        {/* <Route path="/add-request" element={<AddRequest />} /> */}
         <Route path="recepit-material" element={<MaterialRecepits />} />
-        <Route path="/request-completed" element={<CompletedListRequest />} />
+        {/* <Route path="/request-completed" element={<CompletedListRequest />} /> */}
         {/* Reports  */}
         <Route path="/stock-summary" element={<PendingListTask />} />
         <Route path="/d-summary" element={<DonationSummary />} />
         <Route path="/d-summary-view" element={<DonationSummaryView />} />
-        <Route path="/task-inspection" element={<InspectionListTask />} />
-        <Route path="/task-completed" element={<CompletedListTask />} />
+        {/* <Route path="/task-inspection" element={<InspectionListTask />} /> */}
+        {/* <Route path="/task-completed" element={<CompletedListTask />} /> */}
         <Route path="/view-stock" element={<ViewStockSummary />} />
         <Route path="/download-enquiry" element={<EnquiryDownload />} />
         <Route
@@ -153,22 +153,22 @@ const App = () => {
           path="/D-consumption"
           element={<ProtectedRoute element={<DowloadConsumption />} />}
         />
-        <Route
+        {/* <Route
           path="/enquiryreport"
           element={<ProtectedRoute element={<EnquiryReport />} />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/studentreport"
           element={<ProtectedRoute element={<StudentReport />} />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/deliveryreport"
           element={<ProtectedRoute element={<DeliveryReport />} />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/material-recepitreport"
           element={<ProtectedRoute element={<ExamReport />} />}
-        />
+        /> */}
         {/* ///NEW  */}
         <Route
           path="/VendorList"

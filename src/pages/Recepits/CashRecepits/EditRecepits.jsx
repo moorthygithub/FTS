@@ -534,6 +534,7 @@ const EditRecepit = () => {
             </div>{" "}
             <div className="mb-4">
               <Fields
+                required
                 type="textField"
                 name="c_receipt_reason"
                 value={donor.c_receipt_reason}
@@ -565,6 +566,7 @@ const EditRecepit = () => {
                   <Fields
                     label="Amount"
                     type="textField"
+                    required
                     value={user.c_receipt_sub_amount}
                     name="c_receipt_sub_amount"
                     onChange={(e) => {
@@ -578,16 +580,14 @@ const EditRecepit = () => {
             <div className="flex justify-center mt-4 space-x-4">
               <Button
                 type="submit"
-                variant="contained"
-                color="primary"
+             
                 disabled={isButtonDisabled}
                 className="mt-4 bg-blue-400"
               >
                 Update
               </Button>
               <Button
-                variant="contained"
-                color="secondary"
+          
                 className="mt-4 bg-red-400"
                 onClick={handleBackButton}
               >

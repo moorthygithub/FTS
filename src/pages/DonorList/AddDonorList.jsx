@@ -4,7 +4,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Input } from "@material-tailwind/react";
-import BASE_URL, { BaseUrl } from "../../base/BaseUrl";
+import  { BaseUrl } from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";

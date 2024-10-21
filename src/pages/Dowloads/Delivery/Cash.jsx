@@ -7,11 +7,11 @@ import { Button, Input } from "@material-tailwind/react";
 import { Card } from "@material-tailwind/react";
 import Moment from "moment";
 import { useState, useEffect } from "react";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import DownloadCommon from "../../download/DeliveryDownload";
 
 function Cash() {
   const navigate = useNavigate();
@@ -177,7 +177,7 @@ function Cash() {
         <PageTitle
           title={"Download Donation Receipts"}
           // icon={FaArrowCircleLeft}
-          backLink="-1"
+          // backLink="-1"
         />
       </div>
       <Card className="p-4">

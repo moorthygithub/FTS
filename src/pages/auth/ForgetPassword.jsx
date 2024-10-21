@@ -1,9 +1,9 @@
 import { Input, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import img1 from "../../assets/img1.jpg";
+import img1 from "../../assets/mainpage.jpg";
 import Logo from "../../assets/logo.jpg";
 import { useState } from "react";
-import BASE_URL, { BaseUrl } from "../../base/BaseUrl";
+import  { BaseUrl } from "../../base/BaseUrl";
 import { toast } from "react-toastify";
 
 const ForgetPassword = () => {

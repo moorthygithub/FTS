@@ -6,13 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../layout/Layout";
 import { FaLock, FaUser } from "react-icons/fa";
-import { Avatar } from "@material-tailwind/react";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [loader, setLoader] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -54,7 +52,7 @@ const Profile = () => {
       return;
     }
 
-    const data = { first_name: firstName, phone };
+    const data = { full_name: firstName, phone };
 
     try {
       const res = await axios.post(`${BaseUrl}/update-profile`, data, {
@@ -95,6 +93,7 @@ const Profile = () => {
       old_password: oldPassword,
       password: newPassword,
       confirm_password: confirmPassword,
+      username: localStorage.getItem("username"),
     };
 
     try {

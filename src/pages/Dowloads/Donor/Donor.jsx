@@ -10,7 +10,7 @@ import { BaseUrl } from "../../../base/BaseUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import DownloadCommon from "../../download/DeliveryDownload";
 
 function Donor() {
   const navigate = useNavigate();
@@ -115,7 +115,6 @@ function Donor() {
         <PageTitle
           title={"Download Donor"}
           // icon={FaArrowCircleLeft}
-          backLink="-1"
         />
       </div>
       <Card className="p-4">

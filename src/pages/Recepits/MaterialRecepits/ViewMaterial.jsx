@@ -3,17 +3,11 @@ import { Card, Button } from "@material-tailwind/react";
 import { LuDownload } from "react-icons/lu";
 import { MdEmail, MdKeyboardBackspace } from "react-icons/md";
 import { IoIosPrint } from "react-icons/io";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import {
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
 import { FaWhatsapp } from "react-icons/fa";
 
 function ViewMaterialRecepit() {
@@ -108,7 +102,7 @@ function ViewMaterialRecepit() {
             navigate("/donor-list");
           }}
         >
-          <Button variant="standard" color="red">
+          <Button color="red">
             Add New Recepit
           </Button>
         </div>
@@ -240,13 +234,13 @@ function ViewMaterialRecepit() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-16">
-                  <div className="border-b border-black px-4 py-2 flex items-center">
+                  <div className=" border-black px-4 py-2 flex items-center">
                     <strong>Donor Sign:</strong>
                     <p className="text-black font-bold text-sm ml-2">
                       ({donor?.donor_title} {donor?.donor_full_name})
                     </p>
                   </div>
-                  <div className="border-b border-black px-4 py-2 flex items-center">
+                  <div className=" border-black px-4 py-2 flex items-center">
                     <strong>Receiver Sign:</strong>
                     <p className="text-black font-bold text-sm ml-2">
                       ({company?.company_authsign})

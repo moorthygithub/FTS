@@ -702,8 +702,8 @@ const DonorDonationReceipt = () => {
                     select
                     title="Purpose"
                     type="TransactionType1"
-                    name="receipt_donation_type"
-                    value={donor.receipt_donation_type}
+                    name="c_receipt_sub_donation_type"
+                    value={donor.c_receipt_sub_donation_type}
                     onChange={(e) => onChange(e, index)}
                     donor={donor}
                     donation_type={donation_type}

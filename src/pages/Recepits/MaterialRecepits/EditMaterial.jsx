@@ -174,29 +174,16 @@ const EditMaterial = () => {
           },
         })
         .then((res) => {
-          if (res.status == 200 && res.data.code == "200") {
-            toast.success(res.data.msg || "Donor Created Successfully");
-            setTimeout(() => {
-              navigate("/recepit-material");
-            }, [2000]);
+          if (res.data.code == "200") {
+            toast.success("Updated Successfully");
+            navigate("/recepit-material");
           } else {
-            toast.error(res.data.message || "Error occurred");
+            toast.error("Error occurred");
           }
         })
         .catch((err) => {
           if (err.response) {
-            toast.error(
-              `Error: ${
-                err.response.data.message || "An error occurred on the server"
-              }`
-            );
-            console.error("Server Error:", err.response);
-          } else if (err.request) {
-            toast.error("No response from the server.");
-            console.error("No Response:", err.request);
-          } else {
-            toast.error(`Error: ${err.message}`);
-            console.error("Error Message:", err.message);
+            toast.error("An error occurred on the server");
           }
         })
         .finally(() => {
@@ -225,6 +212,7 @@ const EditMaterial = () => {
   }, [id]);
 
   const [item, setItem] = useState([]);
+
   useEffect(() => {
     var theLoginToken = localStorage.getItem("token");
     const requestOptions = {
@@ -238,6 +226,7 @@ const EditMaterial = () => {
       .then((response) => response.json())
       .then((data) => setItem(data.item));
   }, []);
+  console.log(item, "ITENs");
 
   return (
     <Layout>
@@ -396,20 +385,10 @@ const EditMaterial = () => {
             ))}
 
             <div className="flex justify-center mt-4 space-x-4 ">
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className="mt-4 bg-blue-500"
-              >
+              <Button type="submit" className="mt-4 bg-blue-500">
                 Update
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                className="mt-4 bg-red-500"
-                onClick={handleBackButton}
-              >
+              <Button className="mt-4 bg-red-500" onClick={handleBackButton}>
                 Back
               </Button>
             </div>

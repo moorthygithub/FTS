@@ -1,14 +1,11 @@
-import { Card, CardBody, Input } from "@material-tailwind/react";
-import CommonCard from "../../../components/common/dataCard/CommonCard";
 import Layout from "../../../layout/Layout";
-import { Link, useNavigate, useParams } from "react-router-dom"; // Import useParams
+import {  useNavigate, useParams } from "react-router-dom"; // Import useParams
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Fields from "../../../components/common/TextField/TextField";
 import axios from "axios";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { toast } from "react-toastify";
-import moment from "moment";
 
 const status = [
   {

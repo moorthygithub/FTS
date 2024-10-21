@@ -4,9 +4,8 @@ import DeliveryFilter from "../../../components/DeliveryFilter";
 import { ContextPanel } from "../../../utils/ContextPanel";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { MdEdit } from "react-icons/md";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
 
@@ -105,8 +104,7 @@ const Consumption = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 25, 50],
+
     responsive: "standard",
     viewColumns: true,
     download: false,

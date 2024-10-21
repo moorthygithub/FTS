@@ -3,7 +3,7 @@ import Layout from "../../../layout/Layout";
 import { ContextPanel } from "../../../utils/ContextPanel";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { MdEdit } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import EnquiryFilter from "../../../components/EnquiryFilter";
@@ -98,8 +98,7 @@ const ListOccasion = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 25, 50],
+
     responsive: "standard",
     viewColumns: true,
     download: false,

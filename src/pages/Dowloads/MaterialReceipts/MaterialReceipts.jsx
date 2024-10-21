@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Button, Input, Card } from "@material-tailwind/react";
 import Moment from "moment";
 import { useState, useEffect } from "react";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import DownloadCommon from "../../download/DeliveryDownload";
 
 function MaterialReceipts() {
   const navigate = useNavigate();
@@ -151,7 +151,7 @@ function MaterialReceipts() {
       <DownloadCommon />
       <ToastContainer />
       <div className="mt-4 mb-6">
-        <PageTitle title={"Download Material Receipts"} backLink="-1" />
+        <PageTitle title={"Download Material Receipts"} />
       </div>
       <Card className="p-4">
         <h3 className="text-red-500 mb-5">

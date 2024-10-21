@@ -1,14 +1,13 @@
 import Layout from "../../../layout/Layout";
 import { Card, Button } from "@material-tailwind/react";
 import { LuDownload } from "react-icons/lu";
-import { MdEmail, MdKeyboardBackspace } from "react-icons/md";
+import { MdKeyboardBackspace } from "react-icons/md";
 import { IoIosPrint } from "react-icons/io";
-import BASE_URL, { BaseUrl } from "../../../base/BaseUrl";
+import { BaseUrl } from "../../../base/BaseUrl";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Table, TableBody, TableCell, TableRow } from "@mui/material"; // Import Material UI table components
 import {
   Dialog,
   DialogHeader,
@@ -32,8 +31,11 @@ function ViewCashRecepit() {
     ? numWords(receipts.c_receipt_total_amount)
     : "";
   useEffect(() => {
+    fetchdata();
+  }, [id]);
+
+  const fetchdata = () => {
     axios({
-      // url: `${BaseUrl}/fetch-receipt-by-id/${id}`,
       url: `${BaseUrl}/fetch-c-receipt-by-id/${id}`,
 
       method: "GET",
@@ -50,8 +52,7 @@ function ViewCashRecepit() {
       .catch((error) => {
         console.error("Error fetching receipt data:", error);
       });
-  }, [id]);
-
+  };
   const downloadReceipt = (e) => {
     e.preventDefault();
     let check = (window.location.href = BaseUrl + "/download-receiptsc/" + id);
@@ -97,18 +98,16 @@ function ViewCashRecepit() {
     setShowModal(true);
     localStorage.setItem("ftsid", receipts.donor_fts_id + "");
   };
-  // console.log(receipts.donor_fts_id + "", "ftsid");
   const closeModal = () => setShowModal(false);
 
   const onSubmitEmail = (e) => {
     e.preventDefault();
     let data = {
-      donor_email: donor.donor_email,
-      donor_related_id: id,
+      donor_email: email,
     };
 
     axios({
-      url: BaseUrl + "/update-donor-email/" + id,
+      url: BaseUrl + "/update-donor-email/" + donor.donor_fts_id,
       method: "PUT",
       data,
       headers: {
@@ -116,9 +115,9 @@ function ViewCashRecepit() {
       },
     }).then((res) => {
       if (res.data.code == "201") {
-        toast.success("Email Id Updated Sucessfully");
+        toast.success("Email  Updated Sucessfully");
         closeModal();
-        navigate("/cashrecepit");
+        fetchdata();
       } else {
         toast.error("Duplicate Entry of Email Id");
         setShowModal(false);
@@ -168,7 +167,7 @@ function ViewCashRecepit() {
 
       {receipts && (
         <div>
-          <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4 p-6">
+          <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4 p-3">
             {/* Buttons for Download and WhatsApp */}
             <Button
               variant="text"
@@ -197,7 +196,7 @@ function ViewCashRecepit() {
             </Button>
 
             {/* Email Handling Section */}
-            {receipts?.donor?.donor_email ? (
+            {donor?.donor_email ? (
               <>
                 <div className="flex flex-col items-start">
                   <a onClick={sendEmail} className="flex items-center">
@@ -231,6 +230,7 @@ function ViewCashRecepit() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter donor email"
                   className="w-full px-3 py-2 mt-1 border rounded"
+                  name="donor_email"
                 />
               </DialogBody>
               <DialogFooter>
@@ -330,13 +330,13 @@ function ViewCashRecepit() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-16">
-                  <div className="border-b border-black px-4 py-2 flex items-center">
+                  <div className=" border-black px-4 py-2 flex items-center">
                     <strong>Donor Sign:</strong>
                     <p className="text-black font-bold text-sm ml-2">
                       ({donor?.donor_title} {donor?.donor_full_name})
                     </p>
                   </div>
-                  <div className="border-b border-black px-4 py-2 flex items-center">
+                  <div className=" border-black px-4 py-2 flex items-center">
                     <strong>Receiver Sign:</strong>
                     <p className="text-black font-bold text-sm ml-2">
                       ({company?.company_authsign})

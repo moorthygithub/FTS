@@ -9,7 +9,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Layout from "../../layout/Layout";
-import BASE_URL from "../../base/BaseUrl";
+import  { BaseUrl } from "../../base/BaseUrl";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -42,7 +42,7 @@ const ChangePassword = () => {
  
       try {
         const response = await axios.post(
-          `${BASE_URL}/api/panel-change-password`,
+          `${BaseUrl}/change-password`,
           formData,
           {
             headers: {
@@ -53,7 +53,7 @@ const ChangePassword = () => {
 
         if (response.data.code == 200) {
           toast.success("Password Changed Successfully");
-          navigate(`/`);
+          // navigate(`/`);
         } else {
           if (response.data.code == 401) {
             toast.error("Please enter a Password Properly");

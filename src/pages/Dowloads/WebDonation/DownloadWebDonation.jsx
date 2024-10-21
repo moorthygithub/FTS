@@ -9,7 +9,7 @@ import { BaseUrl } from "../../../base/BaseUrl";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import DownloadCommon from "../../download/DeliveryDownload";
 
 function DownloadWebDonation() {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ function DownloadWebDonation() {
       <DownloadCommon />
       <ToastContainer />
       <div className="mt-4 mb-6">
-        <PageTitle title={"Download Website Donation"} backLink="-1" />
+        <PageTitle title={"Download Website Donation"}  />
       </div>
       <Card className="p-4">
         <h3 className="text-red-500 mb-5">

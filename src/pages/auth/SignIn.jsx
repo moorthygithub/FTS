@@ -10,9 +10,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BaseUrl } from "../../base/BaseUrl";
 import { ContextPanel } from "../../utils/ContextPanel";
-import image1 from "../../assets/img1.jpg";
-import image2 from "../../assets/img2.jpg";
-import image3 from "../../assets/img3.jpg";
+
+import image1 from "../../assets/mainpage.jpg";
 import Logo from "../../assets/logo.jpg";
 import { toast } from "react-toastify";
 
@@ -72,7 +71,7 @@ const SignIn = () => {
       <section className="flex flex-col lg:flex-row h-screen">
         {/* Left Section for Carousel // h-full -add */}
         <div className="hidden lg:block lg:w-1/2 h-full">
-          <Carousel autoplay loop>
+          {/* <Carousel autoplay loop>
             <img
               src={image1}
               alt="Slide 1"
@@ -88,7 +87,12 @@ const SignIn = () => {
               alt="Slide 3"
               className="h-full w-full object-cover"
             />
-          </Carousel>
+          </Carousel> */}
+          <img
+              src={image1}
+              alt="img 1"
+              className="h-full w-full object-cover"
+            />
         </div>
 
         {/* Right Section for Login Form  h-full add*/}

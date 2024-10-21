@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import { ContextPanel } from "../../utils/ContextPanel";
 import { Link, useNavigate } from "react-router-dom";
-import BASE_URL, { BaseUrl } from "../../base/BaseUrl";
+import { BaseUrl } from "../../base/BaseUrl";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import { MdEdit, MdShoppingBasket } from "react-icons/md";
@@ -128,29 +128,29 @@ const DonorList = () => {
               <IoEye
                 onClick={() => navigate(`/viewdonor-list/${id}`)}
                 title="View "
-                className="h-5 w-5 cursor-pointer text-blue-500"
+                className="h-5 w-5 cursor-pointer text-blue-500 mr-2"
               />
 
               <MdEdit
                 onClick={() => navigate(`/edit-donor/${id}`)}
                 title="Edit"
-                className="h-5 w-5 cursor-pointer text-blue-500"
+                className="h-5 w-5 cursor-pointer text-blue-500 mr-2"
               />
 
               <BiAbacus
                 onClick={() => navigate(`/createrecepit-donor/${id}`)}
                 title="Cash Recepit"
-                className="h-5 w-5 cursor-pointer text-blue-500"
+                className="h-5 w-5 cursor-pointer text-blue-500 mr-2"
               />
               <MdShoppingBasket
                 onClick={() => navigate(`/create-donor/${id}`)}
                 title="Material Recepit"
-                className="h-5 w-5 cursor-pointer text-blue-500"
+                className="h-5 w-5 cursor-pointer text-blue-500 mr-2"
               />
               <FaUsers
                 onClick={() => navigate(`/create-family/${id}`)}
                 title="Family Members"
-                className="h-5 w-5 cursor-pointer text-blue-500"
+                className="h-5 w-5 cursor-pointer text-blue-500 mr-2"
               />
             </div>
           );
@@ -161,8 +161,7 @@ const DonorList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 25, 50],
+
     responsive: "standard",
     viewColumns: true,
     download: false,

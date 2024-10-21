@@ -120,12 +120,12 @@ const Fields = (props) => {
         </>
       )}
       {/* //occasion drop down  */}
-      {props.type === "occasionDropdown" && (
+      {/* {props.type === "occasionDropdown" && (
         <>
           <FormControl fullWidth>
             <InputLabel id="service-select-label">
               <span className="text-sm relative bottom-[6px]">
-                {props.title} 
+                {props.title}
               </span>
             </InputLabel>
             <Select
@@ -133,20 +133,57 @@ const Fields = (props) => {
               labelId="service-select-label"
               id="service-select"
               name={props.name}
-              value={props.value}
+              value={
+                props.options?.some(
+                  (option) => option.occasion_name == props.value
+                )
+                  ? props.value
+                  : ""
+              }
               label={props.title}
               onChange={props.onchange}
               {...props}
               required={props.required === true || props.required === "true"}
             >
-              {props.options?.map((data, key) => (
-                <MenuItem key={key} value={data.occasion_name}>
+              {props.options?.map((data) => (
+                <MenuItem key={data.occasion_name} value={data.occasion_name}>
                   {data.occasion_name}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </>
+      )} */}
+
+      {props.type === "occasionDropdown" && (
+        <FormControl fullWidth>
+          <InputLabel id="service-select-label">
+            <span className="text-sm relative bottom-[6px]">{props.title}</span>
+          </InputLabel>
+          <Select
+            sx={{ height: "40px", borderRadius: "5px" }}
+            labelId="service-select-label"
+            id="service-select"
+            name={props.name}
+            value={
+              props.options?.some(
+                (option) => option.m_receipt_occasional === props.value
+              )
+                ? props.value
+                : ""
+            }
+            label={props.title}
+            onChange={props.onchange}
+            {...props}
+            required={props.required === true || props.required === "true"}
+          >
+            {props.options?.map((data) => (
+              <MenuItem key={data.occasion_name} value={data.occasion_name}>
+                {data.occasion_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       )}
 
       {/* //Family DROP DOWN  */}
@@ -363,8 +400,16 @@ const Fields = (props) => {
               labelId="service-select-label"
               id="service-select"
               name={props.name}
-              value={props.value}
+              // value={props.value}
               label={props.title}
+              value={
+                props.value !== null &&
+                props.options?.some(
+                  (option) => option.item_name === props.value
+                )
+                  ? props.value
+                  : ""
+              }
               onChange={props.onchange}
               {...props}
               required={props.required === true || props.required === "true"}
@@ -435,7 +480,7 @@ const Fields = (props) => {
         </>
       )}
       {/* //only name */}
-      {props.type === "itemdropdown" && (
+      {/* {props.type === "itemdropdown" && (
         <>
           <FormControl fullWidth>
             <InputLabel id="service-select-label">
@@ -448,7 +493,14 @@ const Fields = (props) => {
               labelId="service-select-label"
               id="service-select"
               name={props.name}
-              value={props.value}
+              value={
+                props.value !== null &&
+                props.options?.some(
+                  (option) => option.purchase_sub_item === props.value
+                )
+                  ? props.value
+                  : ""
+              }
               label={props.title}
               onChange={props.onchange}
               {...props}
@@ -462,7 +514,42 @@ const Fields = (props) => {
             </Select>
           </FormControl>
         </>
+      )} */}
+
+      {props.type === "itemdropdown" && (
+        <FormControl fullWidth>
+          <InputLabel id="service-select-label">
+            <span className="text-sm relative bottom-[6px]">
+              {props.title} <span className="text-red-700">*</span>
+            </span>
+          </InputLabel>
+          <Select
+            sx={{ height: "40px", borderRadius: "5px" }}
+            labelId="service-select-label"
+            id="service-select"
+            name={props.name}
+            value={
+              props.value !== null &&
+              props.options?.some(
+                (option) => option.purchase_sub_item === props.value 
+              )
+                ? props.value
+                : "" 
+            }
+            label={props.title}
+            onChange={props.onchange}
+            {...props}
+            required={props.required === true || props.required === "true"}
+          >
+            {props.options?.map((data, key) => (
+              <MenuItem key={key} value={data.item_name}>
+                {data.item_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       )}
+
       {props.type === "subServiceDropdown" && (
         <>
           <FormControl fullWidth>

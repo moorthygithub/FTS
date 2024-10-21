@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
 import { ContextPanel } from "../../../utils/ContextPanel";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import { BaseUrl } from "../../../base/BaseUrl";
@@ -124,29 +124,24 @@ const DuplicateDonorList = () => {
           return (
             <div style={{ minWidth: "150px" }}>
               {!value.startsWith(0) ? (
-                <Button
-                  className="bg-white text-red-600"
+                <MdEdit
+                  className="text-blue-500 text-lg cursor-pointer"
                   onClick={() => {
                     navigate(
                       `/edit-duplicate/${value.substr(
                         value.indexOf("#") + 1,
                         value.length - 1
                       )}`
-                    )
+                    );
                   }}
-                
-                >
-                  <MdEdit />
-                </Button>
+                />
               ) : (
-                <Button
-                  className="bg-white text-red-600"
+                <MdDelete
+                  className="text-blue-500 text-lg cursor-pointer"
                   onClick={() =>
                     updateData(value.substr(value.indexOf("#") + 1))
                   }
-                >
-                  <MdDelete />
-                </Button>
+                />
               )}
             </div>
           );
@@ -158,8 +153,6 @@ const DuplicateDonorList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 10,
-    rowsPerPageOptions: [10, 25, 50],
     responsive: "standard",
     viewColumns: true,
     download: false,
@@ -176,7 +169,7 @@ const DuplicateDonorList = () => {
       <CommonListing />
       <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Duplicate List 
+          Duplicate List
         </h3>
       </div>
       <div

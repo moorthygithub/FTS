@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 import { NumericFormat } from "react-number-format";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import baseURL, { BaseUrl } from "../../base/BaseUrl";
+import { BaseUrl } from "../../base/BaseUrl";
 import { Chart, ArcElement, registerables } from "chart.js";
 import Layout from "../../layout/Layout";
 import ApexCharts from "apexcharts";
@@ -229,31 +229,29 @@ const NewsDashboard = () => {
         </div>
 
         {/* Current Month Stocks */}
-        <div className="mt-8">
-          <h3 className="text-2xl font-bold">Current Month Stocks (in Kgs)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mt-4">
-            {stock.map((value, index) => (
-              <div
-                key={index}
-                className="bg-white p-4 shadow rounded-md text-center"
-              >
-                <span className="block font-bold text-lg">
-                  <NumericFormat
-                    thousandSeparator={true}
-                    thousandsGroupStyle="lakh"
-                    displayType={"text"}
-                    value={
-                      value.openpurch -
-                      value.closesale +
-                      (value.purch - value.sale)
-                    }
-                  />
-                </span>
-                <span className="block text-sm">{value.item_name}</span>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mt-4">
+          {stock.map((value, index) => (
+            <div
+              key={index}
+              className="bg-white p-4 shadow rounded-md text-center max-w-full"
+            >
+              <span className="block font-bold text-lg text-ellipsis overflow-hidden">
+                <NumericFormat
+                  thousandSeparator={true}
+                  thousandsGroupStyle="lakh"
+                  displayType={"text"}
+                  value={
+                    value.openpurch -
+                    value.closesale +
+                    (value.purch - value.sale)
+                  }
+                />
+              </span>
+              <span className="block text-sm">{value.item_name}</span>
+            </div>
+          ))}
         </div>
+
         <div className="news-dashboard-wrapper mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>

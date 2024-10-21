@@ -1,11 +1,11 @@
 import Layout from "../../../layout/Layout";
 import PageTitle from "../../../components/common/PageTitle";
 import { useNavigate } from "react-router-dom";
-import { Button, Input } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { Card } from "@material-tailwind/react";
 import { useState } from "react";
 import { BaseUrl } from "../../../base/BaseUrl";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import Fields from "../../../components/common/TextField/TextField";
@@ -46,9 +46,8 @@ function AddFamilyMembers() {
       if (res.data.code == "200") {
         toast.success("Family Member Created Sucessfully");
         navigate("/donor-list");
-      }
-      else{
-        toast.error("Duplicate Entry")
+      } else {
+        toast.error("Duplicate Entry");
       }
     });
   };
@@ -73,7 +72,7 @@ function AddFamilyMembers() {
               />
             </div>
 
-            <div className="w-77">
+            <div className="w-auto">
               <Button
                 className="bg-blue-400"
                 fullWidth
@@ -84,9 +83,10 @@ function AddFamilyMembers() {
                 Submit
               </Button>
             </div>
-            <div className="w-77">
+
+            <div className="w-auto">
               <Button
-                color="red"
+                className=" bg-red-500"
                 fullWidth
                 name="donor_gender"
                 onClick={() => {

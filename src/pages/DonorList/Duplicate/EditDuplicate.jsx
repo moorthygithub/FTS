@@ -77,7 +77,6 @@ const EditDuplicate = () => {
       donor_status: "0",
     };
 
-    // if (document.getElementById("addIndiv").checkValidity()) {
     axios
       .put(`${BaseUrl}/update-donors-duplicate/${id}`, data, {
         headers: {
@@ -85,17 +84,12 @@ const EditDuplicate = () => {
         },
       })
       .then((res) => {
-        // if (res.data.code == "200") {
-          toast.success("Donor Updated Successfully");
-          navigate("/duplicate");
-        // } else {
-        //   toast.error("Error occurred");
-        // }
+        toast.success("Donor Updated Successfully");
+        navigate("/duplicate");
       })
       .catch(() => {
         toast.error("Error Occurred");
       });
-    // }
   };
 
   const handleBackButton = () => {
@@ -212,13 +206,15 @@ const EditDuplicate = () => {
               data={donorData}
               columns={columns}
               options={{
-                selectableRows: false,
-                download: false,
                 filterType: "textField",
                 print: false,
                 viewColumns: false,
                 filter: false,
                 searchOpen: true,
+                download: false,
+                selectableRows: false,
+                responsive: "standard",
+                search: false,
               }}
             />
           </DialogBody>

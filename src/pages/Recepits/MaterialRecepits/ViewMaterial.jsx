@@ -23,8 +23,6 @@ function ViewMaterialRecepit() {
   const [recepitsub, setRecepitsub] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [email, setEmail] = useState("");
 
   useEffect(() => {
     axios({
@@ -98,7 +96,7 @@ function ViewMaterialRecepit() {
         <div className="flex flex-row justify-start items-center p-2">
           <MdKeyboardBackspace
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
-            onClick={() => navigate("/cashrecepit")}
+            onClick={() => navigate("/recepit-material")}
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
             Material Receipt
@@ -188,49 +186,71 @@ function ViewMaterialRecepit() {
               <span>Print Receipt</span>
             </Button>
           </div>
-          <div className="flex justify-center">
-            <Card className="p-4  w-[90%] ">
+
+          <hr></hr>
+
+          <div className="flex justify-center mt-2">
+            <Card className="p-4 w-full max-w-[90%] md:max-w-[80%] lg:max-w-[70%]">
               <div className="border border-black">
-                <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b border-r border-black px-4 py-2 h-20 flex items-center">
-                    <strong>Receipt No:</strong>{" "}
-                    {receipts.m_receipt_no || "N/A"}
+                <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-16">
+                  <div className="border-b border-r border-black px-4 py-2 flex items-center">
+                    <strong>Receipt No:</strong>
+                    <p className="text-black font-bold text-sm ml-2">
+                      {receipts.m_receipt_no}
+                    </p>
                   </div>
-                  <div className="border-b border-black px-4 py-2 h-20 flex items-center">
-                    <strong>Date:</strong>{" "}
-                    {new Date(receipts.m_receipt_date).toLocaleDateString() ||
-                      "N/A"}
+                  <div className="border-b border-black px-4 py-2 flex items-center">
+                    <strong>Date:</strong>
+                    <p className="text-black font-bold text-sm ml-2">
+                      {new Date(receipts.m_receipt_date).toLocaleDateString()}{" "}
+                    </p>
                   </div>
                 </div>
 
-                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
-                  <strong>Received with thanks from:</strong>{" "}
-                  {donor?.donor_title} {donor?.donor_full_name}
-                  {donor?.donor_city}-{donor?.donor_pin_code},{" "}
-                  {donor?.donor_state}
+                <div className="border-b border-black px-4 py-2 h-auto md:h-16 flex items-center">
+                  <strong>Received with thanks from:</strong>
+                  <p className="text-black font-bold text-sm ml-2">
+                    {donor?.donor_title} {donor?.donor_full_name},{" "}
+                    {donor?.donor_city} - {donor?.donor_pin_code},{" "}
+                    {donor?.donor_state}
+                  </p>
                 </div>
-
-                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
-                  <strong>Occasion of:</strong> {receipts.m_receipt_occasional}
-                </div>
-
-                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
-                  <strong>Vehicle :</strong> {receipts.m_receipt_vehicle_no}
-                </div>
-                <div className="border-b border-black px-4 py-2 h-20 flex items-center">
-                  <strong>In Account of:</strong>{" "}
-                  {recepitsub[0].purchase_sub_item}-
-                  {recepitsub[0].purchase_sub_qnty}{" "}
-                  {recepitsub[0].purchase_sub_unit}
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="border-b  border-black px-4 py-2 h-20 flex items-center">
-                    <strong>Donor Sign:</strong> ({donor?.donor_title}{" "}
-                    {donor?.donor_full_name})
+                <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-16">
+                  <div className="border-b border-r border-black px-4 py-2 flex items-center">
+                    <strong>Vehicle :</strong>
+                    <p className="text-black font-bold text-sm ml-2">
+                      {receipts.m_receipt_vehicle_no}{" "}
+                    </p>
                   </div>
-                  <div className="border-b border-black px-4 py-2 h-20 flex items-center">
-                    <strong>Receiver Sign:</strong> ({company.company_authsign})
+                  <div className="border-b border-black px-4 py-2 h-auto md:h-16 flex items-center">
+                    <strong>Occasion of:</strong>
+                    <p className="text-black font-bold text-sm ml-2">
+                      {receipts.m_receipt_occasional}{" "}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-b border-black px-4 py-2 h-auto md:h-16 flex items-center">
+                  <strong>In Account of:</strong>
+                  <p className="text-black font-bold text-sm ml-2">
+                    {recepitsub[0]?.purchase_sub_item} -{" "}
+                    {recepitsub[0]?.purchase_sub_qnty}
+                    {recepitsub[0]?.purchase_sub_unit}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 h-auto md:h-16">
+                  <div className="border-b border-black px-4 py-2 flex items-center">
+                    <strong>Donor Sign:</strong>
+                    <p className="text-black font-bold text-sm ml-2">
+                      ({donor?.donor_title} {donor?.donor_full_name})
+                    </p>
+                  </div>
+                  <div className="border-b border-black px-4 py-2 flex items-center">
+                    <strong>Receiver Sign:</strong>
+                    <p className="text-black font-bold text-sm ml-2">
+                      ({company?.company_authsign})
+                    </p>
                   </div>
                 </div>
               </div>

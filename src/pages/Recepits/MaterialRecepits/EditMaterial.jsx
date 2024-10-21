@@ -5,12 +5,9 @@ import axios from "axios";
 import Layout from "../../../layout/Layout";
 import Fields from "../../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
-// import { Button, IconButton } from "@mui/material";
 import { BaseUrl } from "../../../base/BaseUrl";
 import moment from "moment/moment";
 import { Button, Card, CardBody, Input } from "@material-tailwind/react";
-
-// Unit options for dropdown
 
 const unit = [
   { value: "Kg", label: "Kg" },
@@ -226,79 +223,7 @@ const EditMaterial = () => {
       console.log("datatable", res.data.donor);
     });
   }, [id]);
-  //DAY CLOSE
-  console.log(users, "sers");
-  //DAY close
 
-  // const onDayClose = (e) => {
-  //   e.preventDefault();
-  //   setCheck(true);
-
-  //   const receivedDate = new Date(dayClose);
-
-  //   if (isNaN(receivedDate)) {
-  //     console.error("Invalid dayClose date:", dayClose);
-  //     return;
-  //   }
-
-  //   receivedDate.setDate(receivedDate.getDate() + 1);
-
-  //   const year = receivedDate.getFullYear();
-  //   const month = String(receivedDate.getMonth() + 1).padStart(2, "0"); // Get month from 0-11, add 1 and pad with zero
-  //   const day = String(receivedDate.getDate()).padStart(2, "0"); // Get day and pad with zero
-
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   console.log(formattedDate, "formattedDate");
-  //   let data = {
-  //     c_receipt_date: formattedDate,
-  //   };
-
-  //   // Making the API call
-  //   axios({
-  //     url: BaseUrl + "/update-c-receipt-date/1",
-  //     method: "PUT",
-  //     data,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       console.log(res.data, "dayclose");
-  //       setDayClose(res.data.latestdate.c_receipt_date);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error updating receipt date:", error);
-  //     });
-  // };
-
-  // const onDayOpen = (e) => {
-  //   e.preventDefault();
-  //   setCheck(true);
-  //   const receivedDate = new Date(dayClose);
-  //   receivedDate.setDate(receivedDate.getDate() - 1);
-
-  //   const year = receivedDate.getFullYear();
-  //   const month = String(receivedDate.getMonth() + 1).padStart(2, "0");
-  //   const day = String(receivedDate.getDate()).padStart(2, "0");
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   let data = {
-  //     c_receipt_date: formattedDate,
-  //   };
-  //   axios({
-  //     url: BaseUrl + "/update-c-receipt-date-open/1",
-  //     method: "PUT",
-  //     data,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   }).then((res) => {
-  //     if (res.data.code == 401) {
-  //       toast.error("In that Date there is already Receipt is Created");
-  //     } else {
-  //       setDayClose(res.data.latestdate.c_receipt_date);
-  //     }
-  //   });
-  // };
   const [item, setItem] = useState([]);
   useEffect(() => {
     var theLoginToken = localStorage.getItem("token");
@@ -323,46 +248,54 @@ const EditMaterial = () => {
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
-            Donation Receipt in receipt
+            Material Recepit
           </h1>
         </div>
-        <Card className="p-6 mt-5 bg-white shadow-md rounded-lg">
+        <Card className=" mt-5 bg-white shadow-md rounded-lg">
           <CardBody>
             <div className="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-4 mb-4">
-              <div className="text-gray-700">
+              <div className=" text-gray-700">
                 <strong>Name:</strong>
-                {donors.donor_full_name}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {donors.donor_full_name}
+                </div>
               </div>
-              <div className="text-gray-700">
+              <div className=" text-gray-700">
                 <strong>PDS ID:</strong>
-                {donors.donor_fts_id}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {donors.donor_fts_id}
+                </div>
               </div>
-              <div className="text-gray-700">
+              <div className=" text-gray-700">
                 <strong>Pan No:</strong>
-                {pan}
+                <div className="text-blue-400 inline-flex ml-1">{pan}</div>
               </div>
-              <div className="text-gray-700">
-                <strong>Receipt Date:</strong>{" "}
-                {moment(donor.m_receipt_date).format("DD-MM-YYYY")}{" "}
+              <div className=" text-gray-700">
+                <strong>Receipt Date:</strong>
+                <div className="text-blue-400 inline-flex ml-1">
+                  {moment(donor.m_receipt_date).format("DD-MM-YYYY")}
+                </div>
               </div>
-              <div className="text-gray-700">
+              <div className=" text-gray-700">
                 <strong>Year:</strong>
-                {donor.m_receipt_financial_year}{" "}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {donor.m_receipt_financial_year}
+                </div>
               </div>
-
-              <div className="text-gray-700">
-                <strong>Receipt Ref :</strong>
-                {donor.m_receipt_ref_no}{" "}
+              <div className=" text-gray-700">
+                <strong>Receipt Ref:</strong>
+                <div className="text-blue-400 inline-flex ml-1">
+                  {donor.m_receipt_ref_no}
+                </div>
               </div>
             </div>
           </CardBody>
         </Card>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form id="addIndiv" onSubmit={onSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="mb-4 ">
                 <Fields
-                  required
                   label="Approx Value"
                   type="textField"
                   value={donor.m_receipt_total_amount}
@@ -372,9 +305,9 @@ const EditMaterial = () => {
               </div>
               <div className="mb-4">
                 <Fields
-                  required
                   label="Vehicle No"
                   type="textField"
+                  name="m_receipt_vehicle_no"
                   value={donor.m_receipt_vehicle_no}
                   onChange={(e) => onInputChange(e)}
                 />
@@ -390,9 +323,8 @@ const EditMaterial = () => {
                   options={occasion}
                 />
               </div>
-              <div>
+              <div className="mb-4">
                 <Fields
-                  required
                   label="Manual Receipt No"
                   type="textField"
                   value={donor.m_manual_receipt_no}
@@ -400,9 +332,10 @@ const EditMaterial = () => {
                   name="m_manual_receipt_no"
                 />
               </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="mb-4">
                 <Fields
-                  required
                   label="Remarks"
                   type="textField"
                   value={donor.m_receipt_remarks}
@@ -419,12 +352,12 @@ const EditMaterial = () => {
                   onChange={onInputChange}
                   name="m_receipt_reason"
                 />
-              </div>
+              </div>{" "}
             </div>
 
             {/* Mapping all items */}
             {users.map((user, index) => (
-              <div key={index}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="mb-4">
                   <Fields
                     required
@@ -462,19 +395,19 @@ const EditMaterial = () => {
               </div>
             ))}
 
-            <div className="flex justify-center mt-4 space-x-4">
+            <div className="flex justify-center mt-4 space-x-4 ">
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
-                className="mt-4"
+                className="mt-4 bg-blue-500"
               >
-                Submit
+                Update
               </Button>
               <Button
                 variant="contained"
                 color="secondary"
-                className="mt-4"
+                className="mt-4 bg-red-500"
                 onClick={handleBackButton}
               >
                 Back

@@ -9,7 +9,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import moment from "moment/moment";
-import { jsPDF } from "jspdf";
 import html2pdf from "html2pdf.js";
 
 const TABLE_HEAD = ["Donation Trans Type", "Amount"];
@@ -160,13 +159,13 @@ function DonationSummaryView() {
                   Donation Summary - From: {from_date} To: {to_date}
                 </div>
               </div>
-              <table className="min-w-full text-left">
+              <table className="min-w-full text-left border-collapse border border-gray-300">
                 <thead>
                   <tr>
                     {TABLE_HEAD.map((head) => (
                       <th
                         key={head}
-                        className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                        className="border-b border-gray-300 bg-blue-gray-50 p-4"
                       >
                         <Typography
                           variant="small"
@@ -183,7 +182,7 @@ function DonationSummaryView() {
                   {donationSummaryTrans.length > 0 ? (
                     donationSummaryTrans.map((stockItem, index) => (
                       <tr key={index}>
-                        <td className="p-4">
+                        <td className="border border-gray-300 p-4">
                           <Typography
                             variant="small"
                             color="blue-gray"
@@ -192,7 +191,7 @@ function DonationSummaryView() {
                             {stockItem.c_receipt_tran}
                           </Typography>
                         </td>
-                        <td className="p-4 bg-blue-gray-50/50">
+                        <td className="border border-gray-300 p-4 bg-blue-gray-50/50">
                           <Typography
                             variant="small"
                             color="blue-gray"
@@ -214,13 +213,13 @@ function DonationSummaryView() {
               </table>
               {/* SECOND TABLE  */}
 
-              <table className="min-w-full text-left mt-5">
+              <table className="min-w-full text-left border-collapse border border-gray-300 mt-5">
                 <thead>
                   <tr>
                     {TABLE_HEAD.map((head) => (
                       <th
                         key={head}
-                        className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                        className="border-b border-gray-300 bg-blue-gray-50 p-4"
                       >
                         <Typography
                           variant="small"
@@ -236,7 +235,7 @@ function DonationSummaryView() {
                 <tbody>
                   {donationSummarySum && donationSummarySum.length >= 0 ? (
                     <tr>
-                      <td className="p-4">
+                      <td className="border border-gray-300 p-4">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -245,7 +244,7 @@ function DonationSummaryView() {
                           Total
                         </Typography>
                       </td>
-                      <td className="p-4 bg-blue-gray-50/50">
+                      <td className="border border-gray-300 p-4 bg-blue-gray-50/50">
                         <Typography
                           variant="small"
                           color="blue-gray"

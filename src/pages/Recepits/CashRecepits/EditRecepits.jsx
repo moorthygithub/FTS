@@ -143,9 +143,6 @@ const donation_type_2 = [
 
 const EditRecepit = () => {
   const navigate = useNavigate();
-  const [vendors, setVendors] = useState([]);
-  const [items, setItems] = useState([]);
-  const [donors, setDonors] = useState([]);
   const [userfamilydata, setUserfFamilydata] = React.useState("");
   const { id } = useParams();
   const [userdata, setUserdata] = useState("");
@@ -203,7 +200,6 @@ const EditRecepit = () => {
   };
 
   const [users, setUsers] = useState([useTemplate]);
-  const [fabric_inward_count, setCount] = useState(1);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   //FETCH OCCASION
   const [occasion, setOccasion] = useState([]);
@@ -364,6 +360,7 @@ const EditRecepit = () => {
       setUsers(res.data.receiptSub || []);
       setUserfFamilydata(res.data.familyMember);
       setDonor(res.data.receipts);
+      setUserdata(res.data.donor);
       console.log("datatable", res.data.donor);
     });
   }, [id]);
@@ -387,23 +384,37 @@ const EditRecepit = () => {
             <div className="grid grid-cols-1 md:grid-cols-3  lg:grid-cols-5 gap-4 mb-4">
               <div className="text-gray-700">
                 <strong>Name:</strong>
-                {userdata.donor_full_name}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {" "}
+                  {userdata.donor_full_name}
+                </div>
               </div>
               <div className="text-gray-700">
                 <strong>PDS ID:</strong>
-                {userdata.donor_fts_id}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {" "}
+                  {userdata.donor_fts_id}
+                </div>
               </div>
               <div className="text-gray-700">
                 <strong>Pan No:</strong>
-                {pan}
+                <div className="text-blue-400 inline-flex ml-1"> {pan}</div>
               </div>
               <div className="text-gray-700">
                 <strong>Receipt Date:</strong>{" "}
-                {moment(check ? dayClose : dayClose).format("DD-MM-YYYY")}{" "}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {" "}
+                  {moment(check ? dayClose : dayClose).format(
+                    "DD-MM-YYYY"
+                  )}{" "}
+                </div>
               </div>
               <div className="text-gray-700">
                 <strong>Year:</strong>
-                {finalyear}
+                <div className="text-blue-400 inline-flex ml-1">
+                  {" "}
+                  {finalyear}
+                </div>
               </div>
             </div>
             {donor.c_receipt_total_amount > 2000 &&

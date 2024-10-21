@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import moment from "moment/moment";
-import html2pdf from "html2pdf.js"; 
+import html2pdf from "html2pdf.js";
 
 const TABLE_HEAD = [
   "Items Name",
@@ -26,10 +26,10 @@ function ViewStockSummary() {
   const [loader, setLoader] = useState(true);
   const [from_date, setFromDate] = useState("");
   const [to_date, setToDate] = useState("");
-  const componentRef = useRef(); 
+  const componentRef = useRef();
 
   const PrintRecepit = () => {
-    const printContent = componentRef.current; 
+    const printContent = componentRef.current;
     const printWindow = window.open("", "", "height=500,width=800");
 
     printWindow.document.write("<html><head><title>Print Receipt</title>");
@@ -51,7 +51,7 @@ function ViewStockSummary() {
       .join("");
     printWindow.document.write(`<style>${styles}</style>`);
     printWindow.document.write("</head><body>");
-    printWindow.document.write(printContent.innerHTML); 
+    printWindow.document.write(printContent.innerHTML);
     printWindow.document.write("</body></html>");
     printWindow.document.close();
     printWindow.print();
@@ -62,16 +62,20 @@ function ViewStockSummary() {
     const opt = {
       margin: 1,
       filename: `Stock_Summary_${from_date}_to_${to_date}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
+      image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
 
     // Use html2pdf to create and download the PDF
-    html2pdf().from(element).set(opt).save().catch((error) => {
-      console.error("PDF generation error:", error);
-      toast.error("Failed to download PDF.");
-    });
+    html2pdf()
+      .from(element)
+      .set(opt)
+      .save()
+      .catch((error) => {
+        console.error("PDF generation error:", error);
+        toast.error("Failed to download PDF.");
+      });
   };
 
   useEffect(() => {
@@ -124,10 +128,10 @@ function ViewStockSummary() {
           <Button
             variant="text"
             className="flex items-center space-x-2"
-            onClick={downloadPDF} 
+            onClick={downloadPDF}
           >
             <LuDownload className="text-lg" />
-            <span>Download PDF</span>
+            <span> PDF</span>
           </Button>
           <Button
             variant="text"
@@ -153,13 +157,13 @@ function ViewStockSummary() {
                   Stock Summary - From: {from_date} To: {to_date}
                 </div>
               </div>
-              <table className="min-w-full text-left">
+              <table className="min-w-full border border-gray-200">
                 <thead>
-                  <tr>
+                  <tr className="bg-gray-100">
                     {TABLE_HEAD.map((head) => (
                       <th
                         key={head}
-                        className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                        className="border border-gray-300 p-4 text-left"
                       >
                         <Typography
                           variant="small"
@@ -179,8 +183,8 @@ function ViewStockSummary() {
                         stockItem;
                       const isLast = index === stocksummary.length - 1;
                       const classes = isLast
-                        ? "p-4"
-                        : "p-4 border-b border-blue-gray-50";
+                        ? "border-t border-gray-300 p-4"
+                        : "border-t border-b border-gray-300 p-4";
 
                       const numberFormatter = new Intl.NumberFormat("en-US", {
                         minimumFractionDigits: 0,

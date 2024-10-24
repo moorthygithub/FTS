@@ -75,10 +75,23 @@ const AppProvider = ({ children }) => {
           "/class",
           "/add-class",
           "/add-request",
-          "/cashrecepit",
+          "/download/schoolrecepit",
           "/request-completed",
           "/recepit-material",
-          "/stock-summary",
+          // REPORT
+
+          "/report/donorsummary",
+          "/report/recepit",
+          "/report/promoter",
+          "/report/donation",
+          "/report/school",
+          "/report/otg",
+          "/report/payment",
+          //report view
+          "/d-summary-view",
+          "/recepit-summary-view",
+          "/recepit-otg-view",
+
           "/course-due",
           "/task-inspection",
           "/task-completed",
@@ -94,11 +107,14 @@ const AppProvider = ({ children }) => {
           "/add-notification",
           "/download-enquiry",
           "/change-password",
-          "/donor",
-          "/cashpurchase",
-          "/cash",
+          //DOQNLOAD
+          "/download/donor",
+          "/download/receipts",
+          "/download/school",
           "/material-recepit",
-          "/D-consumption",
+          "/download/team",
+          "/download/ots",
+
           "/enquiryreport",
           "/studentreport",
           "/deliveryreport",
@@ -117,31 +133,30 @@ const AppProvider = ({ children }) => {
           "/material-add",
           "/material-view",
           "/view-stock",
-          "/web-donation",
+          "/download/allreceipts",
           "/donor-list",
           "/edit-donor",
           "/create-donor",
           "/createrecepit-donor",
-          "/cashrecepit-list",
+          "/download/schoolrecepit-list",
           "/viewdonor-list",
           "/recepitdonor-list",
           "/create-family/",
           "/add-family",
-          "/d-summary",
-          "/d-summary-view",
+
+         
           "/duplicate",
           "/edit-duplicate",
           "/occasion",
           "/add-occasion",
           "/edit-occasion",
-          "/M-recepit",
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)
         );
         console.log("currentpath", currentPath);
         if (isAllowedPath) {
-          navigate(currentPath);
+          navigate(currentPath + location.search);
         } else {
           navigate("/home");
         }

@@ -317,7 +317,7 @@ const EditRecepit = () => {
         .then((res) => {
           if (res.status == 200 && res.data.code == "200") {
             toast.success(res.data.msg || "Donor Created Successfully");
-            navigate("/cashrecepit");
+            navigate("/download/schoolrecepit");
           } else {
             toast.error(res.data.message || "Error occurred");
           }
@@ -346,7 +346,7 @@ const EditRecepit = () => {
   };
 
   const handleBackButton = () => {
-    navigate("/cashrecepit");
+    navigate("/download/schoolrecepit");
   };
 
   useEffect(() => {
@@ -580,17 +580,12 @@ const EditRecepit = () => {
             <div className="flex justify-center mt-4 space-x-4">
               <Button
                 type="submit"
-             
                 disabled={isButtonDisabled}
                 className="mt-4 bg-blue-400"
               >
                 Update
               </Button>
-              <Button
-          
-                className="mt-4 bg-red-400"
-                onClick={handleBackButton}
-              >
+              <Button className="mt-4 bg-red-400" onClick={handleBackButton}>
                 Back
               </Button>
             </div>

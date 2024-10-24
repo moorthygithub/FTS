@@ -1,1 +1,1 @@
-export const BaseUrl = "https://pranidaya.online/public/api";
+export const BaseUrl = "https://agsrb.online/api/public/api";

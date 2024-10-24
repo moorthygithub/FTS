@@ -1,8 +1,5 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import {
-
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useEffect, useRef } from "react";
 import image from "../assets/logo.jpg";
@@ -162,7 +159,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </li>
 
             <li>
-              <NavLink to="/cashrecepit">
+              <NavLink to="/download/schoolrecepit">
                 {({ isActive }) => (
                   <Button
                     variant={isActive ? "gradient" : "text"}
@@ -203,7 +200,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/stock-summary">
+              <NavLink to="/report/donorsummary">
                 {({ isActive }) => (
                   <Button
                     variant={isActive ? "gradient" : "text"}
@@ -223,7 +220,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/donor">
+              <NavLink to="/download/donor">
                 {({ isActive }) => (
                   <Button
                     variant={isActive ? "gradient" : "text"}

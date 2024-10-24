@@ -16,8 +16,8 @@ import Logo from "../../assets/logo.jpg";
 import { toast } from "react-toastify";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("testadmin");
-  const [password, setPassword] = useState("6570");
+  const [email, setEmail] = useState("testsuperadmin");
+  const [password, setPassword] = useState("aaa5");
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
@@ -42,8 +42,10 @@ const SignIn = () => {
       if (res.status === 200) {
         const token = res.data.UserInfo?.token;
         console.log(token, "Token");
-        localStorage.setItem("full_name", res.data.UserInfo.user.full_name);
+        localStorage.setItem("id", res.data.UserInfo.user.user_type_id);
+        localStorage.setItem("name", res.data.UserInfo.user.first_name);
         localStorage.setItem("username", res.data.UserInfo.user.name);
+        localStorage.setItem("chapter_id", res.data.UserInfo.user.chapter_id);
         localStorage.setItem(
           "user_type_id",
           res.data.UserInfo.user.user_type_id
@@ -51,7 +53,7 @@ const SignIn = () => {
         if (token) {
           // Store the token in localStorage
           localStorage.setItem("token", token);
-          navigate("/master");
+          navigate("/home");
           toast.success("User Logged In Successfully");
         } else {
           toast.error("Login Failed, Token not received.");
@@ -89,10 +91,10 @@ const SignIn = () => {
             />
           </Carousel> */}
           <img
-              src={image1}
-              alt="img 1"
-              className="h-full w-full object-cover"
-            />
+            src={image1}
+            alt="img 1"
+            className="h-full w-full object-cover"
+          />
         </div>
 
         {/* Right Section for Login Form  h-full add*/}

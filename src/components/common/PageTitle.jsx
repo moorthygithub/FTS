@@ -15,7 +15,7 @@ function PageTitle({ title, icon: Icon, backLink }) {
 
   return (
     <div
-      className="flex items-center space-x-2 text-gray-900 text-2xl cursor-pointer mt-4 mb-6"
+      className="flex items-center space-x-2 text-gray-900 text-2xl mt-4 mb-6"
       onClick={handleBackClick}
     >
       {Icon && (

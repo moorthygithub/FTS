@@ -10,32 +10,33 @@ const DownloadCommon = () => {
   const buttons = [
     {
       label: "Donor",
-      path: "/donor",
+      path: "/download/donor",
       color: "from-pink-500 to-orange-400",
     },
     {
-      label: "Purchase",
-      path: "/cashpurchase",
+      label: "Receipts",
+      path: "/download/receipts",
       color: "from-blue-500 to-cyan-400",
     },
+
     {
-      label: "Donation Receipt",
-      path: "/cash",
+      label: "School",
+      path: "/download/school",
       color: "from-green-500 to-teal-400",
     },
     {
-      label: "Material Recepit",
-      path: "/M-recepit",
+      label: "OTS",
+      path: "/download/ots",
       color: "from-cyan-500 to-pink-400",
     },
     {
-      label: "Consumption",
-      path: "/D-consumption",
+      label: "Team",
+      path: "/download/team",
       color: "from-orange-500 to-cyan-400",
     },
     {
-      label: "Website Donation",
-      path: "/web-donation",
+      label: "All Recepits",
+      path: "/download/allreceipts",
       color: "from-red-500 to-yellow-400",
     },
   ];

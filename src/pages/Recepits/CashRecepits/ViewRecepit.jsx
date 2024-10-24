@@ -143,7 +143,7 @@ function ViewCashRecepit() {
         <div className="flex flex-row justify-start items-center p-2">
           <MdKeyboardBackspace
             className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
-            onClick={() => navigate("/cashrecepit")}
+            onClick={() => navigate("/download/schoolrecepit")}
           />
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
             Cash Receipt

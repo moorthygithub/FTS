@@ -10,7 +10,7 @@ const RequestFilter = () => {
   const buttons = [
     {
       label: "Donation Receipts",
-      path: "/cashrecepit",
+      path: "/download/schoolrecepit",
       color: "from-pink-500 to-orange-400",
     },
     {

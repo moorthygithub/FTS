@@ -16,32 +16,40 @@ function Donor() {
   const navigate = useNavigate();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const gender = [
+  const DonorTypes = [
     {
-      value: "Male",
-      label: "Male",
+      value: "Member",
+      label: "Member",
     },
     {
-      value: "Female",
-      label: "Female",
+      value: "Donor",
+      label: "Donor",
+    },
+    {
+      value: "Member+Donor",
+      label: "Member+Donor",
+    },
+    {
+      value: "None",
+      label: "None",
     },
   ];
 
   const DonorType = [
     {
-      value: "Individual",
-      label: "Individual",
+      value: "Member",
+      label: "Member",
     },
     {
-      value: "Private",
-      label: "Private",
+      value: "Donor",
+      label: "Donor",
     },
     {
-      value: "Public",
-      label: "Public",
+      value: "Member+Donor",
+      label: "Member+Donor",
     },
     {
-      value: "PSU",
+      value: "None",
       label: "PSU",
     },
     {
@@ -58,8 +66,8 @@ function Donor() {
     },
   ];
   const [downloadDonor, setDonorDownload] = useState({
-    donor_type: "",
-    donor_gender: "",
+    indicomp_type: "",
+    indicomp_donor_type: "",
   });
   //ONCHANGE
   const onInputChange = (name, value) => {
@@ -72,8 +80,8 @@ function Donor() {
   const onSubmit = (e) => {
     e.preventDefault();
     let data = {
-      donor_type: downloadDonor.donor_type,
-      donor_gender: downloadDonor.donor_gender,
+      indicomp_type: downloadDonor.indicomp_type,
+      indicomp_donor_type: downloadDonor.indicomp_donor_type,
     };
     var v = document.getElementById("dowRecp").checkValidity();
     var v = document.getElementById("dowRecp").reportValidity();
@@ -110,12 +118,8 @@ function Donor() {
   return (
     <Layout>
       <DownloadCommon />
-      <ToastContainer />
       <div className="mt-4 mb-6">
-        <PageTitle
-          title={"Download Donor"}
-          // icon={FaArrowCircleLeft}
-        />
+        <PageTitle title={"Download Donor"} />
       </div>
       <Card className="p-4">
         <h3 className="text-red-500 mb-5">
@@ -127,33 +131,31 @@ function Donor() {
             <div className="w-full">
               <Dropdown
                 required
-                label="Donor Type"
+                label=" Type"
                 className="required"
                 options={DonorType}
-                value={downloadDonor.donor_type}
-                onChange={(value) => onInputChange("donor_type", value)}
-                name="donor_type"
+                value={downloadDonor.indicomp_type}
+                onChange={(value) => onInputChange("indicomp_type", value)}
+                name="indicomp_type"
               />
             </div>
-            {downloadDonor.donor_type == "Individual" ? (
-              <div className="w-full">
-                <Dropdown
-                  label="Gender"
-                  className="required"
-                  value={downloadDonor.donor_gender}
-                  options={gender}
-                  name="donor_gender"
-                  onChange={(value) => onInputChange("donor_gender", value)}
-                />
-              </div>
-            ) : (
-              ""
-            )}
+            <div className="w-full">
+              <Dropdown
+                label="Donor Type"
+                className="required"
+                value={downloadDonor.indicomp_donor_type}
+                options={DonorTypes}
+                name="indicomp_donor_type"
+                onChange={(value) =>
+                  onInputChange("indicomp_donor_type", value)
+                }
+              />
+            </div>
+
             <div className="w-77">
               <Button
                 color="blue"
                 fullWidth
-                name="donor_gender"
                 onClick={onSubmit}
                 disabled={isButtonDisabled}
               >

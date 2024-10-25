@@ -87,10 +87,17 @@ const AppProvider = ({ children }) => {
           "/report/school",
           "/report/otg",
           "/report/payment",
+          "/report/suspense",
           //report view
           "/d-summary-view",
           "/recepit-summary-view",
           "/recepit-otg-view",
+          "/recepit-nopan-view",
+          "/recepit-group-view",
+          "/report/payment-view",
+          "/report/donor-view",
+          "/report/donorgroup-view",
+          "/recepit-donation-view",
 
           "/course-due",
           "/task-inspection",
@@ -144,7 +151,6 @@ const AppProvider = ({ children }) => {
           "/create-family/",
           "/add-family",
 
-         
           "/duplicate",
           "/edit-duplicate",
           "/occasion",
@@ -158,7 +164,7 @@ const AppProvider = ({ children }) => {
         if (isAllowedPath) {
           navigate(currentPath + location.search);
         } else {
-          navigate("/home");
+          navigate("/download/donor");
         }
       } else {
         if (

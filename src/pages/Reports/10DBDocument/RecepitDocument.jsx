@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import TaskManagerFilter from "../TaskManagerFilter"
 import { Link, useNavigate } from "react-router-dom";
 import PageTitle from "../../../components/common/PageTitle";
 import { Input, Button } from "@material-tailwind/react";
-import Dropdown from "../../../components/common/DropDown";
 import moment from "moment";
 import { BaseUrl } from "../../../base/BaseUrl";
 import { toast } from "react-toastify";
@@ -39,6 +38,32 @@ const RecepitDocument = () => {
       navigate("/recepit-otg-view");
     }
   };
+  //NO PAN VIEW
+
+  const onReportNopanView = (e) => {
+    e.preventDefault();
+    if (document.getElementById("dowRecp").checkValidity()) {
+      localStorage.setItem(
+        "receipt_from_date",
+        downloadDonor.receipt_from_date
+      );
+      localStorage.setItem("receipt_to_date", downloadDonor.receipt_to_date);
+      navigate("/recepit-nopan-view");
+    }
+  };
+
+  const onReportGroupView = (e) => {
+    e.preventDefault();
+    if (document.getElementById("dowRecp").checkValidity()) {
+      localStorage.setItem(
+        "receipt_from_date",
+        downloadDonor.receipt_from_date
+      );
+      localStorage.setItem("receipt_to_date", downloadDonor.receipt_to_date);
+      navigate("/recepit-group-view");
+    }
+  };
+
   //DOWNLOAD
   const onSubmit = (e) => {
     e.preventDefault();
@@ -76,7 +101,7 @@ const RecepitDocument = () => {
     }
   };
   //NO PAN SUBMIT
-  const onSubmita = (e) => {
+  const onSubmitNopan = (e) => {
     e.preventDefault();
     let data = {
       receipt_financial_year: downloadDonor.receipt_financial_year,
@@ -111,7 +136,7 @@ const RecepitDocument = () => {
     }
   };
   //DOWNLOAD GROUP
-  const onSubmitab = (e) => {
+  const onSubmitGroup = (e) => {
     e.preventDefault();
     let data = {
       receipt_financial_year: downloadDonor.receipt_financial_year,
@@ -187,22 +212,22 @@ const RecepitDocument = () => {
             </Button>
           </div>
           <div className="w-full">
-            <Button color="blue" fullWidth onClick={onSubmita}>
+            <Button color="blue" fullWidth onClick={onSubmitNopan}>
               No pan Download
             </Button>
           </div>
           <div className="w-full">
-            <Button color="blue" fullWidth onClick={onReportView}>
+            <Button color="blue" fullWidth onClick={onReportNopanView}>
               No pan View
             </Button>
           </div>
           <div className="w-full">
-            <Button color="blue" fullWidth onClick={onSubmitab}>
+            <Button color="blue" fullWidth onClick={onSubmitGroup}>
               Download Group
             </Button>
           </div>
           <div className="w-full">
-            <Button color="blue" fullWidth onClick={onReportView}>
+            <Button color="blue" fullWidth onClick={onReportGroupView}>
               View Group
             </Button>
           </div>

@@ -8,6 +8,7 @@ import image2 from "../../../../assets/receipt/top.png";
 import image3 from "../../../../assets/receipt/ekal.png";
 import Layout from "../../../../layout/Layout";
 import { BaseUrl } from "../../../../base/BaseUrl";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const ReceiptAllView = (props) => {
   const componentRef = useRef();
@@ -83,10 +84,15 @@ const ReceiptAllView = (props) => {
 
       {!loader && !error && (
         <div className="invoice-wrapper">
-          <PageTitleBar title="Promoter Summary" match={props.match} />
+          <PageTitleBar
+            title="Receipt Document"
+            icon={FaArrowLeft}
+            match={props.match}
+            backLink="/report/otg"
+          />
           <div className="flex flex-col items-center">
             <div className="w-full mx-auto">
-              <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto">
+              <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto grid sm:grid-cols-1 1fr">
                 {/* Header */}
                 <div className="flex justify-between items-center mb-4">
                   <div className="invoice-logo">
@@ -139,34 +145,33 @@ const ReceiptAllView = (props) => {
                           <td className="border border-black px-4 py-2 text-sm md:text-base">
                             Section 80G
                           </td>
-                          {dataSumm.indicomp_type != "Individual" && (
-                            <td className="border border-black px-4 py-2 text-sm md:text-base">
-                              M/s {dataSumm.indicomp_full_name}
-                            </td>
-                          )}
-                          {
-                            (dataSumm.indicomp_type = "Individual" && (
-                              <td className="border border-black px-4 py-2 text-sm md:text-base">
-                                {dataSumm.title}
-                                {dataSumm.indicomp_full_name}
-                              </td>
-                            ))
-                          }
+                          <td className="border border-black px-4 py-2 text-sm md:text-base">
+                            {dataSumm.indicomp_type !== "Individual" && (
+                              <>M/s {dataSumm.indicomp_full_name} </>
+                            )}
+                            {dataSumm.indicomp_type === "Individual" && (
+                              <>
+                                {dataSumm.title} {dataSumm.indicomp_full_name}
+                              </>
+                            )}
+                          </td>
 
                           <td className="border border-black text-center text-sm md:text-base">
-                            {dataSumm.indicomp_res_reg_address}
-                            {" ,"}
-                            {dataSumm.indicomp_res_reg_area}
-                            {" ,"}
-                            {dataSumm.indicomp_res_reg_ladmark}
-                            {" ,"}
-                            {dataSumm.indicomp_res_reg_city}
-                            {" - "}
-                            {dataSumm.indicomp_res_reg_pin_code}
-                            {" ,"}
-                            {dataSumm.indicomp_res_reg_state}
-                          </td>
-                          <td className="border border-black text-center text-sm md:text-base">
+                            {dataSumm.indicomp_corr_preffer == "Residence" && (
+                              <>
+                                {dataSumm.indicomp_res_reg_address}
+                                {" ,"}
+                                {dataSumm.indicomp_res_reg_area}
+                                {" ,"}
+                                {dataSumm.indicomp_res_reg_ladmark}
+                                {" ,"}
+                                {dataSumm.indicomp_res_reg_city}
+                                {" - "}
+                                {dataSumm.indicomp_res_reg_pin_code}
+                                {" ,"}
+                                {dataSumm.indicomp_res_reg_state}
+                              </>
+                            )}
                             {dataSumm.indicomp_corr_preffer == "Registered" && (
                               <>
                                 {dataSumm.indicomp_res_reg_address}
@@ -182,44 +187,50 @@ const ReceiptAllView = (props) => {
                                 {dataSumm.indicomp_res_reg_state}
                               </>
                             )}{" "}
-                          </td>
-                          <td className="border border-black text-center text-sm md:text-base">
-                            {dataSumm.receipt_financial_year}
+                            {dataSumm.indicomp_corr_preffer == "Office" && (
+                              <>
+                                {dataSumm.indicomp_off_branch_address}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_area}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_ladmark}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_city}
+                                {" - "}
+                                {dataSumm.indicomp_off_branch_pin_code}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_state}
+                              </>
+                            )}
+                            {dataSumm.indicomp_corr_preffer ==
+                              "Branch Office" && (
+                              <>
+                                {dataSumm.indicomp_off_branch_address}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_area}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_ladmark}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_city}
+                                {" - "}
+                                {dataSumm.indicomp_off_branch_pin_code}
+                                {" ,"}
+                                {dataSumm.indicomp_off_branch_state}
+                              </>
+                            )}
                           </td>
                           <td className="border border-black text-center text-sm md:text-base">
                             {dataSumm.receipt_donation_type}
                           </td>
                           <td className="border border-black text-center text-sm md:text-base">
-                            {dataSumm.receipt_no_of_ots}
+                            {dataSumm.receipt_tran_pay_mode}
                           </td>
-                          <td className="border border-black text-right px-4 text-sm md:text-base">
+                          <td className="border border-black text-center text-sm md:text-base">
                             {dataSumm.receipt_total_amount}
                           </td>
                         </tr>
                       ))}
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <td
-                          colSpan={8}
-                          className="border border-black text-center font-bold text-sm md:text-base"
-                        >
-                          Total
-                        </td>
-                        <td className="border border-black text-center text-sm md:text-base font-bold">
-                          {receiptSummaryFooterOTS.map((footv) => (
-                            <span key={footv.id}>{footv.total_no_of_ots}</span>
-                          ))}
-                        </td>
-                        <td className="border border-black text-right px-4 text-sm md:text-base font-bold">
-                          {receiptSummaryFooterTotal.map((foota) => (
-                            <span key={foota.id}>
-                              {foota.total_grand_amount}
-                            </span>
-                          ))}
-                        </td>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>

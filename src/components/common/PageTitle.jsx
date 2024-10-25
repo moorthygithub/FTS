@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function PageTitle({ title, icon: Icon, backLink }) {
+const PageTitle = ({ title, icon: Icon, backLink }) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -26,6 +26,6 @@ function PageTitle({ title, icon: Icon, backLink }) {
       <div className="font-bold text-gray-700 text-2xl">{title}</div>
     </div>
   );
-}
+};
 
 export default PageTitle;

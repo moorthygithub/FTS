@@ -11,7 +11,8 @@ const options = {
   filter: false,
   searchOpen: true,
   download: false,
-  selectableRows: "none", // Updated to use "none" instead of false
+  sort: false,
+  selectableRows: "none",
   responsive: "standard",
 };
 
@@ -19,12 +20,10 @@ const AddToGroup = ({ populateDonorName, handleClose }) => {
   const [loader, setLoader] = useState(true);
   const [donorData, setDonorData] = useState([]);
 
-  // Function to add donor to receipt
   const addDonorToReceipt = (fts_id) => {
-    populateDonorName(fts_id); // Populate donor name in the parent component
+    populateDonorName(fts_id); 
   };
 
-  // Fetch donor data from API
   const getData = async () => {
     setLoader(true);
     try {
@@ -53,7 +52,6 @@ const AddToGroup = ({ populateDonorName, handleClose }) => {
 
   const columns = [
     {
-      name: "Donor Name",
       label: "Donor Name",
       filter: false,
       sort: false,
@@ -72,9 +70,7 @@ const AddToGroup = ({ populateDonorName, handleClose }) => {
         sort: false,
         customBodyRender: (value) => (
           <div className="flex space-x-2">
-            <Button  onClick={() => addDonorToReceipt(value)}>
-              Select
-            </Button>
+            <Button onClick={() => addDonorToReceipt(value)} className="bg-blue-500">Select</Button>
           </div>
         ),
       },

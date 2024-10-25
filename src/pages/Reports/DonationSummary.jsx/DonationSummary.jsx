@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import TaskManagerFilter from "../TaskManagerFilter"
 import { Link, useNavigate } from "react-router-dom";
 
 import { Input, Button } from "@material-tailwind/react";
-import Dropdown from "../../../components/common/DropDown";
 import moment from "moment";
 import { BaseUrl } from "../../../base/BaseUrl";
 import { toast } from "react-toastify";
@@ -37,7 +36,7 @@ const DonationSummary = () => {
         downloadDonor.receipt_from_date
       );
       localStorage.setItem("receipt_to_date", downloadDonor.receipt_to_date);
-      navigate("/d-summary-view");
+      navigate("/recepit-donation-view");
     }
   };
 

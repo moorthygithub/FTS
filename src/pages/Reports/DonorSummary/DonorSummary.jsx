@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import TaskManagerFilter from "../TaskManagerFilter";
 import { useNavigate } from "react-router-dom";
 import {
   Input,
@@ -33,25 +33,39 @@ const DonorSummary = () => {
     });
   };
 
-  // Handle opening/closing the modal
   const handleOpenDialog = () => setOpenDialog(!openDialog);
 
-  // Populate the donor name from the modal selection
   const populateDonorName = (fts_id) => {
     setDonorSummary({
       ...donorSummary,
       indicomp_full_name: fts_id,
     });
-    setOpenDialog(false); // Close dialog after selection
+    setOpenDialog(false);
   };
 
-  const onReportView = (e) => {
+  const onReporIndividualtView = (e) => {
     e.preventDefault();
-    const form = document.getElementById("dowRecp");
-    if (form.checkValidity()) {
-      localStorage.setItem("receipt_from_date", donorSummary.receipt_from_date);
-      localStorage.setItem("receipt_to_date", donorSummary.receipt_to_date);
-      navigate("/view-stock");
+    if (document.getElementById("dowRecp").checkValidity()) {
+      const { receipt_from_date, receipt_to_date, indicomp_full_name } =
+        donorSummary;
+
+      localStorage.setItem("receipt_from_date_indv", receipt_from_date);
+      localStorage.setItem("receipt_to_date_indv", receipt_to_date);
+      localStorage.setItem("indicomp_full_name_indv", indicomp_full_name);
+
+      navigate("/report/donor-view");
+    }
+  };
+
+  const onReportGroupView = (e) => {
+    e.preventDefault();
+    if (document.getElementById("dowRecp").checkValidity()) {
+      const { receipt_from_date, receipt_to_date, indicomp_full_name } =
+        donorSummary;
+      localStorage.setItem("receipt_from_date_grp", receipt_from_date);
+      localStorage.setItem("receipt_to_date_grp", receipt_to_date);
+      localStorage.setItem("indicomp_full_name_grp", indicomp_full_name);
+      navigate("/report/donorgroup-view");
     }
   };
 
@@ -100,12 +114,12 @@ const DonorSummary = () => {
               />
             </div>
             <div className="w-full">
-              <Button color="blue" fullWidth onClick={onReportView}>
+              <Button color="blue" fullWidth onClick={onReporIndividualtView}>
                 Individual View
               </Button>
             </div>
             <div className="w-full">
-              <Button color="blue" fullWidth onClick={onReportView}>
+              <Button color="blue" fullWidth onClick={onReportGroupView}>
                 Group View
               </Button>
             </div>

@@ -1,17 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
-import ReactToPrint from "react-to-print";
 import axios from "axios";
 import PageTitleBar from "../../../components/common/PageTitle";
 import { BaseUrl } from "../../../base/BaseUrl";
-import { Spinner } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 import Layout from "../../../layout/Layout";
 import Moment from "moment";
 import image1 from "../../../assets/receipt/fts.png";
 import image2 from "../../../assets/receipt/top.png";
 import image3 from "../../../assets/receipt/ekal.png";
+import { FaArrowLeft } from "react-icons/fa6";
+import CustomPivotTable from "./CustomPivotTable";
+// import { savePDF } from "@progress/kendo-react-pdf";
+
+import ReactToPrint from "react-to-print";
 
 const PromoterSummaryReceipt = (props) => {
-  const componentRef = useRef();
   const [donorsummary, setSummary] = useState([]);
   const [receiptsummary, setReceiptSummary] = useState({});
   const [receiptsummaryfooterOTS, setReceiptSummaryFooterOTS] = useState([]);
@@ -20,24 +23,16 @@ const PromoterSummaryReceipt = (props) => {
   );
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(null);
+  const printRef = useRef();
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const promoter = url.searchParams.get("promoter");
-    const from_date = url.searchParams.get("from");
-    const to_date = url.searchParams.get("to");
-
-    console.log(promoter, from_date, to_date);
-
     const fetchData = async () => {
-      if (!promoter || !from_date || !to_date) {
-        console.error("Promoter or date parameters are missing.");
-        return;
-      }
-
+      const receiptFromDate = localStorage.getItem("receipt_from_date_prm");
+      const receiptToDate = localStorage.getItem("receipt_to_date_prm");
+      const indicompFullName = localStorage.getItem("indicomp_full_name_prm");
       try {
         const response = await axios.get(
-          `${BaseUrl}/fetch-promotersummary-by-id/${promoter}/${from_date}/${to_date}`,
+          `${BaseUrl}/fetch-promotersummary-by-id/${indicompFullName}/${receiptFromDate}/${receiptToDate}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -58,7 +53,23 @@ const PromoterSummaryReceipt = (props) => {
 
     fetchData();
   }, []);
+  // const dataSourceSettings = {
+  //   columns: [{ name: "receipt_donation_type", caption: "Donation Type" }],
+  //   dataSource: receiptsummary,
+  //   expandAll: true,
+  //   filters: [],
+  //   rows: [{ name: "receipt_financial_year" }],
+  //   values: [{ name: "total_amount", caption: "Amount" }],
+  //   showCaption: false,
+  // };
 
+  // const handleExportWithFunction = (e) => {
+  //   savePDF(componentRef.current, {
+  //     paperSize: "A4",
+  //     orientation: "vertical",
+  //     scale: 0.8,
+  //   });
+  // };
   return (
     <Layout>
       {loader && (
@@ -69,12 +80,29 @@ const PromoterSummaryReceipt = (props) => {
       {!loader && error && (
         <div className="text-red-600 text-center">{error}</div>
       )}
+      {/* <div>
+        <ReactToPrint
+          trigger={() => (
+            <Button className="flex items-center border  border-blue-500 hover:border-green-500 hover:animate-pulse p-2 rounded-lg">
+              Print
+            </Button>
+          )}
+          content={() => componentRef.current}
+        />
+      </div> */}
       {!loader && !error && (
         <div className="invoice-wrapper">
-          <PageTitleBar title="Promoter Summary" match={props.match} />
-          <div className="flex flex-col items-center">
+          <PageTitleBar
+            title="Promoter Summary"
+            match={props.match}
+            icon={FaArrowLeft}
+            backLink="/report/promoter"
+          />
+          {/* <Button onClick={handleExportWithFunction}>PDF</Button> */}
+
+          <div ref={printRef} className="flex flex-col items-center">
             <div className="w-full mx-auto ">
-              <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto  grid sm:grid-cols-1 1fr">
+              <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto  grid sm:grid-cols-1 1fr ">
                 <div className="flex justify-between items-center mb-4 ">
                   <div className="invoice-logo">
                     <img
@@ -104,7 +132,7 @@ const PromoterSummaryReceipt = (props) => {
                   </div>
                 </div>
 
-                <div ref={componentRef} className="my-5">
+                <div className="my-5">
                   <table className="min-w-full border-collapse border border-black">
                     <thead>
                       <tr className="bg-gray-200">
@@ -187,6 +215,12 @@ const PromoterSummaryReceipt = (props) => {
                       </tr>
                     </tfoot>
                   </table>
+                </div>
+                <div>
+                  <div className="flex justify-center mb-4 mt-4">
+                    <b className="text-lg text-gray-600 ">TOTAL</b>{" "}
+                  </div>
+                  <CustomPivotTable data={donorsummary} />
                 </div>
               </div>
             </div>

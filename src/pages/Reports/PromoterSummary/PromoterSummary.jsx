@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
-import { Link, useNavigate } from "react-router-dom";
+import TaskManagerFilter from "../TaskManagerFilter";
+import { useNavigate } from "react-router-dom";
 import PageTitle from "../../../components/common/PageTitle";
 import { Input, Button } from "@material-tailwind/react";
 import Dropdown from "../../../components/common/DropDown";
@@ -20,43 +20,40 @@ const PromterSummary = () => {
     receipt_to_date: todayback,
     indicomp_promoter: "",
   });
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+
   const onInputChange = (name, value) => {
-    setDonorDownload({
+    const updatedDonor = {
       ...downloadDonor,
       [name]: value,
-    });
+    };
+    setDonorDownload(updatedDonor);
+    checkIfButtonShouldBeEnabled(updatedDonor);
   };
-  //VIEW
-  // const onReportView = (e) => {
-  //   e.preventDefault();
-  //   if (document.getElementById("dowRecp").checkValidity()) {
-  //     const { receipt_from_date, receipt_to_date, indicomp_promoter } =
-  //       downloadDonor;
-  //     navigate(
-  //       `/d-summary-view?from=${receipt_from_date}&to=${receipt_to_date}&promoter=${indicomp_promoter}`
-  //     );
 
-  //   }
-  // };
+  const checkIfButtonShouldBeEnabled = (data) => {
+    const { receipt_from_date, receipt_to_date, indicomp_promoter } = data;
+    if (receipt_from_date && receipt_to_date && indicomp_promoter) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  };
 
   const onReportView = (e) => {
     e.preventDefault();
     if (document.getElementById("dowRecp").checkValidity()) {
       const { receipt_from_date, receipt_to_date, indicomp_promoter } =
         downloadDonor;
-      navigate(
-        `/d-summary-view?from=${receipt_from_date}&to=${receipt_to_date}&promoter=${indicomp_promoter}`
-      );
-      console.log(
-        `/d-summary-view?from=${receipt_from_date}&to=${receipt_to_date}&promoter=${indicomp_promoter}`,
-        "console"
-      );
+      localStorage.setItem("receipt_from_date_prm", receipt_from_date);
+      localStorage.setItem("receipt_to_date_prm", receipt_to_date);
+      localStorage.setItem("indicomp_full_name_prm", indicomp_promoter);
+      navigate("/d-summary-view");
     }
   };
 
   useEffect(() => {
-    var theLoginToken = localStorage.getItem("token");
-
+    const theLoginToken = localStorage.getItem("token");
     const requestOptions = {
       method: "GET",
       headers: {
@@ -68,7 +65,7 @@ const PromterSummary = () => {
       .then((response) => response.json())
       .then((data) => setPromoters(data.promoter));
   }, []);
-  //DOWNLOAD
+
   const onSubmit = (e) => {
     e.preventDefault();
     let data = {
@@ -76,10 +73,8 @@ const PromterSummary = () => {
       receipt_from_date: downloadDonor.receipt_from_date,
       receipt_to_date: downloadDonor.receipt_to_date,
     };
-    var v = document.getElementById("dowRecp").checkValidity();
-    var v = document.getElementById("dowRecp").reportValidity();
 
-    if (v) {
+    if (document.getElementById("dowRecp").reportValidity()) {
       axios({
         url: BaseUrl + "/download-promoter-summary",
         method: "POST",
@@ -89,16 +84,15 @@ const PromterSummary = () => {
         },
       })
         .then((res) => {
-          console.log("data : ", res.data);
           const url = window.URL.createObjectURL(new Blob([res.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "promoter_summary.csv"); //or any other extension
+          link.setAttribute("download", "promoter_summary.csv");
           document.body.appendChild(link);
           link.click();
           toast.success("Promoter Summary is Downloaded Successfully");
         })
-        .catch((err) => {
+        .catch(() => {
           toast.error("Promoter Summary is Not Downloaded");
         });
     }
@@ -115,6 +109,7 @@ const PromterSummary = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <div className="w-full">
             <Dropdown
+              required
               label="Donor Type"
               className="required"
               value={downloadDonor.indicomp_promoter}
@@ -135,7 +130,9 @@ const PromterSummary = () => {
               required
               name="receipt_from_date"
               value={downloadDonor.receipt_from_date}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) =>
+                onInputChange("receipt_from_date", e.target.value)
+              }
             />
           </div>
           <div className="w-full">
@@ -145,17 +142,29 @@ const PromterSummary = () => {
               required
               className="required"
               value={downloadDonor.receipt_to_date}
-              onChange={(e) => onInputChange(e)}
+              onChange={(e) => onInputChange("receipt_to_date", e.target.value)}
               name="receipt_to_date"
             />
           </div>
+
           <div className="w-full">
-            <Button color="blue" fullWidth onClick={onSubmit}>
+            <Button
+              color="blue"
+              fullWidth
+              onClick={onSubmit}
+              disabled={!isButtonEnabled}
+            >
               Download
             </Button>
           </div>
+
           <div className="w-full">
-            <Button color="blue" fullWidth onClick={onReportView}>
+            <Button
+              color="blue"
+              fullWidth
+              onClick={onReportView}
+              disabled={!isButtonEnabled}
+            >
               View
             </Button>
           </div>

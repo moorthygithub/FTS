@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import TaskManagerFilter from "../TaskManagerFilter";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Input, Button } from "@material-tailwind/react";
@@ -32,9 +32,9 @@ const RecepitSummary = () => {
     e.preventDefault();
     if (document.getElementById("dowRecp").checkValidity()) {
       const { receipt_from_date, receipt_to_date } = downloadDonor;
-      navigate(
-        `/recepit-summary-view?from=${receipt_from_date}&to=${receipt_to_date}`
-      );
+      localStorage.setItem("receipt_from_date_recp", receipt_from_date);
+      localStorage.setItem("receipt_to_date_recp", receipt_to_date);
+      navigate("/recepit-summary-view");
       console.log(
         `/recepit-summary-view?from=${receipt_from_date}&to=${receipt_to_date}`,
         "console"

@@ -10,6 +10,7 @@ import image1 from "../../../assets/receipt/fts.png";
 import image2 from "../../../assets/receipt/top.png";
 import image3 from "../../../assets/receipt/ekal.png";
 import { NumericFormat } from "react-number-format";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const RecepitSummaryView = (props) => {
   const componentRef = useRef();
@@ -30,21 +31,12 @@ const RecepitSummaryView = (props) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const from_date = url.searchParams.get("from");
-    const to_date = url.searchParams.get("to");
-
-    console.log(from_date, to_date);
-
     const fetchData = async () => {
-      if (!from_date || !to_date) {
-        console.error("Promoter or date parameters are missing.");
-        return;
-      }
-
+      const receiptFromDate = localStorage.getItem("receipt_from_date_recp");
+      const receiptToDate = localStorage.getItem("receipt_to_date_recp");
       try {
         const response = await axios.get(
-          `${BaseUrl}/fetch-receiptsummary-by-id/${from_date}/${to_date}`,
+          `${BaseUrl}/fetch-receiptsummary-by-id/${receiptFromDate}/${receiptToDate}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -83,7 +75,12 @@ const RecepitSummaryView = (props) => {
       )}
       {!loader && !error && (
         <div className="invoice-wrapper">
-          <PageTitleBar title="Promoter Summary" match={props.match} />
+          <PageTitleBar
+            title="Recepit Summary"
+            icon={FaArrowLeft}
+            match={props.match}
+            backLink="/report/recepit"
+          />
           <div className="flex flex-col items-center">
             <div className="w-full mx-auto ">
               <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto  grid sm:grid-cols-1 1fr">

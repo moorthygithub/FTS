@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
-import { Link, useNavigate } from "react-router-dom";
-
+import TaskManagerFilter from "../TaskManagerFilter";
+import { useNavigate } from "react-router-dom";
 import { Input, Button } from "@material-tailwind/react";
-import Dropdown from "../../../components/common/DropDown";
 import moment from "moment";
 import { BaseUrl } from "../../../base/BaseUrl";
 import { toast } from "react-toastify";
@@ -13,7 +11,6 @@ import PageTitle from "../../../components/common/PageTitle";
 
 const PaymentSummary = () => {
   const navigate = useNavigate();
-  const [promoter, setPromoters] = useState([]);
   const todayback = moment().format("YYYY-MM-DD");
   const firstdate = moment().startOf("month").format("YYYY-MM-DD");
   const [downloadDonor, setDonorDownload] = useState({
@@ -27,17 +24,14 @@ const PaymentSummary = () => {
     });
   };
   //VIEW
+
   const onReportView = (e) => {
     e.preventDefault();
-    var v = document.getElementById("dowRecp").checkValidity();
-    var v = document.getElementById("dowRecp").reportValidity();
-    if (v) {
-      localStorage.setItem(
-        "receipt_from_date",
-        downloadDonor.receipt_from_date
-      );
-      localStorage.setItem("receipt_to_date", downloadDonor.receipt_to_date);
-      navigate("/d-summary-view");
+    if (document.getElementById("dowRecp").checkValidity()) {
+      const { receipt_from_date, receipt_to_date } = downloadDonor;
+      localStorage.setItem("receipt_from_date_pay", receipt_from_date);
+      localStorage.setItem("receipt_to_date_pay", receipt_to_date);
+      navigate("/report/payment-view");
     }
   };
 
